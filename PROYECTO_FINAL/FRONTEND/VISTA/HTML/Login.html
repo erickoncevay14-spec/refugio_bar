@@ -4,28 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../CSS/index.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="../CSS/menu-hamburguesa.css">
     <title>login</title>
 </head>
 <body>
-    <section id="login">
-            <div class="container">
-                <form class="login-form">
-                    <h2>Iniciar Sesión</h2>
-                    <div class="form-group">
-                        <label for="usuario">Usuario</label>
-                        <input type="text" id="usuario" name="usuario" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Contraseña</label>
-                        <input type="password" id="password" name="password" required>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="cta-button" style="width: 100%;">Ingresar</button>
-                    </div>
-                    <button type="submit" class="cta-button" style="width: 100%;">Registrarse</button>
-                </form>
+    <header>
+        <nav>
+            <!-- Logo del sitio -->
+            <a href="#inicio" class="logo">El Refugio</a>
+    
+            <!-- Botón hamburguesa -->
+            <div class="hamburger" id="hamburger">
+                <!-- Son tres líneas que simulan el ícono -->
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
-        </section>
+    
+            <!-- Enlaces del menú -->
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="Nosotros.html">Nosotros</a></li>
+                <li><a href="Productos.html">Productos</a></li>
+                <li><a href="Login.html">Iniciar Sesión</a></li>
+            </ul>
+        </nav>
+    </header>
+ <script>
+    function crearCuenta() {
+        window.location.href = 'Registro.html';
+    }
+ </script>
+
+    <div id="result"></div>
+</div>
+<section id="login">
+    <div class="container">
+        <form class="login-form">
+            <h2>Iniciar Sesión</h2>
+            <div class="form-group">
+                <label for="usuario">Usuario</label>
+                <input type="text" id="usuario" name="usuario" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" onclick="login()" class="cta-button" style="width: 100%;">Ingresar</button>
+            </div>
+            <div class="form-group">
+                <button type="submit"  onclick="crearCuenta()" class="cta-button" style="width: 100%;">Registrar</button>
+            </div>
+        </form>
+    </div>
+</section>
+</main>
+
+    <script src="../login.js"></script>
+    <script src="bootstrap.bundle.min.js"></script>
+    <script src="../JS/menu-hamburguesa.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </body>
 </html>
