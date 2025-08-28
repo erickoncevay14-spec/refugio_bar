@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../CSS/index.css">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" >
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo">
+                🍺 <span>El Refugio</span>
+            </div>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="#nosotros">Nosotros</a></li>
+                <li><a href="Productos.html">Productos</a></li>
+                <li><a href="Login.html">Iniciar Sesión</a></li>
+            </ul>
+            
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="inicio">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>El Refugio Bar</h1>
+                    <p>Donde cada momento se vuelve especial. Disfruta de nuestras mejores bebidas en un ambiente único y acogedor.</p>
+                    <a href="#productos" class="cta-button">Descubre Nuestra Carta</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="nosotros">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2>Nuestra Historia</h2>
+                        <p>El Refugio Bar nació hace más de 10 años con la visión de crear un espacio donde las personas pudieran escapar del bullicio diario y encontrar su momento de tranquilidad.</p>
+                        <p>Nos especializamos en cocteles artesanales, cervezas premium y una selección única de licores de todo el mundo. Nuestro equipo de bartenders profesionales está siempre listo para sorprenderte.</p>
+                        <p>Más que un bar, somos tu refugio perfecto para celebrar, relajarte o simplemente disfrutar de una buena conversación con amigos.</p>
+                    </div>
+                    <div class="about-image">
+                        🏛️
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p>📍 Av. Principal 123, Centro</p>
+                <p>📞 +51 987 654 321</p>
+                <p>✉️ info@elrefugiobar.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>Horarios</h3>
+                <p>Lunes a Jueves: 6:00 PM - 2:00 AM</p>
+                <p>Viernes y Sábado: 6:00 PM - 3:00 AM</p>
+                <p>Domingo: 6:00 PM - 1:00 AM</p>
+            </div>
+            <div class="footer-section">
+                <h3>Síguenos</h3>
+                <a href="#">Facebook</a>
+                <a href="#">Instagram</a>
+                <a href="#">Twitter</a>
+                <a href="#">TikTok</a>
+            </div>
+            <div class="footer-section">
+                <h3>Políticas</h3>
+                <a href="#">Términos y Condiciones</a>
+                <a href="#">Política de Privacidad</a>
+                <a href="#">Consumo Responsable</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 El Refugio Bar. Todos los derechos reservados. | Prohibida la venta a menores de edad.</p>
+        </div>
+    </footer>
+   <script>
+        // Funcionalidad del menú hamburguesa
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Cerrar menú al hacer click en un enlace
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Cerrar menú al hacer click fuera de él
+        document.addEventListener('click', function(event) {
+            if (!hamburger.contains(event.target) && !navMenu.contains(event.target)) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+
+        // Efecto parallax suave en scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.main-content::before');
+            if (parallax) {
+                parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+    </script>
+
+
+
+
+
+
+   </body>
+</html>
