@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/index.css">
+    <link rel="stylesheet" href="../CSS/menu-hamburguesa.css">
+    <link rel="stylesheet" href="../CSS/productos.css">
+    <link rel="stylesheet" href="../CSS/carrito.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <!-- Logo del sitio -->
+            <a href="#inicio" class="logo">El Refugio</a>
+
+            <!-- Botón hamburguesa -->
+            <div class="hamburger" id="hamburger">
+                <!-- Son tres líneas que simulan el ícono -->
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <!-- Enlaces del menú -->
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="Nosotros.html">Nosotros</a></li>
+                <li><a href="Productos.html">Productos</a></li>
+                <li><a href="Login.html">Iniciar Sesión</a></li>
+            </ul>
+
+             <div class="cart-container">
+    <div class="cart-icon" id="cartIcon">
+        🛒
+        <span class="cart-count" id="cartCount">0</span>
+    </div>
+    
+    <!-- Dropdown del carrito -->
+    <div class="cart-dropdown" id="cartDropdown">
+        <div class="cart-header">
+            <h3>Mi Carrito</h3>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Los items se agregan dinámicamente -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total" id="cartTotal">Total: $0.00</div>
+            <button class="checkout-btn">Finalizar Pedido</button>
+        </div>
+    </div>
+</div>
+        </nav>
+    </header>
+    <h1>Nuestros Productos</h1>
+
+    <div class="productos-header">
+        <!-- Caja de filtros -->
+        <aside class="filtros">
+            <h3>Filtrar por</h3>
+            <label><input type="checkbox"> Cocteles</label><br>
+            <label><input type="checkbox"> Cervezas</label><br>
+            <label><input type="checkbox"> Vinos</label><br>
+            <label><input type="checkbox"> Reservas</label><br>
+            <h3> filtrar por precio</h3>
+            <label><input type="checkbox"> 50-100</label><br>
+            <label><input type="checkbox"> 100-150</label><br>
+            <label><input type="checkbox"> 150-200</label><br>
+            <label><input type="checkbox"> 200+</label><br>
+        </aside>
+
+        <!-- Buscador -->
+        <div class="buscador">
+            <input type="text" placeholder="Buscar productos...">
+            <button>Buscar</button>
+        </div>
+    </div>
+
+    <div class=" container">
+        <div class="box">
+            <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQIPTAzLrijbnZ3qgIgkSVbb6rgdL6BKChLhMjtsj1ly6LGtRawoInu0mwJPXNOq7rtJZWTw2-Oo0FFCb52ocN92e52kZVYF7yKBKnHxcf8wg"
+                alt="PARA 4 PERSONAS ">
+            <h2>Cervezas Artesanales</h2>
+            <p>Creaciones únicas de nuestros bartenders expertos. Desde clásicos hasta innovadoras mezclas que
+                despertarán todos tus sentidos.</p>
+            <p class="presio">$120 </p>
+            <button onclick="addToCart(1,'Cervezas Artesanales', 120, 'https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQIPTAzLrijbnZ3qgIgkSVbb6rgdL6BKChLhMjtsj1ly6LGtRawoInu0mwJPXNOq7rtJZWTw2-Oo0FFCb52ocN92e52kZVYF7yKBKnHxcf8wg')" class="cta-button">Agregar al Carrito</button>
+        </div>
+        <div class="box">
+            <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQIPTAzLrijbnZ3qgIgkSVbb6rgdL6BKChLhMjtsj1ly6LGtRawoInu0mwJPXNOq7rtJZWTw2-Oo0FFCb52ocN92e52kZVYF7yKBKnHxcf8wg"
+                alt="PARA 4 PERSONAS ">
+            <h2>Cocteles Premium</h2>
+            <p>Creaciones únicas de nuestros bartenders expertos. Desde clásicos hasta innovadoras mezclas que
+                despertarán todos tus sentidos.</p>
+            <p class="presio"> $200 </p>
+            <button onclick="addToCart(2,'Cocteles Premium', 200, 'https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQIPTAzLrijbnZ3qgIgkSVbb6rgdL6BKChLhMjtsj1ly6LGtRawoInu0mwJPXNOq7rtJZWTw2-Oo0FFCb52ocN92e52kZVYF7yKBKnHxcf8wg')" class="cta-button" >Agregar al Carrito</button>
+        </div>
+        <div class="box">
+            <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQIPTAzLrijbnZ3qgIgkSVbb6rgdL6BKChLhMjtsj1ly6LGtRawoInu0mwJPXNOq7rtJZWTw2-Oo0FFCb52ocN92e52kZVYF7yKBKnHxcf8wg"
+                alt="PARA 4 PERSONAS ">
+            <h2>Cerveza Corona</h2>
+            <p>Creaciones únicas de nuestros bartenders expertos. Desde clásicos hasta innovadoras mezclas que
+                despertarán todos tus sentidos.</p>
+            <p class="presio"> $150 </p>
+            <button onclick="addToCart(3,'Cerveza Corona', 150, 'https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQIPTAzLrijbnZ3qgIgkSVbb6rgdL6BKChLhMjtsj1ly6LGtRawoInu0mwJPXNOq7rtJZWTw2-Oo0FFCb52ocN92e52kZVYF7yKBKnHxcf8wg')" class="cta-button">Agregar al Carrito</button>
+        </div>
+    </div>
+
+    <div class="container-tragos">
+        <div class="tragos">
+            <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQIPTAzLrijbnZ3qgIgkSVbb6rgdL6BKChLhMjtsj1ly6LGtRawoInu0mwJPXNOq7rtJZWTw2-Oo0FFCb52ocN92e52kZVYF7yKBKnHxcf8wg"
+                alt="PARA 4 PERSONAS ">
+            <h2>Cervezas Artesanales</h2>
+            <p>Selección exclusiva de cervezas artesanales locales e internacionales. Perfectas para los amantes de la
+                cerveza que buscan sabores auténticos y variados.</p>
+            <p class="presio">$100 </p>
+            <button class="cta-button">Agregar al Carrito</button>
+        </div>
+        <div class="tragos">
+            <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQIPTAzLrijbnZ3qgIgkSVbb6rgdL6BKChLhMjtsj1ly6LGtRawoInu0mwJPXNOq7rtJZWTw2-Oo0FFCb52ocN92e52kZVYF7yKBKnHxcf8wg"
+                alt="PARA 4 PERSONAS ">
+            <h2>Cervezas Artesanales</h2>
+            <p>Selección exclusiva de cervezas artesanales locales e internacionales. Perfectas para los amantes de la
+                cerveza que buscan sabores auténticos y variados.</p>
+            <p class="presio">$100 </p>
+            <button class="cta-button">Agregar al Carrito</button>
+        </div>
+        <div class="tragos">
+            <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQIPTAzLrijbnZ3qgIgkSVbb6rgdL6BKChLhMjtsj1ly6LGtRawoInu0mwJPXNOq7rtJZWTw2-Oo0FFCb52ocN92e52kZVYF7yKBKnHxcf8wg"
+                alt="PARA 4 PERSONAS ">
+            <h2>Cervezas Artesanales</h2>
+            <p>Selección exclusiva de cervezas artesanales locales e internacionales. Perfectas para los amantes de la
+                cerveza que buscan sabores auténticos y variados.</p>
+            <p class="presio">$100 </p>
+            <button class="cta-button">Agregar al Carrito</button>
+        </div>
+        <div class="tragos">
+            <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQIPTAzLrijbnZ3qgIgkSVbb6rgdL6BKChLhMjtsj1ly6LGtRawoInu0mwJPXNOq7rtJZWTw2-Oo0FFCb52ocN92e52kZVYF7yKBKnHxcf8wg"
+                alt="PARA 4 PERSONAS ">
+            <h2>Cervezas Artesanales</h2>
+            <p>Selección exclusiva de cervezas artesanales locales e internacionales. Perfectas para los amantes de la
+                cerveza que buscan sabores auténticos y variados.</p>
+            <p class="presio">$100 </p>
+            <button class="cta-button">Agregar al Carrito</button>
+        </div>
+        <div class="tragos">
+            <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQIPTAzLrijbnZ3qgIgkSVbb6rgdL6BKChLhMjtsj1ly6LGtRawoInu0mwJPXNOq7rtJZWTw2-Oo0FFCb52ocN92e52kZVYF7yKBKnHxcf8wg"
+                alt="PARA 4 PERSONAS ">
+            <h2>Cervezas Artesanales</h2>
+            <p>Selección exclusiva de cervezas artesanales locales e internacionales. Perfectas para los amantes de la
+                cerveza que buscan sabores auténticos y variados.</p>
+            <p class="presio">$100 </p>
+            <button class="cta-button">Agregar al Carrito</button>
+        </div>
+        <div class="tragos">
+            <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQIPTAzLrijbnZ3qgIgkSVbb6rgdL6BKChLhMjtsj1ly6LGtRawoInu0mwJPXNOq7rtJZWTw2-Oo0FFCb52ocN92e52kZVYF7yKBKnHxcf8wg"
+                alt="PARA 4 PERSONAS ">
+            <h2>Cervezas Artesanales</h2>
+            <p>Selección exclusiva de cervezas artesanales locales e internacionales. Perfectas para los amantes de la
+                cerveza que buscan sabores auténticos y variados.</p>
+            <p class="presio">$100 </p>
+            <button class="cta-button">Agregar al Carrito</button>
+        </div>
+        <div class="tragos">
+            <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQIPTAzLrijbnZ3qgIgkSVbb6rgdL6BKChLhMjtsj1ly6LGtRawoInu0mwJPXNOq7rtJZWTw2-Oo0FFCb52ocN92e52kZVYF7yKBKnHxcf8wg"
+                alt="PARA 4 PERSONAS ">
+            <h2>Cervezas Artesanales</h2>
+            <p>Selección exclusiva de cervezas artesanales locales e internacionales. Perfectas para los amantes de la
+                cerveza que buscan sabores auténticos y variados.</p>
+            <p class="presio">$100 </p>
+            <button class="cta-button">Agregar al Carrito</button>
+        </div>
+       <div class="tragos">
+            <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQIPTAzLrijbnZ3qgIgkSVbb6rgdL6BKChLhMjtsj1ly6LGtRawoInu0mwJPXNOq7rtJZWTw2-Oo0FFCb52ocN92e52kZVYF7yKBKnHxcf8wg"
+                alt="PARA 4 PERSONAS ">
+            <h2>Cervezas Artesanales</h2>
+            <p>Selección exclusiva de cervezas artesanales locales e internacionales. Perfectas para los amantes de la
+                cerveza que buscan sabores auténticos y variados.</p>
+            <p class="presio">$100 </p>
+            <button class="cta-button">Agregar al Carrito</button>
+        </div>
+    </div>
+    <div class="container-mesas">
+        <div class="mesas">
+            <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQIPTAzLrijbnZ3qgIgkSVbb6rgdL6BKChLhMjtsj1ly6LGtRawoInu0mwJPXNOq7rtJZWTw2-Oo0FFCb52ocN92e52kZVYF7yKBKnHxcf8wg"
+                alt="PARA 4 PERSONAS ">
+            <h2>Reservar Mesa</h2>
+            <p>Disfruta de una experiencia única en nuestro bar. Reserva tu mesa y vive momentos inolvidables con amigos
+                y familiares.</p>
+            <button class="cta-button">Reservar</button>
+        </div>
+        <div class="mesas">
+            <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQIPTAzLrijbnZ3qgIgkSVbb6rgdL6BKChLhMjtsj1ly6LGtRawoInu0mwJPXNOq7rtJZWTw2-Oo0FFCb52ocN92e52kZVYF7yKBKnHxcf8wg"
+                alt="PARA 4 PERSONAS ">
+            <h2>Reservar Mesa</h2>
+            <p>Disfruta de una experiencia única en nuestro bar. Reserva tu mesa y vive momentos inolvidables con amigos
+                y familiares.</p>
+            <button class="cta-button">Reservar</button>
+        </div>
+        <div class="mesas">
+            <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQIPTAzLrijbnZ3qgIgkSVbb6rgdL6BKChLhMjtsj1ly6LGtRawoInu0mwJPXNOq7rtJZWTw2-Oo0FFCb52ocN92e52kZVYF7yKBKnHxcf8wg"
+                alt="PARA 4 PERSONAS ">
+            <h2>Reservar Mesa</h2>
+            <p>Disfruta de una experiencia única en nuestro bar. Reserva tu mesa y vive momentos inolvidables con amigos
+                y familiares.</p>
+            <button class="cta-button">Reservar</button>
+        </div>
+        <script src="../JS/menu-hamburguesa.js"></script>
+        <script src="../JS/carrito.js"></script>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p>📍 Av. Principal 123, Centro</p>
+                <p>📞 +51 987 654 321</p>
+                <p>✉️ info@elrefugioagrobar.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>Horarios</h3>
+                <p>Lunes a Jueves: 6:00 PM - 2:00 AM</p>
+                <p>Viernes y Sábado: 6:00 PM - 3:00 AM</p>
+                <p>Domingo: 6:00 PM - 1:00 AM</p>
+            </div>
+            <div class="footer-section">
+                <h3>Síguenos</h3>
+                <a href="#">Facebook</a>
+                <a href="#">Instagram</a>
+                <a href="#">Twitter</a>
+                <a href="#">TikTok</a>
+            </div>
+            <div class="footer-section">
+                <h3>Políticas</h3>
+                <a href="#">Términos y Condiciones</a>
+                <a href="#">Política de Privacidad</a>
+                <a href="#">Consumo Responsable</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 El Refugio Agro Bar. Todos los derechos reservados. | Prohibida la venta a menores de edad.
+            </p>
+        </div>
+</body>
+
+</html>
