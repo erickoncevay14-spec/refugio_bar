@@ -1,316 +1,249 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>El Refugio Bar</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            color: white;
-            min-height: 100vh;
-        }
-
-        /* Header y navegación */
-        .header {
-            background: rgba(0, 0, 0, 0.9);
-            padding: 1rem 2rem;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #d4af37;
-        }
-
-        .logo span {
-            margin-left: 0.5rem;
-        }
-
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-menu a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-menu a:hover {
-            color: #d4af37;
-        }
-
-        /* Menú hamburguesa */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            padding: 0.5rem;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: #d4af37;
-            margin: 3px 0;
-            transition: 0.3s;
-            border-radius: 3px;
-        }
-
-        /* Animación del menú hamburguesa */
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(-45deg) translate(-5px, 6px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(45deg) translate(-5px, -6px);
-        }
-
-        /* Contenido principal */
-        .main-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            text-align: center;
-            padding: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .main-content::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="%23d4af37" opacity="0.1"/></svg>') repeat;
-            animation: float 20s infinite linear;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            100% { transform: translateY(-100px) rotate(360deg); }
-        }
-
-        .main-title {
-            font-size: clamp(3rem, 8vw, 6rem);
-            font-weight: bold;
-            margin-bottom: 1rem;
-            background: linear-gradient(45deg, #d4af37, #f4d03f);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .subtitle {
-            font-size: clamp(1rem, 3vw, 1.3rem);
-            margin-bottom: 2rem;
-            max-width: 600px;
-            line-height: 1.6;
-            opacity: 0.9;
-        }
-
-        .cta-button {
-            background: linear-gradient(45deg, #d4af37, #b8941f);
-            color: white;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
-        }
-
-        /* Imagen flotante */
-        .floating-image {
-            position: absolute;
-            top: 20%;
-            right: 10%;
-            width: 200px;
-            height: auto;
-            opacity: 0.1;
-            animation: pulse 3s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.1; }
-            50% { opacity: 0.2; }
-        }
-
-        /* Responsive */
-        @media screen and (max-width: 768px) {
-            .header {
-                padding: 1rem;
-            }
-
-            .hamburger {
-                display: flex;
-            }
-
-            .nav-menu {
-                position: fixed;
-                left: -100%;
-                top: 70px;
-                flex-direction: column;
-                background: rgba(0, 0, 0, 0.95);
-                width: 100%;
-                text-align: center;
-                transition: 0.3s;
-                backdrop-filter: blur(10px);
-                padding: 2rem 0;
-                gap: 1.5rem;
-            }
-
-            .nav-menu.active {
-                left: 0;
-            }
-
-            .nav-menu li {
-                padding: 0.5rem 0;
-            }
-
-            .nav-menu a {
-                font-size: 1.2rem;
-            }
-
-            .main-content {
-                padding: 1rem;
-                margin-top: 60px;
-            }
-
-            .floating-image {
-                display: none;
-            }
-        }
-
-        @media screen and (max-width: 480px) {
-            .logo {
-                font-size: 1.2rem;
-            }
-            
-            .main-content {
-                padding: 0.5rem;
-            }
-            
-            .subtitle {
-                font-size: 1rem;
-                padding: 0 1rem;
-            }
-        }
-    </style>
+    <title>Document</title>
+    <link rel="stylesheet" href="../CSS/index.css">
+    <link rel="stylesheet" href="../CSS/menu-hamburguesa.css">
 </head>
+
 <body>
-    <header class="header">
-        <nav class="navbar">
-            <div class="logo">
-                🍺 <span>El Refugio</span>
-            </div>
-            
-            <ul class="nav-menu">
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#nosotros">Nosotros</a></li>
-                <li><a href="#productos">Productos</a></li>
-                <li><a href="#contacto">Iniciar Sesión</a></li>
-            </ul>
-            
+    <header>
+        <nav>
+            <!-- Logo del sitio -->
+            <a href="#inicio" class="logo">El Refugio</a>
+
+            <!-- Botón hamburguesa -->
             <div class="hamburger" id="hamburger">
+                <!-- Son tres líneas que simulan el ícono -->
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
+
+            <!-- Enlaces del menú -->
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="Nosotros.html">Nosotros</a></li>
+                <li><a href="Productos.html">Productos</a></li>
+                <li><a href="Login.html">Iniciar Sesión</a></li>
+            </ul>
         </nav>
     </header>
 
-    <main class="main-content">
-        <div class="floating-image">🍻</div>
-        
-        <h1 class="main-title">El Refugio Bar</h1>
-        
-        <p class="subtitle">
-            Donde cada momento se vuelve especial. Disfruta de nuestras mejores bebidas en un ambiente único y acogedor.
-        </p>
-        
-        <a href="#carta" class="cta-button">Descubre Nuestra Carta</a>
-    </main>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Nuestra Historia</h1>
+            <p class="hero-subtitle">Donde la tradición agrícola se encuentra con la pasión por los buenos tragos</p>
+        </div>
+        <div class="hero-video">
+            <div class="video-placeholder">
+                <div class="play-button">▶</div>
+            </div>
+        </div>
+    </section>
 
-    <script>
-        // Funcionalidad del menú hamburguesa
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.querySelector('.nav-menu');
+    <!-- Misión y Visión -->
+    <section class="mission-vision">
+        <div class="container">
+            <div class="mission-vision-grid">
+                <div class="mission-card">
+                    <div class="icon">🎯</div>
+                    <h3>Nuestra Misión</h3>
+                    <p>Crear experiencias únicas combinando la riqueza de los productos agrícolas locales con la
+                        innovación en coctelería, ofreciendo a nuestros clientes un refugio donde pueden disfrutar de
+                        sabores auténticos en un ambiente acogedor y sofisticado.</p>
+                </div>
+                <div class="vision-card">
+                    <div class="icon">🌟</div>
+                    <h3>Nuestra Visión</h3>
+                    <p>Ser el bar de referencia en la región, reconocido por nuestra compromiso con la calidad, la
+                        sostenibilidad y el apoyo a los productores locales, creando un punto de encuentro que celebre
+                        la cultura y los sabores de nuestra tierra.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        hamburger.addEventListener('click', function() {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-        });
+    <!-- Historia -->
+    <section class="history">
+        <div class="container">
+            <div class="history-content">
+                <div class="history-text">
+                    <h2>Nuestros Inicios</h2>
+                    <p class="year">2020 - El Comienzo</p>
+                    <p>Todo comenzó con una pasión: rescatar los sabores tradicionales de nuestra región y darles una
+                        nueva vida a través de la coctelería moderna. Fundado por un grupo de amigos apasionados por la
+                        gastronomía y la agricultura local, El Refugio nació como respuesta a la necesidad de un espacio
+                        que celebrara nuestras raíces.</p>
 
-        // Cerrar menú al hacer click en un enlace
-        document.querySelectorAll('.nav-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
-            });
-        });
+                    <p class="year">2021 - Crecimiento</p>
+                    <p>Durante nuestro primer año, establecimos alianzas con más de 15 productores locales, desde
+                        cultivadores de frutas exóticas hasta destilerías artesanales. Cada cóctel cuenta una historia,
+                        cada ingrediente tiene su origen y cada copa es una celebración de nuestra tierra.</p>
 
-        // Cerrar menú al hacer click fuera de él
-        document.addEventListener('click', function(event) {
-            if (!hamburger.contains(event.target) && !navMenu.contains(event.target)) {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
-            }
-        });
+                    <p class="year">2024 - Presente</p>
+                    <p>Hoy, El Refugio se ha convertido en mucho más que un bar. Somos un punto de encuentro para los
+                        amantes de lo auténtico, un espacio donde la innovación respeta la tradición y donde cada visita
+                        es una nueva aventura de sabores.</p>
+                </div>
+                <div class="history-image">
+                    <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
+                        alt="Historia del bar">
+                </div>
+            </div>
+        </div>
+    </section>
 
-        // Efecto parallax suave en scroll
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallax = document.querySelector('.main-content::before');
-            if (parallax) {
-                parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
-            }
-        });
-    </script>
+    <!-- Valores -->
+    <section class="values">
+        <div class="container">
+            <h2 class="section-title">Nuestros Valores</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">🌱</div>
+                    <h4>Sostenibilidad</h4>
+                    <p>Comprometidos con prácticas responsables que respetan el medio ambiente y apoyan a los
+                        productores locales.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🤝</div>
+                    <h4>Comunidad</h4>
+                    <p>Creamos conexiones auténticas entre nuestros clientes, nuestro equipo y la comunidad agrícola
+                        local.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">⭐</div>
+                    <h4>Calidad</h4>
+                    <p>Cada ingrediente es seleccionado cuidadosamente para garantizar la máxima calidad en cada
+                        experiencia.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🎨</div>
+                    <h4>Innovación</h4>
+                    <p>Combinamos técnicas tradicionales con métodos modernos para crear experiencias únicas e
+                        inolvidables.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Equipo -->
+    <section class="team">
+        <div class="container">
+            <h2 class="section-title">Nuestro Equipo</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-photo">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                            alt="Jefe de Coctelería">
+                    </div>
+                    <h4>Carlos Mendoza</h4>
+                    <p class="role">Jefe de Coctelería</p>
+                    <p>Con más de 10 años de experiencia, Carlos es el maestro detrás de nuestras creaciones más
+                        innovadoras.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-photo">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616c2c2c3f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                            alt="Gerente General">
+                    </div>
+                    <h4>María Rodriguez</h4>
+                    <p class="role">Gerente General</p>
+                    <p>Apasionada por la hospitalidad y la cultura local, María asegura que cada experiencia sea
+                        memorable.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-photo">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                            alt="Chef Ejecutivo">
+                    </div>
+                    <h4>Diego Pérez</h4>
+                    <p class="role">Chef Ejecutivo</p>
+                    <p>Diego lidera nuestra cocina con creatividad, utilizando ingredientes locales en cada preparación.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reconocimientos -->
+    <section class="awards">
+        <div class="container">
+            <h2 class="section-title">Reconocimientos</h2>
+            <div class="awards-grid">
+                <div class="award-item">
+                    <div class="award-icon">🏆</div>
+                    <h4>Mejor Bar Temático 2023</h4>
+                    <p>Asociación de Bares y Restaurantes del Perú</p>
+                </div>
+                <div class="award-item">
+                    <div class="award-icon">🌟</div>
+                    <h4>Excelencia en Sostenibilidad</h4>
+                    <p>Certificación Green Business 2024</p>
+                </div>
+                <div class="award-item">
+                    <div class="award-icon">🥇</div>
+                    <h4>Cóctel del Año</h4>
+                    <p>Festival de Coctelería Lima 2023</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>¿Listo para vivir la experiencia?</h2>
+                <p>Descubre por qué somos más que un bar, somos tu refugio ideal</p>
+                <div class="cta-buttons">
+                    <a href="index.html#productos" class="btn-primary">Ver Nuestros Productos</a>
+                    <a href="#" class="btn-secondary">Reservar Mesa</a>
+                </div>
+            </div>
+           
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p>📍 Av. Principal 123, Centro</p>
+                <p>📞 +51 987 654 321</p>
+                <p>✉️ info@elrefugioagrobar.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>Horarios</h3>
+                <p>Lunes a Jueves: 6:00 PM - 2:00 AM</p>
+                <p>Viernes y Sábado: 6:00 PM - 3:00 AM</p>
+                <p>Domingo: 6:00 PM - 1:00 AM</p>
+            </div>
+            <div class="footer-section">
+                <h3>Síguenos</h3>
+                <a href="#">Facebook</a>
+                <a href="#">Instagram</a>
+                <a href="#">Twitter</a>
+                <a href="#">TikTok</a>
+            </div>
+            <div class="footer-section">
+                <h3>Políticas</h3>
+                <a href="#">Términos y Condiciones</a>
+                <a href="#">Política de Privacidad</a>
+                <a href="#">Consumo Responsable</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 El Refugio Agro Bar. Todos los derechos reservados. | Prohibida la venta a menores de edad.
+            </p>
+        </div>
+    </footer>
+    <script src="../JS/menu-hamburguesa.js"></script>
 </body>
+
 </html>
