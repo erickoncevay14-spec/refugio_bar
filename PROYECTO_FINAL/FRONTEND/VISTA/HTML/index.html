@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>EL BAR</title>
     <link rel="stylesheet" href="../CSS/index.css">
     <link rel="stylesheet" href="../CSS/menu-hamburguesa.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -65,10 +65,7 @@
                             type="video/mp4">
                         Tu navegador no soporta videos en HTML5.
                     </video>
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Video promocional</h5>
-                        <p>El Refugio Bar te da la bienvenida 🍻</p>
-                    </div>
+                    
                 </div>
                 <div class="carousel-item">
                     <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQIPTAzLrijbnZ3qgIgkSVbb6rgdL6BKChLhMjtsj1ly6LGtRawoInu0mwJPXNOq7rtJZWTw2-Oo0FFCb52ocN92e52kZVYF7yKBKnHxcf8wg"
@@ -119,8 +116,8 @@
         </section>
 
         <section id="productos">
-            <div class="container">
-                <h2 class="section-title">Nuestros Productos</h2>
+            <div class="container"> 
+                <h2 class="section-title">Nuestras Categorias</h2>
                 <div class="products-grid">
                     <div class="product-card">
                         <span class="icon">🍸</span>
@@ -163,7 +160,6 @@
         </section>
 
     </main>
-
     <footer>
         <div class="footer-content">
             <div class="footer-section">
@@ -196,70 +192,10 @@
             <p>&copy; 2025 El Refugio Bar. Todos los derechos reservados. | Prohibida la venta a menores de edad.</p>
         </div>
     </footer>
-
-    <script>
-        // Navegación suave
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Efecto de scroll en header
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(26, 26, 26, 0.95)';
-                header.style.backdropFilter = 'blur(10px)';
-            } else {
-                header.style.background = 'linear-gradient(135deg, #1a1a1a 0%, #2d1810 100%)';
-                header.style.backdropFilter = 'none';
-            }
-        });
-
-        // Animación de aparición para las tarjetas de productos
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.product-card').forEach(card => {
-            observer.observe(card);
-        });
-
-        // Manejo del formulario de login
-        document.querySelector('.login-form').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const usuario = document.getElementById('usuario').value;
-            const password = document.getElementById('password').value;
-
-            if (usuario && password) {
-                alert('¡Bienvenido a El Refugio Bar!');
-                // Aquí irían las funciones de autenticación real
-            } else {
-                alert('Por favor complete todos los campos.');
-            }
-        });
-    </script>
+    <script src="../JS/index.js"></script>
     <script src="../JS/menu-hamburguesa.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
 </body>
-
 </html>

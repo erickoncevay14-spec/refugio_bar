@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - El Refugio</title>
+    <link rel="stylesheet" href="../CSS/reserva.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="Productos.html" class="nav-back" onclick="goToProductos()">
+                <span class="icon">←</span>
+                Volver a Productos
+            </a>
+            
+             <a href="#" class="logo"> El Refugio</a>
+            <p class="subtitle">¡Contáctanos o reserva tu mesa!</p>
+        </div>
+
+        <div id="successMessage" class="success-message">
+            <span class="icon">✅</span>
+            ¡Mensaje enviado exitosamente! Nos pondremos en contacto contigo pronto.
+        </div>
+
+        <form id="contactForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="nombre">
+                        <span class="icon">👤</span>
+                        Nombre completo
+                    </label>
+                    <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre completo">
+                </div>
+                <div class="form-group">
+                    <label for="telefono">
+                        <span class="icon">📱</span>
+                        Teléfono
+                    </label>
+                    <input type="tel" id="telefono" name="telefono" required placeholder="+51 987 654 321">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">
+                    <span class="icon">✉️</span>
+                    Correo electrónico
+                </label>
+                <input type="email" id="email" name="email" required placeholder="tu@email.com">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="tipo">
+                        <span class="icon">🎯</span>
+                        Tipo de consulta
+                    </label>
+                    <select id="tipo" name="tipo" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="reserva">Reservar mesa</option>
+                        <option value="evento">Evento privado</option>
+                        <option value="consulta">Consulta general</option>
+                        <option value="trabajo">Oportunidad laboral</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="fecha">
+                        <span class="icon">📅</span>
+                        Fecha preferida
+                    </label>
+                    <input type="date" id="fecha" name="fecha">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="mensaje">
+                    <span class="icon">💬</span>
+                    Mensaje
+                </label>
+                <textarea id="mensaje" name="mensaje" placeholder="Cuéntanos más detalles sobre tu consulta o reserva..."></textarea>
+            </div>
+
+            <div class="btn-container">
+                <button type="submit" class="btn btn-primary">
+                    <span class="icon">🚀</span>
+                    Enviar mensaje
+                </button>
+                <a href="Productos.html" onclick="goToNosotros()" class="btn btn-secondary">
+                    <span class="icon">🏠</span>
+                    Volver a Productos
+                </a>
+            </div>
+        </form>
+    </div>
+     <script src="../JS/reserva.js"></script>
+   
+</body>
+</html>
