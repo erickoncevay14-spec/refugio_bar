@@ -1,14 +1,14 @@
-const  usuario="franco";
-const contrseña="1234";
-function login(){
-    const UsusarioN=document.getElementById('usuario').value;
-    const ContraseñaN=document.getElementById('password').value;
+const user = "hh";
+const pass = "hh";
 
-    if(usuario==UsusarioN && contrseña==ContraseñaN){
-        alert("bienvenido"+usuario);
-
-    }else{
-        alert("error de contraseña intenetelo de nuevo")
+function validarLogin() {
+    const usuario = document.getElementById("usuario").value;
+    const password = document.getElementById("password").value;
+    if (usuario === user && password === pass) {
+        alert("login exitozop");
+        console.log("login exitoso");
+        window.location.href = "../HTML/index.html";
+    } else {
+        alert("Credenciales incorrectas");
     }
 }
-
