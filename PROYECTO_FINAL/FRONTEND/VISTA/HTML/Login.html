@@ -30,11 +30,34 @@
             </ul>
         </nav>
     </header>
- <script>
-    function crearCuenta() {
-        window.location.href = 'Registro.html';
-    }
- </script>
+    <script>
+        function crearCuenta() {
+          window.location.href = 'Registro.html';
+        }
+      
+        function validarLogin() {
+          const usuario = document.getElementById('usuario').value;
+          const password = document.getElementById('password').value;
+      
+          // Lista de usuarios válidos con su ruta de redirección
+          const usuarios = [
+            { nombre: "Mozo", clave: "1234", redirect: "MOSO/Moso.html" },
+            { nombre: "bartender", clave: "1234", redirect: "BARTENDER/Bartender.html" },
+              { nombre:"admin",clave:"1234",redirect:"ADMIN/Admin.html" }
+          ];
+      
+          // Buscar si coincide usuario y contraseña
+          const user = usuarios.find(u => u.nombre === usuario && u.clave === password);
+      
+          if (user) {
+            alert("Bienvenido " + user.nombre + " ✅");
+            window.location.href = user.redirect; // redirige a su página
+          } else {
+            alert("❌ Usuario o contraseña incorrectos");
+          }
+        }
+      </script>
+      
 
     <div id="result"></div>
 </div>
@@ -51,20 +74,20 @@
                 <input type="password" id="password" name="password" required>
             </div>
             <div class="form-group">
-                <button type="submit" onclick="login()" class="cta-button" style="width: 100%;">Ingresar</button>
+                <button type="button" onclick="validarLogin()" class="cta-button" style="width: 100%;">Ingresar</button>
             </div>
             <div class="form-group">
-                <button type="submit"  onclick="crearCuenta()" class="cta-button" style="width: 100%;">Registrar</button>
+                <button type="button"  onclick="crearCuenta()" class="cta-button" style="width: 100%;">Registrar</button>
             </div>
         </form>
     </div>
 </section>
 </main>
 
-    <script src="../login.js"></script>
-    <script src="bootstrap.bundle.min.js"></script>
+    
+
+   
     <script src="../JS/menu-hamburguesa.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+ 
 </body>
 </html>

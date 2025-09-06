@@ -1,0 +1,130 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f7f7f7;
+  color: #2c3e50;
+  line-height: 1.6;
+}
+
+/* HEADER */
+.header {
+  background: #2c3e50;
+  color: white;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+}
+.mozo-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.mozo-foto {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+}
+.logout-button {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.logout-button:hover {
+  background: #c0392b;
+}
+
+/* CONTENEDOR PRINCIPAL */
+.contenedor {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px;
+}
+
+/* SECCIONES */
+section {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+h2 {
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+  color: #34495e;
+  text-align: center;
+}
+
+/* LISTAS */
+ul {
+  list-style: none;
+}
+
+li {
+  background: #ecf0f1;
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+/* BOTONES */
+button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.85rem;
+  transition: background 0.3s;
+}
+
+/* Preparar */
+.lista-pedidos button {
+  background: #2980b9;
+  color: white;
+}
+.lista-pedidos button:hover {
+  background: #1f6391;
+}
+
+/* Servir */
+.servir-btn {
+  background: #27ae60;
+  color: white;
+}
+.servir-btn:hover {
+  background: #1e8449;
+}
+
+/* Estado entregado */
+.pedidos-entregados li {
+  background: #d5f5e3;
+  border-left: 5px solid #27ae60;
+  font-weight: bold;
+  color: #1e8449;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .contenedor {
+    grid-template-columns: 1fr;
+  }
+}
