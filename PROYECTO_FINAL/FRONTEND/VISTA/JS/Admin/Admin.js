@@ -1,3 +1,3 @@
 function CerrarSesion(){
-    window.location.href = "../../../index.html";
+    window.location.href = "../Login.html";
 }
