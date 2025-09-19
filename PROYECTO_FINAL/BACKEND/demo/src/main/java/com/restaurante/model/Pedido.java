@@ -1,10 +1,7 @@
 package com.restaurante.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -12,113 +9,64 @@ import java.util.List;
 public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_pedido") 
-    private Long idPedido;
-
+    private Long id;
     
-    @ManyToOne
-    @JoinColumn(name = "id_usuario_cliente", nullable = false)
-    private Usuario cliente;
+    @Column(unique = true, name = "numero_pedido")
+    private String numeroPedido;
     
-    @ManyToOne
-    @JoinColumn(name = "id_usuario_mesero")
-    private Usuario mesero;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
     
-    @ManyToOne
-    @JoinColumn(name = "id_mesa")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "mesa_id")
     private Mesa mesa;
     
-    @NotNull
-    @Column(name = "fecha_hora") 
-    private LocalDateTime fechaHora; 
-
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+    private List<DetallePedido> detalles;
     
-    @NotBlank
-    private String estado; // Pendiente, En preparación, Listo, Entregado, Cancelado
+    private Double total;
+    private String estado = "PENDIENTE";
     
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<DetallePedido> detalles = new ArrayList<>();
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "fecha_pedido")
+    private Date fechaPedido;
     
-    // Constructores
-    public Pedido() {}
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "fecha_entrega")
+    private Date fechaEntrega;
     
-    public Pedido(Usuario cliente, Usuario mesero, Mesa mesa, LocalDateTime fecha_hora, String estado) {
-        this.cliente = cliente;
-        this.mesero = mesero;
-        this.mesa = mesa;
-        this.fechaHora = fecha_hora;
-        this.estado = estado;
+    @PrePersist
+    protected void onCreate() {
+        fechaPedido = new Date();
+        numeroPedido = "PED-" + System.currentTimeMillis();
     }
     
     // Getters y Setters
-    public Long getIdPedido() {
-        return idPedido;
-    }
-
-    public void setIdPedido(Long idPedido) {
-        this.idPedido = idPedido;
-    }
-
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
     
-    public Usuario getCliente() {
-        return cliente;
-    }
+    public String getNumeroPedido() { return numeroPedido; }
+    public void setNumeroPedido(String numeroPedido) { this.numeroPedido = numeroPedido; }
     
-    public void setCliente(Usuario cliente) {
-        this.cliente = cliente;
-    }
+    public Usuario getUsuario() { return usuario; }
+    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
     
-    public Usuario getMesero() {
-        return mesero;
-    }
+    public Mesa getMesa() { return mesa; }
+    public void setMesa(Mesa mesa) { this.mesa = mesa; }
     
-    public void setMesero(Usuario mesero) {
-        this.mesero = mesero;
-    }
+    public List<DetallePedido> getDetalles() { return detalles; }
+    public void setDetalles(List<DetallePedido> detalles) { this.detalles = detalles; }
     
-    public Mesa getMesa() {
-        return mesa;
-    }
+    public Double getTotal() { return total; }
+    public void setTotal(Double total) { this.total = total; }
     
-    public void setMesa(Mesa mesa) {
-        this.mesa = mesa;
-    }
+    public String getEstado() { return estado; }
+    public void setEstado(String estado) { this.estado = estado; }
     
-    public LocalDateTime getFechaHora() {
-        return fechaHora;
-    }
-
-    public void setFechaHora(LocalDateTime fechaHora) {
-        this.fechaHora = fechaHora;
-    }
-
+    public Date getFechaPedido() { return fechaPedido; }
+    public void setFechaPedido(Date fechaPedido) { this.fechaPedido = fechaPedido; }
     
-    public String getEstado() {
-        return estado;
-    }
-    
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-    
-    public List<DetallePedido> getDetalles() {
-        return detalles;
-    }
-    
-    public void setDetalles(List<DetallePedido> detalles) {
-        this.detalles = detalles;
-    }
-    
-    // Método helper para agregar detalle
-    public void addDetalle(Producto producto, Integer cantidad, Double precioUnitario) {
-        DetallePedido detalle = new DetallePedido(this, producto, cantidad, precioUnitario);
-        detalles.add(detalle);
-    }
-    
-    // Método para calcular el total del pedido
-    public Double getTotal() {
-        return detalles.stream()
-                .mapToDouble(d -> d.getCantidad() * d.getPrecioUnitario())
-                .sum();
-    }
+    public Date getFechaEntrega() { return fechaEntrega; }
+    public void setFechaEntrega(Date fechaEntrega) { this.fechaEntrega = fechaEntrega; }
 }

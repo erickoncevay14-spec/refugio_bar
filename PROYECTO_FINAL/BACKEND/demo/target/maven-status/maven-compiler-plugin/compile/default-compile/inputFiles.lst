@@ -1,21 +1,50 @@
-C:\Users\user\Documents\ARCHIVOS FRANCO\SEXTO CICLO\MARCO Y DESARROLLO WEB\Trabajo git\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\controller\IndexController.java
-C:\Users\user\Documents\ARCHIVOS FRANCO\SEXTO CICLO\MARCO Y DESARROLLO WEB\Trabajo git\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\controller\SecurityConfig.java
-C:\Users\user\Documents\ARCHIVOS FRANCO\SEXTO CICLO\MARCO Y DESARROLLO WEB\Trabajo git\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\DemoApplication.java
-C:\Users\user\Documents\ARCHIVOS FRANCO\SEXTO CICLO\MARCO Y DESARROLLO WEB\Trabajo git\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\model\DetallePedido.java
-C:\Users\user\Documents\ARCHIVOS FRANCO\SEXTO CICLO\MARCO Y DESARROLLO WEB\Trabajo git\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\model\Ingrediente.java
-C:\Users\user\Documents\ARCHIVOS FRANCO\SEXTO CICLO\MARCO Y DESARROLLO WEB\Trabajo git\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\model\Mesa.java
-C:\Users\user\Documents\ARCHIVOS FRANCO\SEXTO CICLO\MARCO Y DESARROLLO WEB\Trabajo git\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\model\Pago.java
-C:\Users\user\Documents\ARCHIVOS FRANCO\SEXTO CICLO\MARCO Y DESARROLLO WEB\Trabajo git\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\model\Pedido.java
-C:\Users\user\Documents\ARCHIVOS FRANCO\SEXTO CICLO\MARCO Y DESARROLLO WEB\Trabajo git\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\model\Producto.java
-C:\Users\user\Documents\ARCHIVOS FRANCO\SEXTO CICLO\MARCO Y DESARROLLO WEB\Trabajo git\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\model\ProductoIngrediente.java
-C:\Users\user\Documents\ARCHIVOS FRANCO\SEXTO CICLO\MARCO Y DESARROLLO WEB\Trabajo git\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\model\Reserva.java
-C:\Users\user\Documents\ARCHIVOS FRANCO\SEXTO CICLO\MARCO Y DESARROLLO WEB\Trabajo git\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\model\Rol.java
-C:\Users\user\Documents\ARCHIVOS FRANCO\SEXTO CICLO\MARCO Y DESARROLLO WEB\Trabajo git\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\model\Usuario.java
-C:\Users\user\Documents\ARCHIVOS FRANCO\SEXTO CICLO\MARCO Y DESARROLLO WEB\Trabajo git\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\repository\IngredienteRepository.java
-C:\Users\user\Documents\ARCHIVOS FRANCO\SEXTO CICLO\MARCO Y DESARROLLO WEB\Trabajo git\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\repository\MesaRepository.java
-C:\Users\user\Documents\ARCHIVOS FRANCO\SEXTO CICLO\MARCO Y DESARROLLO WEB\Trabajo git\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\repository\PagoRepository.java
-C:\Users\user\Documents\ARCHIVOS FRANCO\SEXTO CICLO\MARCO Y DESARROLLO WEB\Trabajo git\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\repository\PedidoRepository.java
-C:\Users\user\Documents\ARCHIVOS FRANCO\SEXTO CICLO\MARCO Y DESARROLLO WEB\Trabajo git\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\repository\ProductoRepository.java
-C:\Users\user\Documents\ARCHIVOS FRANCO\SEXTO CICLO\MARCO Y DESARROLLO WEB\Trabajo git\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\repository\ReservaRepository.java
-C:\Users\user\Documents\ARCHIVOS FRANCO\SEXTO CICLO\MARCO Y DESARROLLO WEB\Trabajo git\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\repository\RolRepository.java
-C:\Users\user\Documents\ARCHIVOS FRANCO\SEXTO CICLO\MARCO Y DESARROLLO WEB\Trabajo git\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\repository\UsuarioRepository.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\config\SecurityConfig.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\controller\api\AuthController.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\controller\api\MesaController.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\controller\api\PagoController.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\controller\api\PedidoController.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\controller\api\ProductoController.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\controller\api\ReservaController.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\controller\IndexController.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\DemoApplication.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\dto\request\LoginRequest.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\dto\request\PagoRequest.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\dto\request\PedidoRequest.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\dto\request\RegisterRequest.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\dto\request\ReservaRequest.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\dto\response\ErrorResponse.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\dto\response\LoginResponse.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\dto\response\PedidoResponse.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\exception\BusinessException.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\exception\GlobalExceptionHandler.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\exception\ResourceNotFoundException.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\exception\UnauthorizedException.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\model\DetallePedido.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\model\Ingrediente.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\model\Mesa.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\model\Pago.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\model\Pedido.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\model\Producto.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\model\ProductoIngrediente.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\model\Reserva.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\model\Rol.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\model\Usuario.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\repository\DetallePedidoRepository.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\repository\IngredienteRepository.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\repository\MesaRepository.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\repository\PagoRepository.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\repository\PedidoRepository.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\repository\ProductoRepository.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\repository\ReservaRepository.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\repository\RolRepository.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\repository\UsuarioRepository.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\service\AuthService.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\service\MercadoPagoService.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\service\MesaService.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\service\PagoService.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\service\PedidoService.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\service\ProductoService.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\service\ReservaService.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\validator\PedidoValidator.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\validator\ProductoValidator.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\validator\ReservaValidator.java

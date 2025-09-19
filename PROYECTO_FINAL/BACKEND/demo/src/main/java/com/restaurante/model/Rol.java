@@ -1,40 +1,26 @@
 package com.restaurante.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "roles")
 public class Rol {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_rol;
+    private Long id;
     
-    @NotBlank
-    @Column(name = "nombre_rol", nullable = false)
-    private String nombreRol;
+    @Column(unique = true, nullable = false)
+    private String nombre;
     
-    // Constructores
-    public Rol() {}
-    
-    public Rol(String nombreRol) {
-        this.nombreRol = nombreRol;
-    }
+    private String descripcion;
     
     // Getters y Setters
-    public Long getId_rol() {
-        return id_rol;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
     
-    public void setId_rol(Long id_rol) {
-        this.id_rol = id_rol;
-    }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
     
-    public String getNombreRol() {
-        return nombreRol;
-    }
-    
-    public void setNombreRol(String nombreRol) {
-        this.nombreRol = nombreRol;
-    }
+    public String getDescripcion() { return descripcion; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 }
