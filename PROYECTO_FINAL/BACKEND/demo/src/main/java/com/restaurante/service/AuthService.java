@@ -1,6 +1,6 @@
 package com.restaurante.service;
 
-import com.restaurante.dto.RegisterRequest;
+import com.restaurante.dto.request.RegisterRequest;
 import com.restaurante.model.Usuario;
 import com.restaurante.model.Rol;
 import com.restaurante.repository.UsuarioRepository;

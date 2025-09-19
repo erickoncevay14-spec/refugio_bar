@@ -1,6 +1,6 @@
 package com.restaurante.controller.api;
 
-import com.restaurante.dto.PedidoRequest;
+import com.restaurante.dto.request.PedidoRequest;
 import com.restaurante.model.Pedido;
 import com.restaurante.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
