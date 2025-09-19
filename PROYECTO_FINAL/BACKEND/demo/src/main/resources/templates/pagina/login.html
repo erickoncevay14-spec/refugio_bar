@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -8,22 +8,17 @@
     <link rel="stylesheet" th:href="@{/css/pagina.css/menu-hamburguesa.css}" />
     <title>login</title>
 </head>
-
 <body>
     <header>
         <nav>
-            <!-- Logo del sitio -->
             <a href="#inicio" class="logo">El Refugio</a>
 
-            <!-- Botón hamburguesa -->
             <div class="hamburger" id="hamburger">
-                <!-- Son tres líneas que simulan el ícono -->
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
 
-            <!-- Enlaces del menú -->
             <ul class="nav-links" id="nav-links">
                 <li><a th:href="@{/index}">Inicio</a></li>
                 <li><a th:href="@{/nosotros}">Nosotros</a></li>
@@ -32,38 +27,6 @@
             </ul>
         </nav>
     </header>
-    <script th:inline="javascript">
-        function crearCuenta() {
-            window.location.href = /*[[@{/registro}]]*/ '/registro';
-        }
-    </script>
-    
-    <script>
-       
-
-        function validarLogin() {
-            const usuario = document.getElementById('usuario').value;
-            const password = document.getElementById('password').value;
-
-            // Lista de usuarios válidos con su ruta de redirección
-            const usuarios = [
-                { nombre: "Mozo", clave: "1234", redirect: "MOSO/Moso.html" },
-                { nombre: "bartender", clave: "1234", redirect: "BARTENDER/Bartender.html" },
-                { nombre: "admin", clave: "1234", redirect: "ADMIN/Admin.html" }
-            ];
-
-            // Buscar si coincide usuario y contraseña
-            const user = usuarios.find(u => u.nombre === usuario && u.clave === password);
-
-            if (user) {
-                alert("Bienvenido " + user.nombre + " ✅");
-                window.location.href = user.redirect; // redirige a su página
-            } else {
-                alert("❌ Usuario o contraseña incorrectos");
-            }
-        }
-    </script>
-
 
     <div id="result"></div>
     </div>
@@ -84,7 +47,7 @@
                         style="width: 100%;">Ingresar</button>
                 </div>
                 <div class="form-group">
-                    <button type="button" onclick="crearCuenta()" class="cta-button"
+                    <button type="button" onclick="window.location.href = '/registro'" class="cta-button"
                         style="width: 100%;">Registrar</button>
                 </div>
             </form>
@@ -92,11 +55,33 @@
     </section>
     </main>
 
+    <script th:src="@{/js/menu-hamburguesa/menu-hamburguesa.js}"></script>
+    <script th:src="@{/js/services/apiService.js}"></script>
+    <script th:src="@{/js/services/authService.js}"></script>
+    <script th:src="@{/js/login.js}"></script>
 
+    <script>
+        function validarLogin() {
+            const usuario = document.getElementById('usuario').value;
+            const password = document.getElementById('password').value;
 
+            // Lista de usuarios válidos con su ruta de redirección
+            const usuarios = [
+                { nombre: "mozo", clave: "1234", redirect: "/mozo" },
+                { nombre: "bartender", clave: "1234", redirect: "/bartender" },
+                { nombre: "admin", clave: "1234", redirect: "/admin" }
+            ];
 
-    <script src="../../static/js/menu-hamburguesa/menu-hamburguesa.js"></script>
+            const user = usuarios.find(u => u.nombre.toLowerCase() === usuario.toLowerCase() && u.clave === password);
 
+            if (user) {
+                alert("Bienvenido " + user.nombre + " ✅");
+                window.location.href = user.redirect; // redirige a su página
+            } else {
+                alert("❌ Usuario o contraseña incorrectos");
+            }
+        }
+    </script>
 </body>
 
 </html>

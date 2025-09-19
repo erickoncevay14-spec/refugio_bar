@@ -1,3 +1,4 @@
+// Archivo: SecurityConfig.java
 package com.restaurante.config;
 
 import org.springframework.context.annotation.Bean;
@@ -26,13 +27,15 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/productos/**").permitAll()
+                .requestMatchers("/css/**", "/js/**", "/img/**", "/ASSENTS/**").permitAll()
+                .requestMatchers("/", "/index", "/login", "/registro", "/nosotros", "/productos").permitAll()
                 .requestMatchers("/api/pedidos/**").authenticated()
-                .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                .requestMatchers("/api/mesero/**").hasRole("MESERO")
-                .requestMatchers("/api/bartender/**").hasRole("BARTENDER")
-                .anyRequest().permitAll()
+                .requestMatchers("/admin").hasRole("ADMIN")
+                .requestMatchers("/moso").hasRole("MESERO")
+                .requestMatchers("/bartender").hasRole("BARTENDER")
+                .anyRequest().authenticated()
             );
-        
+
         return http.build();
     }
 
@@ -44,7 +47,7 @@ public class SecurityConfig {
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(3600L);
-        
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

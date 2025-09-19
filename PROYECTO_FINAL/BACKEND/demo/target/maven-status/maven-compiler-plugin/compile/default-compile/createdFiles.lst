@@ -17,14 +17,18 @@ com\restaurante\exception\ResourceNotFoundException.class
 com\restaurante\repository\DetallePedidoRepository.class
 com\restaurante\exception\GlobalExceptionHandler.class
 com\restaurante\service\ReservaService.class
+com\restaurante\dto\request\PedidoRequest$ItemPedido.class
 com\restaurante\controller\api\AuthController.class
+com\restaurante\dto\response\LoginResponse.class
 com\restaurante\dto\response\PedidoResponse.class
 com\restaurante\repository\RolRepository.class
+com\restaurante\dto\request\PedidoRequest.class
 com\restaurante\service\MercadoPagoService.class
 com\restaurante\dto\LoginResponse.class
 com\restaurante\model\Rol.class
 com\restaurante\controller\api\MesaController.class
 com\restaurante\model\ProductoIngrediente.class
+com\restaurante\dto\request\LoginRequest.class
 com\restaurante\exception\BusinessException.class
 com\restaurante\repository\ProductoRepository.class
 com\restaurante\repository\ReservaRepository.class
@@ -48,4 +52,5 @@ com\restaurante\model\Mesa.class
 com\restaurante\validator\ReservaValidator.class
 com\restaurante\model\Pedido.class
 com\restaurante\repository\UsuarioRepository.class
+com\restaurante\dto\request\RegisterRequest.class
 com\restaurante\model\DetallePedido.class

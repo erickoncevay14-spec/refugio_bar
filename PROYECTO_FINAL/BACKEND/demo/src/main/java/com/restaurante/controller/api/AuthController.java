@@ -1,8 +1,8 @@
 package com.restaurante.controller.api;
 
-import com.restaurante.dto.LoginRequest;
-import com.restaurante.dto.LoginResponse;
-import com.restaurante.dto.RegisterRequest;
+import com.restaurante.dto.request.LoginRequest;
+import com.restaurante.dto.response.LoginResponse;
+import com.restaurante.dto.request.RegisterRequest;
 import com.restaurante.model.Usuario;
 import com.restaurante.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;

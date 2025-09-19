@@ -1,4 +1,4 @@
-package com.restaurante.dto;
+package com.restaurante.dto.response;
 
 public class LoginResponse {
     private Long id;

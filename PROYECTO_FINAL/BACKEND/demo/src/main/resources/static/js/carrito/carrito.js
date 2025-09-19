@@ -1,18 +1,3 @@
-
-  function finalizarPedido() {
-    if (cart.length === 0) {
-        alert("El carrito está vacío.");
-        return;
-    }   
-    let mensaje = "Gracias por su compra. Detalles del pedido:\n\n";
-    cart.forEach(item => {
-        mensaje += `${item.name} x${item.quantity} - S/${(item.price * item.quantity).toFixed(2)}\n`;
-    });
-    mensaje += `\nTotal: S/${cart.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2)}`;
-    alert(mensaje);
-    cart = [];
-    updateCart();
-}
 // Variables globales
 let cart = JSON.parse(localStorage.getItem("cart")) || []; // Recupera carrito si existe
 const cartItems = document.getElementById("cartItems");
@@ -33,7 +18,11 @@ document.querySelectorAll(".add-to-cart").forEach(button => {
         e.stopPropagation();
         const name = button.getAttribute("data-name");
         const price = parseFloat(button.getAttribute("data-price"));
-        const img = button.getAttribute("data-img");
+
+        // 💡 NUEVO CÓDIGO: Encontrar la imagen del producto
+        const productContainer = button.closest(".tequilas");
+        const imgElement = productContainer.querySelector("img");
+        const img = imgElement ? imgElement.src : null; // Obtener la URL de la imagen
 
         addToCart(name, price, img);
 
@@ -87,32 +76,43 @@ function updateCart() {
 
     // Guardar carrito en localStorage
     localStorage.setItem("cart", JSON.stringify(cart));
+}
 
-    // Eventos ➕ ➖
-    document.querySelectorAll(".qty-btn").forEach(btn => {
-        btn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            const index = btn.getAttribute("data-index");
-            const action = btn.getAttribute("data-action");
+// Eventos delegados para los botones ➕ ➖ y ❌
+cartItems.addEventListener("click", (e) => {
+    const target = e.target;
+    if (target.classList.contains("qty-btn")) {
+        e.stopPropagation();
+        const index = target.getAttribute("data-index");
+        const action = target.getAttribute("data-action");
+        if (action === "plus") {
+            cart[index].quantity++;
+        } else if (action === "minus" && cart[index].quantity > 1) {
+            cart[index].quantity--;
+        }
+        updateCart();
+    } else if (target.classList.contains("remove-btn")) {
+        e.stopPropagation();
+        const index = target.getAttribute("data-index");
+        cart.splice(index, 1);
+        updateCart();
+    }
+});
 
-            if (action === "plus") {
-                cart[index].quantity++;
-            } else if (action === "minus" && cart[index].quantity > 1) {
-                cart[index].quantity--;
-            }
-            updateCart();
-        });
+// Función para finalizar el pedido
+function finalizarPedido() {
+    if (cart.length === 0) {
+        alert("El carrito está vacío.");
+        return;
+    }
+    let mensaje = "Gracias por su compra. Detalles del pedido:\n\n";
+    cart.forEach(item => {
+        mensaje += `${item.name} x${item.quantity} - S/${(item.price * item.quantity).toFixed(2)}\n`;
     });
-
-    // Botones eliminar
-    document.querySelectorAll(".remove-btn").forEach(btn => {
-        btn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            const index = btn.getAttribute("data-index");
-            cart.splice(index, 1);
-            updateCart();
-        });
-    });
+    mensaje += `\nTotal: S/${cart.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2)}`;
+    alert(mensaje);
+    cart = [];
+    updateCart();
 }
 
 // Cerrar carrito si se hace clic fuera

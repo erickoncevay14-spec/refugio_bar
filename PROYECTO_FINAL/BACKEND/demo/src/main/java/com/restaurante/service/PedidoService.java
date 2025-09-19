@@ -1,6 +1,6 @@
 package com.restaurante.service;
 
-import com.restaurante.dto.PedidoRequest;
+import com.restaurante.dto.request.PedidoRequest;
 import com.restaurante.model.*;
 import com.restaurante.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
