@@ -5,9 +5,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class IndexController {
-    @GetMapping({"/"})
-    public String hola() {
-        return "hola";
+
+    @GetMapping("/")
+    public String home() {
+        return "pagina/index";
     }
 
     @GetMapping("/index")
@@ -65,20 +66,18 @@ public class IndexController {
         return "pagina/vodckas";
     }
 
-        @GetMapping("/admin")
-        public String admin() {
-            return "admin/admin";
-        }
-
-        @GetMapping("/bartender")
-        public String bartender() {
-            return "bartender/bartender";
-        }
-
-        @GetMapping("/moso")
-        public String moso() {
-            return "moso/moso";
-        }
+    @GetMapping("/admin")
+    public String admin() {
+        return "admin/admin";
     }
-    
 
+    @GetMapping("/bartender")
+    public String bartender() {
+        return "bartender/bartender";
+    }
+
+    @GetMapping("/moso")
+    public String moso() {
+        return "moso/moso";
+    }
+}

@@ -1,68 +1,67 @@
 package com.restaurante.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "reservas")
 public class Reserva {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_reserva")
-    private Long idReserva;
+    private Long id;
     
-    @ManyToOne
-    @JoinColumn(name = "id_usuario_cliente", nullable = false)
-    private Usuario cliente;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
     
-    @ManyToOne
-    @JoinColumn(name = "id_mesa", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mesa_id")
     private Mesa mesa;
     
-    @NotNull
-    @Column(name = "fecha_hora") // en la BD sigue siendo fecha_hora
-    private LocalDateTime fechaHora;
-
-    // Constructores
-    public Reserva() {}
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "fecha_hora")
+    private Date fechaHora;
     
-    public Reserva(Usuario cliente, Mesa mesa, LocalDateTime fechaHora) {
-        this.cliente = cliente;
-        this.mesa = mesa;
-        this.fechaHora = fechaHora;
+    private Integer personas;
+    
+    private String estado = "PENDIENTE"; // AGREGAMOS ESTE CAMPO
+    
+    private String notas;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "fecha_creacion")
+    private Date fechaCreacion;
+    
+    @PrePersist
+    protected void onCreate() {
+        fechaCreacion = new Date();
+        if (estado == null) {
+            estado = "PENDIENTE";
+        }
     }
     
     // Getters y Setters
-    public Long getIdReserva() {
-        return idReserva;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
     
-    public void setIdReserva(Long idReserva) {
-        this.idReserva = idReserva;
-    }
+    public Usuario getUsuario() { return usuario; }
+    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
     
-    public Usuario getCliente() {
-        return cliente;
-    }
+    public Mesa getMesa() { return mesa; }
+    public void setMesa(Mesa mesa) { this.mesa = mesa; }
     
-    public void setCliente(Usuario cliente) {
-        this.cliente = cliente;
-    }
+    public Date getFechaHora() { return fechaHora; }
+    public void setFechaHora(Date fechaHora) { this.fechaHora = fechaHora; }
     
-    public Mesa getMesa() {
-        return mesa;
-    }
+    public Integer getPersonas() { return personas; }
+    public void setPersonas(Integer personas) { this.personas = personas; }
     
-    public void setMesa(Mesa mesa) {
-        this.mesa = mesa;
-    }
+    public String getEstado() { return estado; }
+    public void setEstado(String estado) { this.estado = estado; }
     
-    public LocalDateTime getFechaHora() {
-        return fechaHora;
-    }
+    public String getNotas() { return notas; }
+    public void setNotas(String notas) { this.notas = notas; }
     
-    public void setFechaHora(LocalDateTime fechaHora) {
-        this.fechaHora = fechaHora;
-    }
+    public Date getFechaCreacion() { return fechaCreacion; }
+    public void setFechaCreacion(Date fechaCreacion) { this.fechaCreacion = fechaCreacion; }
 }

@@ -1,73 +1,46 @@
 package com.restaurante.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 
 @Entity
 @Table(name = "detalle_pedidos")
 public class DetallePedido {
     @Id
-    @ManyToOne
-    @JoinColumn(name = "id_pedido", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pedido_id")
     private Pedido pedido;
     
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "id_producto", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "producto_id")
     private Producto producto;
     
-    @Min(1)
     private Integer cantidad;
-    
-    @Min(0)
-    @Column(name = "precio_unitario", nullable = false)
     private Double precioUnitario;
-    
-    // Constructores
-    public DetallePedido() {}
-    
-    public DetallePedido(Pedido pedido, Producto producto, Integer cantidad, Double precioUnitario) {
-        this.pedido = pedido;
-        this.producto = producto;
-        this.cantidad = cantidad;
-        this.precioUnitario = precioUnitario;
-    }
+    private Double subtotal;
+    private String notas;
     
     // Getters y Setters
-    public Pedido getPedido() {
-        return pedido;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
     
-    public void setPedido(Pedido pedido) {
-        this.pedido = pedido;
-    }
+    public Pedido getPedido() { return pedido; }
+    public void setPedido(Pedido pedido) { this.pedido = pedido; }
     
-    public Producto getProducto() {
-        return producto;
-    }
+    public Producto getProducto() { return producto; }
+    public void setProducto(Producto producto) { this.producto = producto; }
     
-    public void setProducto(Producto producto) {
-        this.producto = producto;
-    }
+    public Integer getCantidad() { return cantidad; }
+    public void setCantidad(Integer cantidad) { this.cantidad = cantidad; }
     
-    public Integer getCantidad() {
-        return cantidad;
-    }
+    public Double getPrecioUnitario() { return precioUnitario; }
+    public void setPrecioUnitario(Double precioUnitario) { this.precioUnitario = precioUnitario; }
     
-    public void setCantidad(Integer cantidad) {
-        this.cantidad = cantidad;
-    }
+    public Double getSubtotal() { return subtotal; }
+    public void setSubtotal(Double subtotal) { this.subtotal = subtotal; }
     
-    public Double getPrecioUnitario() {
-        return precioUnitario;
-    }
-    
-    public void setPrecioUnitario(Double precioUnitario) {
-        this.precioUnitario = precioUnitario;
-    }
-    
-    // Método para calcular el subtotal
-    public Double getSubtotal() {
-        return cantidad * precioUnitario;
-    }
+    public String getNotas() { return notas; }
+    public void setNotas(String notas) { this.notas = notas; }
 }
