@@ -1,5 +1,5 @@
 // Variables de paginación
-
+const itemsPorPagina = 6; // cuantos productos por página
 let paginaActual = 1;
 
 // Seleccionar productos y contenedor
@@ -12,17 +12,20 @@ function mostrarPagina(pagina) {
   // Ocultar todos
   productos.forEach((item, index) => {
     item.style.display = "none";
-    // Calcular rango visible
     if (index >= (pagina - 1) * itemsPorPagina && index < pagina * itemsPorPagina) {
       item.style.display = "block";
     }
   });
 
   // Actualizar botones activos
-  document.querySelectorAll(".pagination .page-item").forEach((btn, i) => {
+  document.querySelectorAll(".pagination .page-item").forEach((btn) => {
     btn.classList.remove("active");
-    if (i === pagina) btn.classList.add("active"); // ojo: i=0 es el botón "Prev"
   });
+
+  const pageButtons = document.querySelectorAll(".pagination .page-item:not(:first-child):not(:last-child)");
+  if (pageButtons[pagina - 1]) {
+    pageButtons[pagina - 1].classList.add("active");
+  }
 }
 
 // Navegación siguiente/anterior
@@ -31,6 +34,7 @@ function siguientePagina() {
     mostrarPagina(paginaActual + 1);
   }
 }
+
 function anteriorPagina() {
   if (paginaActual > 1) {
     mostrarPagina(paginaActual - 1);
