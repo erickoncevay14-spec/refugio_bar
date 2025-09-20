@@ -1,276 +1,347 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title> El Administrador</title>
-
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Bootstrap Icons -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <style>
-    body { background-color: #f8f9fa; font-family: "Segoe UI", Roboto, sans-serif; }
-    .sidebar { min-height: 100vh; background: #212529; }
-    .sidebar a { color: #adb5bd; text-decoration: none; padding: 10px 15px; display: block; border-radius: .375rem; }
-    .sidebar a:hover, .sidebar a.active { background: #343a40; color: #fff; }
-    .sidebar .logo { font-weight: bold; font-size: 1.25rem; color: #fff; padding: 15px; text-align: center; border-bottom: 1px solid #343a40; }
-    .content { padding: 20px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administrador - Refugio Bar</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/Admin.css/Admin.css}">
 </head>
-<script src="/js/services/apiService.js"></script>
-<script src="/js/services/authService.js"></script>
-<script src="/js/services/productoService.js"></script>
-<script src="/js/services/pedidoService.js"></script>
 <body>
-<div class="container-fluid">
-  <div class="row">
-    <!-- Sidebar -->
-    <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
-      <div class="logo">🍸 Bar El Refugio</div>
-      <ul class="nav flex-column mt-3">
-        <li><a class="active" href="#"><i class="bi bi-speedometer2 me-2"></i>Panel</a></li>
-        <li><a href="#"><i class="bi bi-cash-coin me-2"></i>Ventas</a></li>
-        <li><a href="#"><i class="bi bi-receipt me-2"></i>Pedidos</a></li>
-        <li><a href="#"><i class="bi bi-people me-2"></i>Clientes</a></li>
-        <li><a href="#"><i class="bi bi-box-seam me-2"></i>Inventario</a></li>
-        <li><a href="#"><i class="bi bi-calendar-event me-2"></i>Reservas</a></li>
-        <li><a href="#"><i class="bi bi-person-gear me-2"></i>Personal</a></li>
-        <li><a href="#"><i class="bi bi-gear me-2"></i>Configuración</a></li>
-      </ul>
-    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-2 d-none d-md-block sidebar">
+                <div class="sidebar-sticky">
+                    <div class="logo">
+                        <i class="bi bi-cup-straw"></i> Refugio Bar
+                    </div>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" th:href="@{#}" data-section="dashboard">
+                                <i class="bi bi-speedometer2"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{#}" data-section="productos">
+                                <i class="bi bi-box-seam"></i> Productos
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{#}" data-section="pedidos">
+                                <i class="bi bi-receipt"></i> Pedidos
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{#}" data-section="usuarios">
+                                <i class="bi bi-people"></i> Usuarios
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{#}" data-section="mesas">
+                                <i class="bi bi-grid-3x3"></i> Mesas
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{#}" data-section="reservas">
+                                <i class="bi bi-calendar-check"></i> Reservas
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{#}" data-section="analytics">
+                                <i class="bi bi-graph-up"></i> Analytics
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="sidebar-footer">
+                        <a th:href="@{#}" onclick="cerrarSesion()" class="btn btn-danger w-100">
+                            <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                        </a>
+                    </div>
+                </div>
+            </nav>
 
-    <!-- Main content -->
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-      <!-- Topbar -->
-      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h4">Panel de Administrador</h1>
-        <div class="d-flex align-items-center gap-3">
-          <form class="d-none d-md-block">
-            <input class="form-control form-control-sm" type="search" placeholder="Buscar..." aria-label="Buscar">
-          </form>
-          <div class="dropdown">
-            <a href="#" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
-              <i class="bi bi-person-circle fs-4 me-1"></i> Admin
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item" href="#">Perfil</a></li>
-              <li><a class="dropdown-item" href="#">Configuración</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a id="logoutBtn" onclick="CerrarSesion()" class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-right me-2"></i>Cerrar sesión</a></li>
-            </ul>
-          </div>
+            <!-- Main Content -->
+            <main class="col-md-10 ms-sm-auto px-4">
+                <!-- Header -->
+                <div class="header">
+                    <h2 id="sectionTitle">Dashboard</h2>
+                    <div class="header-info">
+                        <span id="userInfo">Admin</span>
+                        <span id="dateTime"></span>
+                    </div>
+                </div>
+
+                <!-- Dashboard Section -->
+                <section id="dashboard" class="content-section active">
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <div class="stat-icon bg-success">
+                                    <i class="bi bi-currency-dollar"></i>
+                                </div>
+                                <div class="stat-details">
+                                    <h6>Ventas Hoy</h6>
+                                    <h3 id="ventasHoy">S/ 0</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <div class="stat-icon bg-primary">
+                                    <i class="bi bi-bag-check"></i>
+                                </div>
+                                <div class="stat-details">
+                                    <h6>Pedidos Hoy</h6>
+                                    <h3 id="pedidosHoy">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <div class="stat-icon bg-warning">
+                                    <i class="bi bi-box"></i>
+                                </div>
+                                <div class="stat-details">
+                                    <h6>Productos</h6>
+                                    <h3 id="totalProductos">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <div class="stat-icon bg-info">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                                <div class="stat-details">
+                                    <h6>Clientes</h6>
+                                    <h3 id="totalClientes">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-header">Ventas Semanales</div>
+                                <div class="card-body">
+                                    <canvas id="salesChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">Top Productos</div>
+                                <div class="card-body">
+                                    <ul id="topProductos" class="list-unstyled"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Productos Section -->
+                <section id="productos" class="content-section">
+                    <div class="section-header">
+                        <h4>Gestión de Productos</h4>
+                        <button class="btn btn-primary" onclick="abrirModalProducto()">
+                            <i class="bi bi-plus"></i> Nuevo Producto
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Descripción</th>
+                                    <th>Precio</th>
+                                    <th>Categoría</th>
+                                    <th>Stock</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productosTabla"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Pedidos Section -->
+                <section id="pedidos" class="content-section">
+                    <div class="section-header">
+                        <h4>Gestión de Pedidos</h4>
+                        <select class="form-select w-auto" id="filtroPedidos" onchange="filtrarPedidos()">
+                            <option value="">Todos</option>
+                            <option value="PENDIENTE">Pendiente</option>
+                            <option value="EN_PREPARACION">En Preparación</option>
+                            <option value="LISTO">Listo</option>
+                            <option value="ENTREGADO">Entregado</option>
+                        </select>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Número</th>
+                                    <th>Cliente</th>
+                                    <th>Mesa</th>
+                                    <th>Total</th>
+                                    <th>Estado</th>
+                                    <th>Fecha</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pedidosTabla"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Usuarios Section -->
+                <section id="usuarios" class="content-section">
+                    <div class="section-header">
+                        <h4>Gestión de Usuarios</h4>
+                        <button class="btn btn-primary" onclick="abrirModalUsuario()">
+                            <i class="bi bi-person-plus"></i> Nuevo Usuario
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Usuario</th>
+                                    <th>Email</th>
+                                    <th>Nombre</th>
+                                    <th>Rol</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usuariosTabla"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Mesas Section -->
+                <section id="mesas" class="content-section">
+                    <div class="section-header">
+                        <h4>Gestión de Mesas</h4>
+                        <button class="btn btn-primary" onclick="abrirModalMesa()">
+                            <i class="bi bi-plus"></i> Nueva Mesa
+                        </button>
+                    </div>
+                    <div class="row" id="mesasGrid"></div>
+                </section>
+
+                <!-- Reservas Section -->
+                <section id="reservas" class="content-section">
+                    <div class="section-header">
+                        <h4>Gestión de Reservas</h4>
+                        <input type="date" class="form-control w-auto" id="filtroReserva">
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Cliente</th>
+                                    <th>Mesa</th>
+                                    <th>Fecha/Hora</th>
+                                    <th>Personas</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reservasTabla"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Analytics Section (Solo Looker Studio) -->
+                <section id="analytics" class="content-section">
+                    <div class="analytics-header">
+                        <h4>Analytics - Dashboard Externo</h4>
+                        <p class="text-muted">Análisis de datos de ventas y tendencias del mercado</p>
+                    </div>
+                    
+                    <!-- Iframe para Looker Studio -->
+                    <div class="looker-container">
+                        <iframe 
+                            src="https://lookerstudio.google.com/embed/reporting/TU-ID-AQUI"
+                            frameborder="0"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+
+                    <!-- Nota explicativa -->
+                    <div class="alert alert-info mt-3">
+                        <i class="bi bi-info-circle"></i>
+                        Los datos mostrados en esta sección provienen de análisis externos y tendencias del mercado, 
+                        no están relacionados con la base de datos operacional del sistema.
+                    </div>
+                </section>
+            </main>
         </div>
-      </div>
+    </div>
 
-      <!-- KPIs -->
-      <div class="row g-3">
-        <div class="col-md-3">
-          <div class="card text-bg-light shadow-sm">
-            <div class="card-body">
-              <i class="bi bi-currency-dollar fs-4 text-success"></i>
-              <h5 class="card-title">Ventas hoy</h5>
-              <p class="card-text fs-5 fw-bold">S/ 2,480</p>
+    <!-- Modal Producto -->
+    <div class="modal fade" id="modalProducto" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tituloModalProducto">Nuevo Producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formProducto">
+                        <input type="hidden" id="productoId">
+                        <div class="mb-3">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="productoNombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Descripción</label>
+                            <textarea class="form-control" id="productoDescripcion"></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label">Precio</label>
+                                <input type="number" class="form-control" id="productoPrecio" step="0.01" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Stock</label>
+                                <input type="number" class="form-control" id="productoStock" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Categoría</label>
+                            <select class="form-select" id="productoCategoria">
+                                <option value="BEBIDA">Bebida</option>
+                                <option value="COMIDA">Comida</option>
+                                <option value="POSTRE">Postre</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="guardarProducto()">Guardar</button>
+                </div>
             </div>
-          </div>
         </div>
-        <div class="col-md-3">
-          <div class="card text-bg-light shadow-sm">
-            <div class="card-body">
-              <i class="bi bi-receipt-cutoff fs-4 text-primary"></i>
-              <h5 class="card-title">Pedidos</h5>
-              <p class="card-text fs-5 fw-bold">134</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card text-bg-light shadow-sm">
-            <div class="card-body">
-              <i class="bi bi-people fs-4 text-info"></i>
-              <h5 class="card-title">Clientes en sala</h5>
-              <p class="card-text fs-5 fw-bold">76</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card text-bg-light shadow-sm">
-            <div class="card-body">
-              <i class="bi bi-exclamation-triangle fs-4 text-warning"></i>
-              <h5 class="card-title">Stock bajo</h5>
-              <p class="card-text fs-5 fw-bold">9 productos</p>
-            </div>
-          </div>
-        </div>
-      </div>
+    </div>
 
-      <!-- Gráficos -->
-      <div class="row g-3 mt-3">
-        <div class="col-md-8">
-          <div class="card shadow-sm">
-            <div class="card-header fw-bold"><i class="bi bi-graph-up me-1"></i> Ventas de la semana</div>
-            <div class="card-body">
-              <canvas id="salesChart" height="120"></canvas>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card shadow-sm">
-            <div class="card-header fw-bold"><i class="bi bi-pie-chart me-1"></i> Categorías más vendidas</div>
-            <div class="card-body">
-              <canvas id="categoryChart" height="200"></canvas>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Pedidos recientes -->
-      <h5 class="mt-4">Pedidos recientes</h5>
-      <div class="table-responsive">
-        <table class="table table-striped align-middle">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Cliente</th>
-              <th>Items</th>
-              <th>Total</th>
-              <th>Estado</th>
-              <th>Hora</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>#9842</td>
-              <td>María S.</td>
-              <td>3</td>
-              <td>S/ 68.00</td>
-              <td><span class="badge bg-success">Pagado</span></td>
-              <td>11:06</td>
-            </tr>
-            <tr>
-              <td>#9841</td>
-              <td>José P.</td>
-              <td>5</td>
-              <td>S/ 125.00</td>
-              <td><span class="badge bg-info text-dark">En preparación</span></td>
-              <td>10:58</td>
-            </tr>
-            <tr>
-              <td>#9840</td>
-              <td>Cliente X</td>
-              <td>2</td>
-              <td>S/ 32.00</td>
-              <td><span class="badge bg-warning text-dark">Por cobrar</span></td>
-              <td>10:51</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Info lateral -->
-      <div class="row g-3 mt-2">
-        <div class="col-md-4">
-          <div class="card shadow-sm">
-            <div class="card-header fw-bold"><i class="bi bi-box-seam me-1"></i> Stock bajo</div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item d-flex justify-content-between">
-                Ron Añejo 750ml <span class="badge bg-warning">6</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between">
-                Cerveza IPA 355ml <span class="badge bg-danger">2</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between">
-                Hielo 5kg <span class="badge bg-info">8</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card shadow-sm">
-            <div class="card-header fw-bold"><i class="bi bi-calendar-event me-1"></i> Reservas</div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">
-                12:30 — Mesa 4 <span class="badge bg-success">Confirmada</span>
-              </li>
-              <li class="list-group-item">
-                20:00 — Terraza <span class="badge bg-secondary">Pendiente</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card shadow-sm">
-            <div class="card-header fw-bold"><i class="bi bi-person-fill me-1"></i> Personal</div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">Lucía (caja) <span class="badge bg-success">Activo</span></li>
-              <li class="list-group-item">Carlos (barra) <span class="badge bg-success">Activo</span></li>
-              <li class="list-group-item">Ana (salón) <span class="badge bg-info text-dark">Próximo</span></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <footer class="text-center py-3 text-muted small">
-        © <span id="year"></span> Bar El Refugio — Panel Admin
-      </footer>
-    </main>
-  </div>
-</div>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-  // Actualiza año automáticamente
-  document.getElementById("year").textContent = new Date().getFullYear();
-
-  // Ejemplo funcionalidad: cerrar sesión
-  document.getElementById("logoutBtn").addEventListener("click", function(e){
-    e.preventDefault();
-    alert("Sesión cerrada correctamente.");
-  });
-
-  // Gráfico de ventas semanales
-  const ctxSales = document.getElementById('salesChart');
-  new Chart(ctxSales, {
-    type: 'line',
-    data: {
-      labels: ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'],
-      datasets: [{
-        label: 'Ventas (S/)',
-        data: [380, 420, 500, 460, 600, 750, 680],
-        borderColor: 'rgba(13,110,253,0.9)',
-        backgroundColor: 'rgba(13,110,253,0.2)',
-        tension: 0.3,
-        fill: true,
-        pointRadius: 5,
-        pointBackgroundColor: 'rgba(13,110,253,1)'
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: { legend: { display: false } }
-    }
-  });
-  // Gráfico de categorías
-  const ctxCat = document.getElementById('categoryChart');
-  new Chart(ctxCat, {
-    type: 'doughnut',
-    data: {
-      labels: ['Cervezas', 'Cócteles', 'Piqueos', 'Vinos', 'Otros'],
-      datasets: [{
-        data: [45, 25, 15, 10, 5],
-        backgroundColor: ['#0d6efd','#20c997','#ffc107','#dc3545','#6c757d'],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: { legend: { position: 'bottom' } }
-    }
-  });
-</script>
-<script src="../../JS/Admin/Admin.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script th:src="@{/js/Admin/Admin.js}"></script>
 </body>
 </html>
