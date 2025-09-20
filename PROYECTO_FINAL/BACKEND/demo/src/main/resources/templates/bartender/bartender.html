@@ -3,9 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../CSS/Bartender/bartender.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/bartender.css/bartender.css}">
+    
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <title>Document</title>
+    
+    <title>Bartender</title>
 </head>
 <body>
     <header class="header">
@@ -15,33 +20,37 @@
           <span class="bartender-nombre">Bienvenido, <strong>Juan Pérez</strong></span>
           <button class="logout-button" onclick="CerrarSesion()">Cerrar Sesión</button>
         </div>
-      </header>
-        <main class="contenedor">
-            <!-- SECCIÓN: PEDIDOS POR SERVIR -->
-            <section class="pedidos-en-preparacion">
-            <h2> Pedidos por Preparando</h2>
+    </header>
+
+    <main class="contenedor">
+        <!-- SECCIÓN: PEDIDOS POR SERVIR -->
+        <section class="pedidos-en-preparacion">
+            <h2>Pedidos por Preparar</h2>
             <ul>
                 <li>Mesa 1 - Tequila, Chelas - Listo para Servir <button class="servir-btn">listo</button></li>
                 <li>Mesa 2 - Ron, Pisco - Listo para Servir <button class="servir-btn">listo</button></li>
             </ul>
-            </section>
-            <section class="lista-pedidos">
-            <h2> Lista de Pedidos</h2>
+        </section>
+
+        <section class="lista-pedidos">
+            <h2>Lista de Pedidos</h2>
             <ul>
                 <li>Mesa 1 - Tequila, Chelas - En Preparación <button>Preparar</button></li>
-                <li>Mesa 2 - Ron, Pisco - En Preparación<button>Preparar</button></li>
+                <li>Mesa 2 - Ron, Pisco - En Preparación <button>Preparar</button></li>
+            </ul>
+        </section>
 
-            </section>
-            <section class="pedidos-entregados">
-                <h2> Pedidos Entregados</h2>
-                <ul>
-                  <li>Mesa 1 - Tequila, Chelas - Entregado</li>
-                  <li>Mesa 2 - Ron, Pisco - Entregado</li>
-                </ul>
-              </section>
- 
-        </main>
-        <script src="../../JS/Bartender/Bartender.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+        <section class="pedidos-entregados">
+            <h2>Pedidos Entregados</h2>
+            <ul>
+                <li>Mesa 1 - Tequila, Chelas - Entregado</li>
+                <li>Mesa 2 - Ron, Pisco - Entregado</li>
+            </ul>
+        </section>
+    </main>
+
+    <!-- JS -->
+    <script th:src="@{/js/bartender/bartender.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>

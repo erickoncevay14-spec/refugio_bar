@@ -76,8 +76,8 @@ public class IndexController {
         return "bartender/bartender";
     }
 
-    @GetMapping("/moso")
-    public String moso() {
-        return "moso/moso";
+    @GetMapping("/mozo")
+    public String mozo() {
+        return "mozo/mozo";
     }
 }

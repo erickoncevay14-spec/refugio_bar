@@ -23,24 +23,20 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     
-    public Usuario authenticate(String usuario, String password) {
-        Usuario user = usuarioRepository.findByUsuario(usuario).orElse(null);
+    // 👉 Método de autenticación (versión pedida para pruebas)
+    public Usuario authenticate(String username, String password) {
+        Usuario user = usuarioRepository.findByUsuario(username).orElse(null);
         
-        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
-            return user;
+        if (user != null) {
+            // Temporal: comparación directa sin encriptar
+            if (password.equals(user.getPassword())) {
+                return user;
+            }
+            // O si está encriptada:
+            // if (passwordEncoder.matches(password, user.getPassword())) {
+            //     return user;
+            // }
         }
-        
-        // Para testing temporal (ELIMINAR EN PRODUCCIÓN)
-        if ("admin".equals(usuario) && "1234".equals(password)) {
-            return createTemporalAdmin();
-        }
-        if ("Mozo".equals(usuario) && "1234".equals(password)) {
-            return createTemporalMozo();
-        }
-        if ("bartender".equals(usuario) && "1234".equals(password)) {
-            return createTemporalBartender();
-        }
-        
         return null;
     }
     
