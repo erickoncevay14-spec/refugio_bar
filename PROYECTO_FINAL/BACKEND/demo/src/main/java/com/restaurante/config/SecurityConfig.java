@@ -1,4 +1,3 @@
-// Archivo: SecurityConfig.java
 package com.restaurante.config;
 
 import org.springframework.context.annotation.Bean;
@@ -23,31 +22,22 @@ public class SecurityConfig {
         http
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(csrf -> csrf.disable())
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/productos/**").permitAll()
-                .requestMatchers("/css/**", "/js/**", "/img/**", "/ASSENTS/**").permitAll()
-                .requestMatchers("/", "/index", "/login", "/registro", "/nosotros", "/productos").permitAll()
-                .requestMatchers("/api/pedidos/**").authenticated()
-                .requestMatchers("/admin").hasRole("ADMIN")
-                .requestMatchers("/moso").hasRole("MESERO")
-                .requestMatchers("/bartender").hasRole("BARTENDER")
-                .anyRequest().authenticated()
-            );
-
+                .anyRequest().permitAll()  // Por ahora permitir todo
+            )
+            .formLogin(form -> form.disable())
+            .httpBasic(basic -> basic.disable());
+        
         return http.build();
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:3001"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("*"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
-        configuration.setAllowCredentials(true);
-        configuration.setMaxAge(3600L);
-
+        
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

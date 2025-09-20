@@ -1,7 +1,5 @@
 com\restaurante\validator\PedidoValidator.class
-com\restaurante\dto\LoginRequest.class
 com\restaurante\repository\MesaRepository.class
-com\restaurante\dto\PedidoRequest.class
 com\restaurante\controller\IndexController.class
 com\restaurante\model\Pago.class
 com\restaurante\repository\IngredienteRepository.class
@@ -11,7 +9,6 @@ com\restaurante\validator\ProductoValidator.class
 com\restaurante\dto\response\ErrorResponse.class
 com\restaurante\controller\api\ReservaController.class
 com\restaurante\service\MesaService.class
-com\restaurante\dto\RegisterRequest.class
 com\restaurante\model\Producto.class
 com\restaurante\exception\ResourceNotFoundException.class
 com\restaurante\repository\DetallePedidoRepository.class
@@ -24,7 +21,6 @@ com\restaurante\dto\response\PedidoResponse.class
 com\restaurante\repository\RolRepository.class
 com\restaurante\dto\request\PedidoRequest.class
 com\restaurante\service\MercadoPagoService.class
-com\restaurante\dto\LoginResponse.class
 com\restaurante\model\Rol.class
 com\restaurante\controller\api\MesaController.class
 com\restaurante\model\ProductoIngrediente.class
@@ -47,7 +43,6 @@ com\restaurante\model\Ingrediente.class
 com\restaurante\DemoApplication.class
 com\restaurante\model\Reserva.class
 com\restaurante\config\SecurityConfig.class
-com\restaurante\dto\PedidoRequest$ItemPedido.class
 com\restaurante\model\Mesa.class
 com\restaurante\validator\ReservaValidator.class
 com\restaurante\model\Pedido.class

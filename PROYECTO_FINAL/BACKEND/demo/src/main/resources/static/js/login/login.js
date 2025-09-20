@@ -43,7 +43,7 @@ async function validarLogin() {
                     window.location.href = '/admin';
                     break;
                 case 'MESERO':
-                    window.location.href = '/moso';
+                    window.location.href = '/mozo';
                     break;
                 case 'BARTENDER':
                     window.location.href = '/bartender';
