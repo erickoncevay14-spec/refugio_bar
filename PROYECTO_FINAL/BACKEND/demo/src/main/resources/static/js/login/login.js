@@ -1,4 +1,4 @@
-// login.js - ARCHIVO COMPLETO Y FINAL
+// login.js - VERSIÓN FINAL SIN CONFLICTOS
 
 console.log('🚀 CARGANDO LOGIN.JS VERSIÓN FINAL...');
 
@@ -23,7 +23,7 @@ async function ejecutarLogin() {
     }
     
     // Mostrar loading
-    const loginBtn = document.querySelector('button') || document.querySelector('input[type="submit"]');
+    const loginBtn = document.getElementById('loginBtn');
     const originalText = loginBtn ? loginBtn.textContent : '';
     
     if (loginBtn) {
@@ -142,6 +142,31 @@ function redirigirSegunRol(rol, userSession) {
 document.addEventListener('DOMContentLoaded', function() {
     console.log('📄 Login page loaded - versión final');
     
+    // IMPORTANTE: Asegurar que el botón esté conectado correctamente
+    const loginBtn = document.getElementById('loginBtn');
+    if (loginBtn) {
+        console.log('✅ Botón loginBtn encontrado');
+        
+        // Limpiar cualquier event listener previo
+        loginBtn.onclick = ejecutarLogin;
+        
+        // También manejar Enter en los inputs
+        document.getElementById('usuario').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                ejecutarLogin();
+            }
+        });
+        
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                ejecutarLogin();
+            }
+        });
+        
+        console.log('✅ Event listeners configurados');
+    }
+    
+    // Verificar sesión existente
     const userString = localStorage.getItem('currentUser');
     if (userString) {
         try {
@@ -168,6 +193,3 @@ function cerrarSesion() {
 }
 
 console.log('✅ Login.js versión final cargado completamente');
-console.log('🔧 Funciones disponibles:', Object.getOwnPropertyNames(window).filter(name => 
-    name.includes('Login') || name.includes('login') || name.includes('redirigir')
-));
