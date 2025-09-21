@@ -3,7 +3,7 @@ package com.restaurante.dto.request;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
-public class PedidoRequest {
+public class CrearPedidoRequest {
     @NotNull(message = "Usuario ID es requerido")
     private Long usuarioId;
     

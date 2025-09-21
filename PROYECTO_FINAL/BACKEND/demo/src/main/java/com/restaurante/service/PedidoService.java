@@ -1,6 +1,6 @@
 package com.restaurante.service;
 
-import com.restaurante.dto.request.PedidoRequest;
+import com.restaurante.dto.request.CrearPedidoRequest;
 import com.restaurante.model.*;
 import com.restaurante.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class PedidoService {
     @Autowired
     private DetallePedidoRepository detallePedidoRepository;
     
-    public Pedido crearPedido(PedidoRequest request) {
+    public Pedido crearPedido(CrearPedidoRequest request) {
         Pedido pedido = new Pedido();
         
         // Asignar usuario
@@ -49,7 +49,7 @@ public class PedidoService {
         List<DetallePedido> detalles = new ArrayList<>();
         Double total = 0.0;
         
-        for (PedidoRequest.ItemPedido item : request.getItems()) {
+        for (CrearPedidoRequest.ItemPedido item : request.getItems()) {
             Producto producto = productoRepository.findById(item.getProductoId())
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
             
