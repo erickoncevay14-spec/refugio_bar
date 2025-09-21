@@ -44,8 +44,8 @@
                     <input type="password" id="password" name="password" required>
                 </div>
                 <div class="form-group">
-                    <!-- Cambio: quitamos onclick y usamos id -->
-                    <button type="button" id="loginBtn" class="cta-button" style="width: 100%;">Ingresar</button>
+                    <!-- SOLO llamar a ejecutarLogin() - sin conflictos -->
+                    <button type="button" id="loginBtn" onclick="ejecutarLogin()">Iniciar Sesión</button>
                 </div>
                 <div class="form-group">
                     <button type="button" onclick="window.location.href = '/registro'" class="cta-button"
@@ -61,33 +61,10 @@
     <script th:src="@{/js/services/authService.js}"></script>
     <script src="/js/login/login.js"></script>
 
-    <script>
-        // Asignamos el evento al botón
-        document.getElementById('loginBtn').addEventListener('click', validarLogin);
+    <!-- 
+    ❌ ELIMINADO: Script inline que causaba conflictos
+    El login.js maneja todo ahora
+    -->
 
-        // Función de validación (igual que antes)
-        function validarLogin() {
-            const usuario = document.getElementById('usuario').value;
-            const password = document.getElementById('password').value;
-
-            // Lista de usuarios válidos con su ruta de redirección
-            const usuarios = [
-                { nombre: "mozo", clave: "1234", redirect: "/mozo" },
-                { nombre: "bartender", clave: "1234", redirect: "/bartender" },
-                { nombre: "admin", clave: "1234", redirect: "/admin" }
-            ];
-
-            const user = usuarios.find(u =>
-                u.nombre.toLowerCase() === usuario.toLowerCase() && u.clave === password
-            );
-
-            if (user) {
-                alert("Bienvenido " + user.nombre + " ✅");
-                window.location.href = user.redirect; // redirige a su página
-            } else {
-                alert("❌ Usuario o contraseña incorrectos");
-            }
-        }
-    </script>
 </body>
 </html>
