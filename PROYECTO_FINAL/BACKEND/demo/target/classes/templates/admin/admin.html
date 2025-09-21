@@ -12,7 +12,7 @@
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Custom CSS -->
-    <link rel="stylesheet" th:href="@{/css/Admin.css/Admin.css}">
+    <link rel="stylesheet" href="/css/Admin.css/Admin.css">
 </head>
 <body>
     <div class="container-fluid">
@@ -25,43 +25,43 @@
                     </div>
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" th:href="@{#}" data-section="dashboard">
+                            <a class="nav-link active" href="#" data-section="dashboard">
                                 <i class="bi bi-speedometer2"></i> Dashboard
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{#}" data-section="productos">
+                            <a class="nav-link" href="#" data-section="productos">
                                 <i class="bi bi-box-seam"></i> Productos
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{#}" data-section="pedidos">
+                            <a class="nav-link" href="#" data-section="pedidos">
                                 <i class="bi bi-receipt"></i> Pedidos
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{#}" data-section="usuarios">
+                            <a class="nav-link" href="#" data-section="usuarios">
                                 <i class="bi bi-people"></i> Usuarios
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{#}" data-section="mesas">
-                                <i class="bi bi-grid-3x3"></i> Mesas
+                            <a class="nav-link" href="#" data-section="mesas">
+                                <i class="bi bi-table"></i> Mesas
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{#}" data-section="reservas">
+                            <a class="nav-link" href="#" data-section="reservas">
                                 <i class="bi bi-calendar-check"></i> Reservas
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{#}" data-section="analytics">
+                            <a class="nav-link" href="#" data-section="analytics">
                                 <i class="bi bi-graph-up"></i> Analytics
                             </a>
                         </li>
                     </ul>
                     <div class="sidebar-footer">
-                        <a th:href="@{#}" onclick="cerrarSesion()" class="btn btn-danger w-100">
+                        <a href="#" onclick="cerrarSesion()" class="nav-link text-danger">
                             <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
                         </a>
                     </div>
@@ -69,79 +69,77 @@
             </nav>
 
             <!-- Main Content -->
-            <main class="col-md-10 ms-sm-auto px-4">
+            <main class="col-md-10 ml-sm-auto col-lg-10 px-4">
                 <!-- Header -->
-                <div class="header">
-                    <h2 id="sectionTitle">Dashboard</h2>
-                    <div class="header-info">
+                <div class="header d-flex justify-content-between align-items-center">
+                    <h1 id="pageTitle">Dashboard</h1>
+                    <div class="user-info">
                         <span id="userInfo">Admin</span>
-                        <span id="dateTime"></span>
+                        <span id="fechaHora" class="text-muted ms-3"></span>
                     </div>
                 </div>
 
                 <!-- Dashboard Section -->
                 <section id="dashboard" class="content-section active">
-                    <div class="row mb-4">
+                    <div class="row">
+                        <!-- Cards de resumen -->
                         <div class="col-md-3">
-                            <div class="stat-card">
-                                <div class="stat-icon bg-success">
-                                    <i class="bi bi-currency-dollar"></i>
-                                </div>
-                                <div class="stat-details">
-                                    <h6>Ventas Hoy</h6>
-                                    <h3 id="ventasHoy">S/ 0</h3>
+                            <div class="card stats-card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Productos</h5>
+                                    <h2 id="totalProductos">0</h2>
+                                    <small class="text-muted">Total en inventario</small>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="stat-card">
-                                <div class="stat-icon bg-primary">
-                                    <i class="bi bi-bag-check"></i>
-                                </div>
-                                <div class="stat-details">
-                                    <h6>Pedidos Hoy</h6>
-                                    <h3 id="pedidosHoy">0</h3>
+                            <div class="card stats-card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Pedidos Hoy</h5>
+                                    <h2 id="pedidosHoy">0</h2>
+                                    <small class="text-muted">Pedidos del día</small>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="stat-card">
-                                <div class="stat-icon bg-warning">
-                                    <i class="bi bi-box"></i>
-                                </div>
-                                <div class="stat-details">
-                                    <h6>Productos</h6>
-                                    <h3 id="totalProductos">0</h3>
+                            <div class="card stats-card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Usuarios</h5>
+                                    <h2 id="totalUsuarios">0</h2>
+                                    <small class="text-muted">Usuarios registrados</small>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="stat-card">
-                                <div class="stat-icon bg-info">
-                                    <i class="bi bi-people"></i>
-                                </div>
-                                <div class="stat-details">
-                                    <h6>Clientes</h6>
-                                    <h3 id="totalClientes">0</h3>
+                            <div class="card stats-card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Mesas</h5>
+                                    <h2 id="totalMesas">0</h2>
+                                    <small class="text-muted">Mesas disponibles</small>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-8">
+                    <!-- Gráficos -->
+                    <div class="row mt-4">
+                        <div class="col-md-6">
                             <div class="card">
-                                <div class="card-header">Ventas Semanales</div>
+                                <div class="card-header">
+                                    <h5>Ventas Semanales</h5>
+                                </div>
                                 <div class="card-body">
-                                    <canvas id="salesChart"></canvas>
+                                    <canvas id="ventasChart"></canvas>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="card">
-                                <div class="card-header">Top Productos</div>
+                                <div class="card-header">
+                                    <h5>Productos Más Vendidos</h5>
+                                </div>
                                 <div class="card-body">
-                                    <ul id="topProductos" class="list-unstyled"></ul>
+                                    <canvas id="productosChart"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -150,142 +148,198 @@
 
                 <!-- Productos Section -->
                 <section id="productos" class="content-section">
-                    <div class="section-header">
-                        <h4>Gestión de Productos</h4>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h2>Gestión de Productos</h2>
                         <button class="btn btn-primary" onclick="abrirModalProducto()">
                             <i class="bi bi-plus"></i> Nuevo Producto
                         </button>
                     </div>
+                    
+                    <!-- Filtros -->
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="buscarProducto" placeholder="Buscar producto...">
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select" id="filtroCategoria">
+                                <option value="">Todas las categorías</option>
+                                <option value="BEBIDAS">Bebidas</option>
+                                <option value="COMIDAS">Comidas</option>
+                                <option value="POSTRES">Postres</option>
+                                <option value="APERITIVOS">Aperitivos</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Tabla de productos -->
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>ID</th>
                                     <th>Nombre</th>
-                                    <th>Descripción</th>
-                                    <th>Precio</th>
                                     <th>Categoría</th>
+                                    <th>Precio</th>
                                     <th>Stock</th>
+                                    <th>Estado</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody id="productosTabla"></tbody>
+                            <tbody id="tablaProductos">
+                                <!-- Productos se cargan dinámicamente -->
+                            </tbody>
                         </table>
                     </div>
                 </section>
 
                 <!-- Pedidos Section -->
                 <section id="pedidos" class="content-section">
-                    <div class="section-header">
-                        <h4>Gestión de Pedidos</h4>
-                        <select class="form-select w-auto" id="filtroPedidos" onchange="filtrarPedidos()">
-                            <option value="">Todos</option>
-                            <option value="PENDIENTE">Pendiente</option>
-                            <option value="EN_PREPARACION">En Preparación</option>
-                            <option value="LISTO">Listo</option>
-                            <option value="ENTREGADO">Entregado</option>
-                        </select>
-                    </div>
+                    <h2>Gestión de Pedidos</h2>
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Número</th>
+                                    <th>ID</th>
                                     <th>Cliente</th>
                                     <th>Mesa</th>
+                                    <th>Fecha</th>
                                     <th>Total</th>
                                     <th>Estado</th>
-                                    <th>Fecha</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody id="pedidosTabla"></tbody>
+                            <tbody id="tablaPedidos">
+                                <!-- Pedidos se cargan dinámicamente -->
+                            </tbody>
                         </table>
                     </div>
                 </section>
 
                 <!-- Usuarios Section -->
                 <section id="usuarios" class="content-section">
-                    <div class="section-header">
-                        <h4>Gestión de Usuarios</h4>
-                        <button class="btn btn-primary" onclick="abrirModalUsuario()">
-                            <i class="bi bi-person-plus"></i> Nuevo Usuario
-                        </button>
-                    </div>
+                    <h2>Gestión de Usuarios</h2>
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Usuario</th>
-                                    <th>Email</th>
                                     <th>Nombre</th>
+                                    <th>Email</th>
                                     <th>Rol</th>
                                     <th>Estado</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody id="usuariosTabla"></tbody>
+                            <tbody id="tablaUsuarios">
+                                <!-- Usuarios se cargan dinámicamente -->
+                            </tbody>
                         </table>
                     </div>
                 </section>
 
                 <!-- Mesas Section -->
                 <section id="mesas" class="content-section">
-                    <div class="section-header">
-                        <h4>Gestión de Mesas</h4>
-                        <button class="btn btn-primary" onclick="abrirModalMesa()">
-                            <i class="bi bi-plus"></i> Nueva Mesa
-                        </button>
+                    <h2>Gestión de Mesas</h2>
+                    <div class="row" id="gridMesas">
+                        <!-- Mesas se cargan dinámicamente -->
                     </div>
-                    <div class="row" id="mesasGrid"></div>
                 </section>
 
                 <!-- Reservas Section -->
                 <section id="reservas" class="content-section">
-                    <div class="section-header">
-                        <h4>Gestión de Reservas</h4>
-                        <input type="date" class="form-control w-auto" id="filtroReserva">
-                    </div>
+                    <h2>Gestión de Reservas</h2>
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>ID</th>
                                     <th>Cliente</th>
                                     <th>Mesa</th>
-                                    <th>Fecha/Hora</th>
+                                    <th>Fecha</th>
+                                    <th>Hora</th>
                                     <th>Personas</th>
                                     <th>Estado</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody id="reservasTabla"></tbody>
+                            <tbody id="tablaReservas">
+                                <!-- Reservas se cargan dinámicamente -->
+                            </tbody>
                         </table>
                     </div>
                 </section>
 
-                <!-- Analytics Section (Solo Looker Studio) -->
+                <!-- Analytics Section -->
                 <section id="analytics" class="content-section">
-                    <div class="analytics-header">
-                        <h4>Analytics - Dashboard Externo</h4>
-                        <p class="text-muted">Análisis de datos de ventas y tendencias del mercado</p>
-                    </div>
-                    
-                    <!-- Iframe para Looker Studio -->
-                    <div class="looker-container">
-                        <iframe 
-                            src="https://lookerstudio.google.com/embed/reporting/TU-ID-AQUI"
-                            frameborder="0"
-                            allowfullscreen>
-                        </iframe>
+                    <h2>Analytics - Looker Studio</h2>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Dashboard de Ventas</h5>
+                                    <small class="text-muted">Datos externos de Looker Studio</small>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Iframe para embebido de Looker Studio -->
+                                    <iframe id="lookerDashboard" 
+                                            width="100%" 
+                                            height="600"
+                                            style="border:0"
+                                            src=""
+                                            allowfullscreen>
+                                    </iframe>
+                                    
+                                    <!-- Mensaje por defecto -->
+                                    <div id="lookerPlaceholder" class="text-center p-5">
+                                        <i class="bi bi-graph-up-arrow display-1 text-muted"></i>
+                                        <h4 class="mt-3">Looker Studio Dashboard</h4>
+                                        <p class="text-muted">
+                                            Configura tu URL de Looker Studio en la configuración
+                                        </p>
+                                        <button class="btn btn-primary" onclick="configurarLooker()">
+                                            Configurar Dashboard
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Nota explicativa -->
-                    <div class="alert alert-info mt-3">
-                        <i class="bi bi-info-circle"></i>
-                        Los datos mostrados en esta sección provienen de análisis externos y tendencias del mercado, 
-                        no están relacionados con la base de datos operacional del sistema.
+                    <!-- Enlaces rápidos a dashboards -->
+                    <div class="row mt-4">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-currency-dollar display-4 text-success"></i>
+                                    <h5>Dashboard Ventas</h5>
+                                    <button class="btn btn-outline-success" onclick="cargarDashboard('ventas')">
+                                        Ver Dashboard
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-people display-4 text-info"></i>
+                                    <h5>Dashboard Clientes</h5>
+                                    <button class="btn btn-outline-info" onclick="cargarDashboard('clientes')">
+                                        Ver Dashboard
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-graph-up display-4 text-warning"></i>
+                                    <h5>Dashboard Inventario</h5>
+                                    <button class="btn btn-outline-warning" onclick="cargarDashboard('inventario')">
+                                        Ver Dashboard
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
             </main>
@@ -297,37 +351,49 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="tituloModalProducto">Nuevo Producto</h5>
+                    <h5 class="modal-title" id="modalProductoTitulo">Nuevo Producto</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <form id="formProducto">
                         <input type="hidden" id="productoId">
                         <div class="mb-3">
-                            <label class="form-label">Nombre</label>
+                            <label for="productoNombre" class="form-label">Nombre</label>
                             <input type="text" class="form-control" id="productoNombre" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Descripción</label>
-                            <textarea class="form-control" id="productoDescripcion"></textarea>
+                            <label for="productoDescripcion" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="productoDescripcion" rows="3"></textarea>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <label class="form-label">Precio</label>
+                                <label for="productoPrecio" class="form-label">Precio</label>
                                 <input type="number" class="form-control" id="productoPrecio" step="0.01" required>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label">Stock</label>
+                                <label for="productoStock" class="form-label">Stock</label>
                                 <input type="number" class="form-control" id="productoStock" required>
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Categoría</label>
-                            <select class="form-select" id="productoCategoria">
-                                <option value="BEBIDA">Bebida</option>
-                                <option value="COMIDA">Comida</option>
-                                <option value="POSTRE">Postre</option>
+                            <label for="productoCategoria" class="form-label">Categoría</label>
+                            <select class="form-select" id="productoCategoria" required>
+                                <option value="">Seleccionar categoría</option>
+                                <option value="BEBIDAS">Bebidas</option>
+                                <option value="COMIDAS">Comidas</option>
+                                <option value="POSTRES">Postres</option>
+                                <option value="APERITIVOS">Aperitivos</option>
                             </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="productoImagen" class="form-label">URL Imagen</label>
+                            <input type="url" class="form-control" id="productoImagen">
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="productoActivo" checked>
+                            <label class="form-check-label" for="productoActivo">
+                                Producto activo
+                            </label>
                         </div>
                     </form>
                 </div>
@@ -339,9 +405,35 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS -->
+    <!-- Modal Configurar Looker -->
+    <div class="modal fade" id="modalLooker" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Configurar Looker Studio</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formLooker">
+                        <div class="mb-3">
+                            <label for="lookerUrl" class="form-label">URL del Dashboard de Looker Studio</label>
+                            <input type="url" class="form-control" id="lookerUrl" placeholder="https://lookerstudio.google.com/embed/reporting/...">
+                            <div class="form-text">
+                                Obtén la URL de embebido desde tu dashboard de Looker Studio
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="guardarConfigLooker()">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom JS -->
-    <script th:src="@{/js/Admin/Admin.js}"></script>
+    <script src="/js/Admin/Admin.js"></script>
 </body>
 </html>
