@@ -1,82 +1,173 @@
-// Función de login que conecta con el backend
-async function validarLogin() {
+// login.js - ARCHIVO COMPLETO Y FINAL
+
+console.log('🚀 CARGANDO LOGIN.JS VERSIÓN FINAL...');
+
+// Credenciales de prueba
+const usuarios = {
+    "admin": { password: "1234", rol: "ADMIN", nombre: "Administrador Local" },
+    "mozo": { password: "1234", rol: "MOZO", nombre: "Mesero Local" },
+    "bartender": { password: "1234", rol: "BARTENDER", nombre: "Bartender Local" }
+};
+
+async function ejecutarLogin() {
+    console.log('🚀 EJECUTANDO LOGIN VERSIÓN FINAL...');
+    
     const usuario = document.getElementById("usuario").value;
     const password = document.getElementById("password").value;
+    
+    console.log('📝 Datos ingresados:', { usuario, password: '***' });
     
     if (!usuario || !password) {
         alert('Por favor complete todos los campos');
         return;
     }
     
+    // Mostrar loading
+    const loginBtn = document.querySelector('button') || document.querySelector('input[type="submit"]');
+    const originalText = loginBtn ? loginBtn.textContent : '';
+    
+    if (loginBtn) {
+        loginBtn.textContent = 'Iniciando sesión...';
+        loginBtn.disabled = true;
+    }
+    
     try {
-        // Conectar con el backend Spring Boot
-        const response = await fetch('http://localhost:8080/api/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ 
-                usuario: usuario, 
-                password: password 
-            })
-        });
+        console.log('🔑 Verificando credenciales locales...');
         
-        const data = await response.json();
+        // Usar credenciales locales
+        const userData = usuarios[usuario.toLowerCase()];
+        console.log('🔍 Usuario encontrado:', userData ? 'SÍ' : 'NO');
         
-        if (response.ok && data.token) {
-            // Login exitoso
-            alert(`Bienvenido ${data.nombre} ✅`);
-            console.log("Login exitoso", data);
+        if (userData && userData.password === password) {
+            console.log('✅ Login exitoso con credenciales locales');
+            console.log('👤 Datos del usuario:', userData);
             
-            // Guardar datos en localStorage
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('currentUser', JSON.stringify({
-                id: data.id,
-                usuario: data.usuario,
-                nombre: data.nombre,
-                rol: data.rol
-            }));
+            const userSession = {
+                id: Date.now(),
+                usuario: usuario,
+                nombre: userData.nombre,
+                rol: userData.rol,
+                token: 'local-token-' + Date.now(),
+                fechaLogin: new Date().toISOString(),
+                esLocal: true
+            };
             
-            // Redirigir según el rol
-            switch(data.rol) {
-                case 'ADMIN':
-                    window.location.href = '/admin';
-                    break;
-                case 'MESERO':
-                    window.location.href = '/mozo';
-                    break;
-                case 'BARTENDER':
-                    window.location.href = '/bartender';
-                    break;
-                default:
-                    window.location.href = '/index';
-            }
+            console.log('💾 Creando sesión:', userSession);
+            
+            alert(`Bienvenido ${userData.nombre} ✅`);
+            
+            console.log('🔄 LLAMANDO A redirigirSegunRol FINAL...');
+            
+            // Llamar a la redirección
+            redirigirSegunRolFinal(userData.rol, userSession);
+            
         } else {
-            // Login fallido
             alert('❌ Credenciales incorrectas');
-            console.error('Login fallido:', data.error);
+            console.error('❌ Login fallido para:', usuario);
         }
         
     } catch (error) {
-        console.error('Error de conexión:', error);
-        alert('❌ Error al conectar con el servidor. Asegúrate de que el backend esté corriendo.');
+        console.error('💥 Error en login:', error);
+        alert('Error: ' + error.message);
+    } finally {
+        // Restaurar botón
+        if (loginBtn) {
+            loginBtn.textContent = originalText || 'Iniciar Sesión';
+            loginBtn.disabled = false;
+        }
     }
 }
+
+function redirigirSegunRolFinal(rol, userSession) {
+    console.log('🔄 EJECUTANDO REDIRECCIÓN FINAL...');
+    console.log('- Rol recibido:', rol);
+    console.log('- UserSession:', userSession);
+    
+    // Guardar en TODOS los lugares posibles
+    const sessionString = JSON.stringify(userSession);
+    localStorage.setItem('currentUser', sessionString);
+    localStorage.setItem('userBackup', sessionString);
+    sessionStorage.setItem('currentUser', sessionString);
+    
+    console.log('💾 Datos guardados en localStorage:', localStorage.getItem('currentUser'));
+    
+    // Preparar datos para URL
+    const userData = encodeURIComponent(sessionString);
+    console.log('🔗 Datos preparados para URL (length):', userData.length);
+    
+    // Determinar URL destino
+    let targetUrl;
+    const timestamp = Date.now();
+    
+    switch(rol?.toUpperCase()) {
+        case 'ADMIN':
+            targetUrl = `/admin?user=${userData}&t=${timestamp}`;
+            console.log('👑 Redirigiendo a ADMIN');
+            break;
+        case 'MOZO':
+            targetUrl = `/mozo?user=${userData}&t=${timestamp}`;
+            console.log('🍽️ Redirigiendo a MOZO');
+            break;
+        case 'BARTENDER':
+            targetUrl = `/bartender?user=${userData}&t=${timestamp}`;
+            console.log('🍸 Redirigiendo a BARTENDER');
+            break;
+        default:
+            targetUrl = '/index';
+            console.log('🏠 Redirigiendo a index (rol desconocido:', rol, ')');
+    }
+    
+    console.log('🚀 URL FINAL:', targetUrl.substring(0, 100) + '...');
+    
+    // Pequeña pausa para asegurar guardado
+    setTimeout(() => {
+        console.log('⏰ Ejecutando redirección después de pausa...');
+        window.location.href = targetUrl;
+    }, 100);
+}
+
+// Función wrapper para compatibilidad
+function validarLogin() {
+    console.log('📞 validarLogin() llamada - ejecutando versión final');
+    return ejecutarLogin();
+}
+
+// Función wrapper para redirigirSegunRol (por si algo la llama)
+function redirigirSegunRol(rol, userSession) {
+    console.log('📞 redirigirSegunRol() llamada - ejecutando versión final');
+    return redirigirSegunRolFinal(rol, userSession);
+}
+
+// Al cargar la página
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('📄 Login page loaded - versión final');
+    
+    const userString = localStorage.getItem('currentUser');
+    if (userString) {
+        try {
+            const user = JSON.parse(userString);
+            console.log('👤 Usuario existente encontrado:', user);
+            console.log('🔄 Auto-redirigiendo...');
+            redirigirSegunRolFinal(user.rol, user);
+        } catch (error) {
+            console.error('💥 Error al leer sesión existente:', error);
+            localStorage.clear();
+            sessionStorage.clear();
+        }
+    } else {
+        console.log('🆕 No hay sesión previa - login limpio');
+    }
+});
 
 // Función para cerrar sesión
 function cerrarSesion() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('currentUser');
+    console.log('👋 Cerrando sesión...');
+    localStorage.clear();
+    sessionStorage.clear();
     window.location.href = '/login';
 }
 
-// Función para verificar si hay sesión activa
-function verificarSesion() {
-    const token = localStorage.getItem('token');
-    const user = localStorage.getItem('currentUser');
-    
-    if (!token || !user) {
-        return false;
-    }
-    return true;
-}
+console.log('✅ Login.js versión final cargado completamente');
+console.log('🔧 Funciones disponibles:', Object.getOwnPropertyNames(window).filter(name => 
+    name.includes('Login') || name.includes('login') || name.includes('redirigir')
+));

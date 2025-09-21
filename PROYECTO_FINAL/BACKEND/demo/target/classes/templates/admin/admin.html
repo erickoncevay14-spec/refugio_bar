@@ -1,3 +1,29 @@
+<script>
+console.log('🚀 ADMIN.HTML CARGANDO...');
+console.log('📦 localStorage al cargar admin.html:', localStorage.getItem('currentUser'));
+console.log('📦 sessionStorage al cargar admin.html:', sessionStorage.getItem('currentUser'));
+
+// Monitorear cambios en localStorage
+const originalSetItem = localStorage.setItem;
+const originalRemoveItem = localStorage.removeItem;
+const originalClear = localStorage.clear;
+
+localStorage.setItem = function(key, value) {
+    console.log('📝 localStorage.setItem:', key, value);
+    return originalSetItem.apply(this, arguments);
+};
+
+localStorage.removeItem = function(key) {
+    console.log('🗑️ localStorage.removeItem:', key);
+    return originalRemoveItem.apply(this, arguments);
+};
+
+localStorage.clear = function() {
+    console.log('💥 localStorage.clear() LLAMADO!');
+    console.trace(); // Mostrar stack trace
+    return originalClear.apply(this, arguments);
+};
+</script>
 <!DOCTYPE html>
 <html lang="es">
 <head>

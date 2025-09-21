@@ -1,6 +1,6 @@
 package com.restaurante.controller.api;
 
-import com.restaurante.dto.request.PedidoRequest;
+import com.restaurante.dto.request.CrearPedidoRequest;
 import com.restaurante.model.Pedido;
 import com.restaurante.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class PedidoController {
     private PedidoService pedidoService;
 
     @PostMapping
-    public ResponseEntity<?> crearPedido(@Valid @RequestBody PedidoRequest pedidoRequest) {
+    public ResponseEntity<?> crearPedido(@Valid @RequestBody CrearPedidoRequest pedidoRequest) {
         try {
             Pedido nuevoPedido = pedidoService.crearPedido(pedidoRequest);
             return ResponseEntity.status(HttpStatus.CREATED).body(nuevoPedido);

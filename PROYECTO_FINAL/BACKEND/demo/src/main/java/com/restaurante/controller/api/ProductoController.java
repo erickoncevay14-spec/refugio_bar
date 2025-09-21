@@ -1,85 +1,155 @@
 package com.restaurante.controller.api;
 
-import com.restaurante.model.Producto;
+import com.restaurante.dto.request.ProductoRequest;
+import com.restaurante.dto.response.ProductoResponse;
+import com.restaurante.dto.response.ApiResponse;
 import com.restaurante.service.ProductoService;
+import com.restaurante.model.Producto;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
+
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/productos")
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001"})
+@CrossOrigin(origins = "*")
 public class ProductoController {
-
+    
     @Autowired
     private ProductoService productoService;
-
+    
+    // GET /api/productos - Obtener todos los productos
     @GetMapping
-    public ResponseEntity<List<Producto>> getAllProductos() {
-        List<Producto> productos = productoService.findAll();
-        return ResponseEntity.ok(productos);
+    public ResponseEntity<ApiResponse<List<ProductoResponse>>> getAllProductos() {
+        try {
+            List<ProductoResponse> productos = productoService.obtenerTodos();
+            return ResponseEntity.ok(ApiResponse.success("Productos obtenidos exitosamente", productos));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                .body(ApiResponse.error("Error al obtener productos: " + e.getMessage()));
+        }
     }
-
+    
+    // GET /api/productos/{id} - Obtener producto por ID
     @GetMapping("/{id}")
-    public ResponseEntity<?> getProductoById(@PathVariable Long id) {
-        return productoService.findById(id)
-            .map(ResponseEntity::ok)
-            .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<ApiResponse<ProductoResponse>> getProductoById(@PathVariable Long id) {
+        try {
+            ProductoResponse producto = productoService.obtenerPorId(id);
+            return ResponseEntity.ok(ApiResponse.success("Producto encontrado", producto));
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
-
+    
+    // GET /api/productos/disponibles - Obtener productos disponibles (para mozo)
+    @GetMapping("/disponibles")
+    public ResponseEntity<ApiResponse<List<ProductoResponse>>> getProductosDisponibles() {
+        try {
+            List<ProductoResponse> productos = productoService.obtenerDisponibles();
+            return ResponseEntity.ok(ApiResponse.success("Productos disponibles obtenidos", productos));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                .body(ApiResponse.error("Error al obtener productos disponibles: " + e.getMessage()));
+        }
+    }
+    
+    // GET /api/productos/categoria/{categoria} - Obtener productos por categoría
     @GetMapping("/categoria/{categoria}")
-    public ResponseEntity<List<Producto>> getProductosByCategoria(@PathVariable String categoria) {
-        List<Producto> productos = productoService.findByCategoria(categoria);
-        return ResponseEntity.ok(productos);
+    public ResponseEntity<ApiResponse<List<ProductoResponse>>> getProductosPorCategoria(@PathVariable String categoria) {
+        try {
+            List<ProductoResponse> productos = productoService.obtenerPorCategoria(categoria);
+            return ResponseEntity.ok(ApiResponse.success("Productos de categoría " + categoria, productos));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                .body(ApiResponse.error("Error al obtener productos por categoría: " + e.getMessage()));
+        }
     }
-
+    
+    // POST /api/productos - Crear nuevo producto (ADMIN)
     @PostMapping
-    public ResponseEntity<?> createProducto(@Valid @RequestBody Producto producto) {
+    public ResponseEntity<ApiResponse<ProductoResponse>> crearProducto(@Valid @RequestBody ProductoRequest request) {
         try {
-            if (productoService.existsByNombre(producto.getNombre())) {
-                return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(Map.of("error", "Producto con ese nombre ya existe"));
-            }
-            
-            Producto nuevoProducto = productoService.save(producto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(nuevoProducto);
-            
+            ProductoResponse producto = productoService.crear(request);
+            return ResponseEntity.ok(ApiResponse.success("Producto creado exitosamente", producto));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest()
+                .body(ApiResponse.error("Datos inválidos: " + e.getMessage()));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Map.of("error", "Error al crear producto"));
+            return ResponseEntity.badRequest()
+                .body(ApiResponse.error("Error al crear producto: " + e.getMessage()));
         }
     }
-
+    
+    // PUT /api/productos/{id} - Actualizar producto (ADMIN)
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateProducto(@PathVariable Long id, @Valid @RequestBody Producto producto) {
+    public ResponseEntity<ApiResponse<ProductoResponse>> actualizarProducto(
+            @PathVariable Long id, 
+            @Valid @RequestBody ProductoRequest request) {
         try {
-            producto.setId(id);
-            Producto actualizado = productoService.update(producto);
-            return ResponseEntity.ok(actualizado);
+            ProductoResponse producto = productoService.actualizar(id, request);
+            return ResponseEntity.ok(ApiResponse.success("Producto actualizado exitosamente", producto));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest()
+                .body(ApiResponse.error("Datos inválidos: " + e.getMessage()));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(Map.of("error", "Producto no encontrado"));
+            return ResponseEntity.badRequest()
+                .body(ApiResponse.error("Error al actualizar producto: " + e.getMessage()));
         }
     }
-
+    
+    // DELETE /api/productos/{id} - Eliminar producto (ADMIN)
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteProducto(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<String>> eliminarProducto(@PathVariable Long id) {
         try {
-            productoService.deleteById(id);
-            return ResponseEntity.ok(Map.of("message", "Producto eliminado exitosamente"));
+            productoService.eliminar(id);
+            return ResponseEntity.ok(ApiResponse.success("Producto eliminado exitosamente", "Producto con ID " + id + " eliminado"));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(Map.of("error", "Producto no encontrado"));
+            return ResponseEntity.badRequest()
+                .body(ApiResponse.error("Error al eliminar producto: " + e.getMessage()));
         }
     }
-
-    @GetMapping("/buscar")
-    public ResponseEntity<List<Producto>> buscarProductos(@RequestParam String q) {
-        List<Producto> productos = productoService.buscarProductos(q);
-        return ResponseEntity.ok(productos);
+    
+    // PUT /api/productos/{id}/stock - Actualizar solo el stock (BARTENDER/ADMIN)
+    @PutMapping("/{id}/stock")
+    public ResponseEntity<ApiResponse<ProductoResponse>> actualizarStock(
+            @PathVariable Long id, 
+            @RequestBody StockUpdateRequest stockRequest) {
+        try {
+            ProductoResponse producto = productoService.actualizarStock(id, stockRequest.getNuevoStock());
+            return ResponseEntity.ok(ApiResponse.success("Stock actualizado exitosamente", producto));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                .body(ApiResponse.error("Error al actualizar stock: " + e.getMessage()));
+        }
+    }
+    
+    // GET /api/productos/stock-bajo - Obtener productos con stock bajo
+    @GetMapping("/stock-bajo")
+    public ResponseEntity<ApiResponse<List<ProductoResponse>>> getProductosStockBajo() {
+        try {
+            List<ProductoResponse> productos = productoService.obtenerConStockBajo();
+            return ResponseEntity.ok(ApiResponse.success("Productos con stock bajo obtenidos", productos));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                .body(ApiResponse.error("Error al obtener productos con stock bajo: " + e.getMessage()));
+        }
+    }
+    
+    // Clase interna para actualización de stock simple
+    public static class StockUpdateRequest {
+        private Integer nuevoStock;
+        
+        public StockUpdateRequest() {}
+        
+        public Integer getNuevoStock() {
+            return nuevoStock;
+        }
+        
+        public void setNuevoStock(Integer nuevoStock) {
+            this.nuevoStock = nuevoStock;
+        }
     }
 }
