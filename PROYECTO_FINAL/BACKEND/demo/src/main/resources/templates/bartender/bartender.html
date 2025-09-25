@@ -1,56 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- CSS -->
-    <link rel="stylesheet" th:href="@{/css/bartender.css/bartender.css}">
-    
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    
-    <title>Bartender</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bartender - Refugio Bar</title>
+
+  <!-- CSS personalizado -->
+  <link rel="stylesheet" th:href="@{/css/bartender.css/bartender.css}">
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+  <!-- Iconos -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
-<body>
-    <header class="header">
-        <div class="mozo-info">
-          <img src="https://static.dw.com/image/71456751_605.jpg" alt="Foto del Mozo" class="mozo-foto">
-          <h1>Refugio Bar</h1>
-          <span class="bartender-nombre" id="userInfo">Bienvenido, <strong>Juan Pérez</strong></span>
-          <button class="logout-button" onclick="cerrarSesion()">Cerrar Sesión</button>
+<body class="bg-light">
+
+  <!-- Header -->
+  <header class="bg-dark text-white py-3 shadow">
+    <div class="container d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center gap-3">
+        <img src="https://static.dw.com/image/71456751_605.jpg" alt="Foto del Mozo" class="rounded-circle" width="70" height="70">
+        <div>
+          <h1 class="h3 mb-0">Refugio Bar</h1>
+          <span id="userInfo" class="small">Bienvenido, <strong>Juan Pérez</strong></span>
         </div>
-    </header>
+      </div>
+      <button class="btn btn-danger btn-sm" onclick="cerrarSesion()">
+        <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+      </button>
+    </div>
+  </header>
 
-    <main class="contenedor">
-        <!-- SECCIÓN: PEDIDOS POR SERVIR -->
-        <section class="pedidos-en-preparacion">
-            <h2>Pedidos por Preparar</h2>
-            <ul>
-                <li>Mesa 1 - Tequila, Chelas - Listo para Servir <button class="servir-btn">listo</button></li>
-                <li>Mesa 2 - Ron, Pisco - Listo para Servir <button class="servir-btn">listo</button></li>
-            </ul>
-        </section>
+  <div class="mb-3">
+    <input type="text" id="buscarPedido" class="form-control" placeholder="🔎 Buscar por mesa o ID...">
+  </div>
 
-        <section class="lista-pedidos">
-            <h2>Lista de Pedidos</h2>
-            <ul>
-                <li>Mesa 1 - Tequila, Chelas - En Preparación <button>Preparar</button></li>
-                <li>Mesa 2 - Ron, Pisco - En Preparación <button>Preparar</button></li>
-            </ul>
-        </section>
+  <!-- Contenido principal -->
+  <main class="container my-5">
+    <div class="row g-4">
 
-        <section class="pedidos-entregados">
-            <h2>Pedidos Entregados</h2>
-            <ul>
-                <li>Mesa 1 - Tequila, Chelas - Entregado</li>
-                <li>Mesa 2 - Ron, Pisco - Entregado</li>
-            </ul>
-        </section>
-    </main>
+      <!-- Pedidos por Preparar (pendientes) -->
+      <div class="col-md-4">
+        <div class="card shadow-sm border-0">
+          <div class="card-header bg-warning text-dark fw-bold">
+            <i class="bi bi-hourglass-split"></i> Pedidos por Preparar
+          </div>
+          <ul id="listaPendientes" class="list-group list-group-flush">
+            <!-- renderizado dinámico -->
+          </ul>
+        </div>
+      </div>
 
-    <!-- JS -->
-    <script th:src="@{/js/bartender/bartender.js}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+      <!-- Lista de Pedidos (preparación / listo) -->
+      <div class="col-md-4">
+        <div class="card shadow-sm border-0">
+          <div class="card-header bg-primary text-white fw-bold">
+            <i class="bi bi-clipboard-check"></i> En Preparación / Listos
+          </div>
+          <ul id="listaPreparacion" class="list-group list-group-flush">
+            <!-- renderizado dinámico -->
+          </ul>
+        </div>
+      </div>
+
+      <!-- Pedidos entregados -->
+      <div class="col-md-4">
+        <div class="card shadow-sm border-0">
+          <div class="card-header bg-success text-white fw-bold">
+            <i class="bi bi-check-circle"></i> Pedidos Entregados
+          </div>
+          <ul id="listaEntregados" class="list-group list-group-flush">
+            <!-- renderizado dinámico -->
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- JS -->
+  <script th:src="@{/js/bartender/bartender.js}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>

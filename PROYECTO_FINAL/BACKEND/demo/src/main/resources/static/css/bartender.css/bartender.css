@@ -3,114 +3,162 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-  background: #f4f4f4;
+  background: #f4f7fa;
   color: #2c3e50;
   line-height: 1.6;
 }
 
-/* Header */
 .header {
-  background: #2c3e50;
+  background: linear-gradient(90deg, #2c3e50, #000,#d5f5e3);
   color: white;
-  padding: 15px;
+  padding: 15px 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-.mozo-info {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-.mozo-foto {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-.logout-button {
-  background: #e74c3c;
-  color: white;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-.logout-button:hover {
-  background: #c0392b;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
 }
 
-/* Contenedor principal */
-.contenedor {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 20px;
-  padding: 20px;
+
+header .rounded-circle {
+  border: 2px solid #27ae60;
 }
 
-/* Secciones */
-section {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+header h1 {
+  font-size: 1.5rem;
 }
 
-h2 {
-  margin-bottom: 15px;
-  font-size: 1.2rem;
-  color: #34495e;
-}
-
-/* Listas */
-ul {
-  list-style: none;
-}
-
-li {
-  background: #ecf0f1;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* Botones */
-button {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
+header #userInfo {
   font-size: 0.9rem;
 }
 
-/* Botones específicos */
-.servir-btn {
-  background: #27ae60;
-  color: white;
+header .btn-danger {
+  transition: all 0.3s ease;
 }
-.servir-btn:hover {
-  background: #1e8449;
-}
-
-.lista-pedidos button {
-  background: #2980b9;
-  color: white;
-}
-.lista-pedidos button:hover {
-  background: #1f6391;
+header .btn-danger:hover {
+  transform: scale(1.05);
+  background-color: #c0392b;
 }
 
-/* Estados visuales */
+/* Input de búsqueda */
+#buscarPedido {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 12px;
+  border: 2px solid #bdc3c7;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+#buscarPedido:focus {
+  outline: none;
+  border-color: #27ae60;
+  box-shadow: 0 0 8px rgba(39, 174, 96, 0.3);
+}
+
+/* Cards de pedidos */
+.card {
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+}
+
+/* Card headers */
+.card-header {
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 12px 12px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Listas de pedidos */
+ul.list-group {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+ul.list-group::-webkit-scrollbar {
+  width: 8px;
+}
+
+ul.list-group::-webkit-scrollbar-thumb {
+  background-color: #27ae60;
+  border-radius: 10px;
+}
+
+li.list-group-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ecf0f1;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding: 12px 15px;
+  transition: all 0.3s ease;
+}
+li.list-group-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Badges */
+.badge {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  padding: 5px 8px;
+  border-radius: 8px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+.bg-secondary { background: #95a5a6; }
+.bg-primary { background: #2980b9; }
+.bg-warning { background: #f1c40f; color: #2c3e50; }
+.bg-success { background: #27ae60; }
+
+/* Botones dentro de listas */
+li button {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+}
+li button:hover {
+  transform: scale(1.05);
+}
+
+/* Pedidos entregados destacados */
 li.entregado {
   background: #d5f5e3;
   color: #1e8449;
   font-weight: bold;
+  border-left: 5px solid #27ae60;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .contenedor {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 674px) and (max-width: 900px) {
+  .contenedor {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 1200px) {
+  .contenedor {
+    grid-template-columns: 1fr 1fr 1fr ;
+  }
 }
