@@ -161,3 +161,151 @@ function cerrarSesion() {
         window.location.href = '/login';
     }
 }
+document.addEventListener("DOMContentLoaded", () => {
+    const enviarBtn = document.getElementById("enviarPedido");
+    const mesaSelect = document.getElementById("opciones");
+    const cantidadInput = document.getElementById("cantidadPersonas");
+    const productosLista = document.getElementById("productosSeleccionados");
+  
+    const listaPorRecoger = document.getElementById("pedidosPorRecoger");
+    const listaEntregados = document.getElementById("pedidosEntregados");
+    const buscarInput = document.getElementById("buscarPedido");
+  
+    const ESTADOS = {
+      PENDIENTE: "pendiente",
+      PREPARANDO: "preparando",
+      LISTO: "listo",
+      ENTREGADO: "entregado"
+    };
+  
+    function getPedidos() {
+      return JSON.parse(localStorage.getItem("pedidos") || "[]");
+    }
+    function savePedidos(pedidos) {
+      localStorage.setItem("pedidos", JSON.stringify(pedidos));
+    }
+  
+    function renderPedidos(filtro = "") {
+      const pedidos = getPedidos();
+      listaPorRecoger.innerHTML = "";
+      listaEntregados.innerHTML = "";
+    
+      pedidos.forEach(p => {
+        // Filtrar por mesa, id o nombre del cliente
+        if (filtro && !`${p.mesa} ${p.id} ${p.nombreCliente}`.toLowerCase().includes(filtro.toLowerCase())) {
+          return;
+        }
+    
+        const li = document.createElement("li");
+        li.className = "list-group-item d-flex justify-content-between align-items-center";
+    
+        const left = document.createElement("div");
+        left.innerHTML = `
+          <strong>Mesa ${p.mesa}</strong> · ${p.productos?.join(", ") || "—"}
+          <div class="small text-muted">
+            Cliente: ${p.nombreCliente || "-"} · Personas: ${p.personas || "-"} · ID: ${p.id}
+            ${p.estado === ESTADOS.ENTREGADO && p.actualizadoEn ? `<br>Entregado: ${new Date(p.actualizadoEn).toLocaleString()}` : ""}
+          </div>
+        `;
+    
+        const right = document.createElement("div");
+        right.className = "d-flex gap-2 align-items-center";
+    
+        // Badge de estado
+        const badge = document.createElement("span");
+        badge.className = "badge rounded-pill";
+        badge.textContent = p.estado;
+        if (p.estado === ESTADOS.PENDIENTE) badge.classList.add("bg-secondary");
+        if (p.estado === ESTADOS.PREPARANDO) badge.classList.add("bg-primary");
+        if (p.estado === ESTADOS.LISTO) badge.classList.add("bg-warning", "text-dark");
+        if (p.estado === ESTADOS.ENTREGADO) badge.classList.add("bg-success");
+    
+        right.appendChild(badge);
+    
+        // Botón "Recoger" solo si está listo
+        if (p.estado === ESTADOS.LISTO) {
+          const btn = document.createElement("button");
+          btn.className = "btn btn-sm btn-outline-success";
+          btn.textContent = "Recoger";
+          btn.onclick = () => {
+            const pedidos = getPedidos().map(item => {
+              if (item.id === p.id) {
+                return { ...item, estado: ESTADOS.ENTREGADO, actualizadoEn: Date.now() };
+              }
+              return item;
+            });
+            savePedidos(pedidos);
+            renderPedidos(buscarInput?.value || "");
+            alert(`Pedido de ${p.nombreCliente} recogido ✅`);
+            window.dispatchEvent(new StorageEvent("storage", { key: "pedidos" }));
+          };
+          right.appendChild(btn);
+        }
+    
+        li.appendChild(left);
+        li.appendChild(right);
+    
+        // Separación por estado
+        if (p.estado === ESTADOS.ENTREGADO) {
+          listaEntregados.appendChild(li);
+        } else {
+          listaPorRecoger.appendChild(li);
+        }
+      });
+    
+      // Limitar entregados a los últimos 10
+      const entregadosItems = listaEntregados.querySelectorAll("li");
+      if (entregadosItems.length > 10) {
+        for (let i = 0; i < entregadosItems.length - 10; i++) {
+          entregadosItems[i].remove();
+        }
+      }
+    }
+    
+  
+    // 👉 Enviar pedido
+    enviarBtn?.addEventListener("click", () => {
+      const productos = [];
+      productosLista?.querySelectorAll("li").forEach(li => {
+        productos.push(li.textContent.replace("Eliminar", "").trim());
+      });
+  
+      if (productos.length === 0) {
+        productos.push("Producto genérico");
+      }
+  
+      const pedido = {
+        id: Date.now(),
+        mesa: mesaSelect?.value || "1",
+        nombreCliente: document.getElementById("nombre")?.value || "Cliente sin nombre",
+        personas: cantidadInput?.value || 1,
+        productos,
+        estado: ESTADOS.PENDIENTE,
+        creadoEn: Date.now()
+      };
+  
+      const pedidos = getPedidos();
+      pedidos.push(pedido);
+      savePedidos(pedidos);
+  
+      alert(`Pedido de ${pedido.nombreCliente} enviado ✅`);
+      if (productosLista) productosLista.innerHTML = "";
+      renderPedidos(buscarInput?.value || "");
+    });
+  
+    // 👉 Actualizar cuando bartender cambia algo
+    window.addEventListener("storage", (e) => {
+      if (e.key === "pedidos") {
+        console.log("Pedidos actualizados (por bartender).");
+        renderPedidos(buscarInput?.value || "");
+      }
+    });
+  
+    // 👉 Buscar en tiempo real
+    buscarInput?.addEventListener("input", (e) => {
+      renderPedidos(e.target.value);
+    });
+  
+    renderPedidos();
+  });
+  
