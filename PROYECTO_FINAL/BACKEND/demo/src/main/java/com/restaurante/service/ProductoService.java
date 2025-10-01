@@ -1,17 +1,17 @@
 package com.restaurante.service;
 
-import com.restaurante.dto.request.ProductoRequest;
-import com.restaurante.dto.response.ProductoResponse;
-import com.restaurante.model.Producto;
-import com.restaurante.repository.ProductoRepository;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.restaurante.dto.request.ProductoRequest;
+import com.restaurante.dto.response.ProductoResponse;
+import com.restaurante.model.Producto;
+import com.restaurante.repository.ProductoRepository;
 
 @Service
 @Transactional
@@ -187,8 +187,8 @@ public class ProductoService {
         producto.setPrecio(request.getPrecio());
         producto.setCategoria(request.getCategoria().toUpperCase());
         producto.setStock(request.getStock());
-        producto.setDisponible(request.getDisponible() != null ? request.getDisponible() : true);
-        producto.setImagen(request.getImagen());
+    producto.setDisponible(request.getDisponible() != null ? request.getDisponible() : Boolean.TRUE);
+        // Imagen eliminado
     }
     
     private ProductoResponse convertirAResponse(Producto producto) {
@@ -200,7 +200,7 @@ public class ProductoService {
         response.setCategoria(producto.getCategoria());
         response.setStock(producto.getStock());
         response.setDisponible(producto.getDisponible());
-        response.setImagen(producto.getImagen());
+        // Imagen eliminado
         response.setFechaCreacion(producto.getFechaCreacion());
         response.setFechaModificacion(producto.getFechaModificacion());
         return response;

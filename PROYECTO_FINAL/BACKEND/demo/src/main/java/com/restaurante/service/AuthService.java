@@ -1,14 +1,15 @@
 package com.restaurante.service;
 
-import com.restaurante.dto.request.RegisterRequest;
-import com.restaurante.model.Usuario;
-import com.restaurante.model.Rol;
-import com.restaurante.repository.UsuarioRepository;
-import com.restaurante.repository.RolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.restaurante.dto.request.RegisterRequest;
+import com.restaurante.model.Rol;
+import com.restaurante.model.Usuario;
+import com.restaurante.repository.RolRepository;
+import com.restaurante.repository.UsuarioRepository;
 
 @Service
 @Transactional
@@ -26,16 +27,11 @@ public class AuthService {
     // 👉 Método de autenticación (versión pedida para pruebas)
     public Usuario authenticate(String username, String password) {
         Usuario user = usuarioRepository.findByUsuario(username).orElse(null);
-        
         if (user != null) {
-            // Temporal: comparación directa sin encriptar
-            if (password.equals(user.getPassword())) {
+            // Permitir login con contraseña encriptada o en texto plano
+            if (passwordEncoder.matches(password, user.getPassword()) || password.equals(user.getPassword())) {
                 return user;
             }
-            // O si está encriptada:
-            // if (passwordEncoder.matches(password, user.getPassword())) {
-            //     return user;
-            // }
         }
         return null;
     }

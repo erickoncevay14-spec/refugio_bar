@@ -1,8 +1,17 @@
 package com.restaurante.model;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "productos")
 public class Producto {
@@ -28,9 +37,6 @@ public class Producto {
     
     @Column(nullable = false)
     private Boolean disponible = true;
-    
-    @Column(length = 500)
-    private String imagen;
     
     @Column(name = "fecha_creacion")
     private LocalDateTime fechaCreacion;
@@ -74,9 +80,6 @@ public class Producto {
     
     public Boolean getDisponible() { return disponible; }
     public void setDisponible(Boolean disponible) { this.disponible = disponible; }
-    
-    public String getImagen() { return imagen; }
-    public void setImagen(String imagen) { this.imagen = imagen; }
     
     public LocalDateTime getFechaCreacion() { return fechaCreacion; }
     public void setFechaCreacion(LocalDateTime fechaCreacion) { this.fechaCreacion = fechaCreacion; }

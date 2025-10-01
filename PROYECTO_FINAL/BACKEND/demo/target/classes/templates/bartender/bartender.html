@@ -16,20 +16,18 @@
 </head>
 <body class="bg-light">
 
-  <!-- Header -->
-  <header class="bg-dark text-white py-3 shadow">
-    <div class="container d-flex justify-content-between align-items-center">
-      <div class="d-flex align-items-center gap-3">
-        <img src="https://static.dw.com/image/71456751_605.jpg" alt="Foto del Mozo" class="rounded-circle" width="70" height="70">
-        <div>
-          <h1 class="h3 mb-0">Refugio Bar</h1>
-          <span id="userInfo" class="small">Bienvenido, <strong>Juan Pérez</strong></span>
-        </div>
+  <!-- Header Moderno -->
+  <header class="header">
+    <div class="mozo-info">
+      <img src="https://static.dw.com/image/71456751_605.jpg" alt="Foto del Bartender" class="rounded-circle">
+      <div>
+        <h1 class="h3 mb-0">Refugio Bar</h1>
+        <span id="userInfo" class="small">Bienvenido, <strong>Juan Pérez</strong></span>
       </div>
-      <button class="btn btn-danger btn-sm" onclick="cerrarSesion()">
-        <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
-      </button>
     </div>
+    <button class="btn btn-danger" onclick="cerrarSesion()">
+      <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+    </button>
   </header>
 
   <div class="mb-3">
@@ -38,11 +36,10 @@
 
   <!-- Contenido principal -->
   <main class="container my-5">
-    <div class="row g-4">
-
+    <div class="contenedor">
       <!-- Pedidos por Preparar (pendientes) -->
-      <div class="col-md-4">
-        <div class="card shadow-sm border-0">
+      <section class="pedido-section">
+        <div class="card shadow border-0">
           <div class="card-header bg-warning text-dark fw-bold">
             <i class="bi bi-hourglass-split"></i> Pedidos por Preparar
           </div>
@@ -50,11 +47,10 @@
             <!-- renderizado dinámico -->
           </ul>
         </div>
-      </div>
-
+      </section>
       <!-- Lista de Pedidos (preparación / listo) -->
-      <div class="col-md-4">
-        <div class="card shadow-sm border-0">
+      <section class="pedido-section">
+        <div class="card shadow border-0">
           <div class="card-header bg-primary text-white fw-bold">
             <i class="bi bi-clipboard-check"></i> En Preparación / Listos
           </div>
@@ -62,11 +58,10 @@
             <!-- renderizado dinámico -->
           </ul>
         </div>
-      </div>
-
+      </section>
       <!-- Pedidos entregados -->
-      <div class="col-md-4">
-        <div class="card shadow-sm border-0">
+      <section class="pedido-section">
+        <div class="card shadow border-0">
           <div class="card-header bg-success text-white fw-bold">
             <i class="bi bi-check-circle"></i> Pedidos Entregados
           </div>
@@ -74,8 +69,7 @@
             <!-- renderizado dinámico -->
           </ul>
         </div>
-      </div>
-
+      </section>
     </div>
   </main>
 
