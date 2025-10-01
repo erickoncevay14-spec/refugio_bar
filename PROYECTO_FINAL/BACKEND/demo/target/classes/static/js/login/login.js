@@ -1,83 +1,17 @@
-// login.js - VERSIÓN FINAL SIN CONFLICTOS
+// login.js - Solo funciones de UI, sin validación local
 
 console.log('🚀 CARGANDO LOGIN.JS VERSIÓN FINAL...');
 
-// Credenciales de prueba
-const usuarios = {
-    "admin": { password: "1234", rol: "ADMIN", nombre: "Administrador Local" },
-    "mozo": { password: "1234", rol: "MOZO", nombre: "Mesero Local" },
-    "bartender": { password: "1234", rol: "BARTENDER", nombre: "Bartender Local" }
-};
+// Mostrar/Ocultar contraseña
+const togglePassword = document.getElementById('togglePassword');
+const passwordField = document.getElementById('password');
 
-async function ejecutarLogin() {
-    console.log('🚀 EJECUTANDO LOGIN VERSIÓN FINAL...');
-    
-    const usuario = document.getElementById("usuario").value;
-    const password = document.getElementById("password").value;
-    
-    console.log('📝 Datos ingresados:', { usuario, password: '***' });
-    
-    if (!usuario || !password) {
-        alert('Por favor complete todos los campos');
-        return;
-    }
-    
-    // Mostrar loading
-    const loginBtn = document.getElementById('loginBtn');
-    const originalText = loginBtn ? loginBtn.textContent : '';
-    
-    if (loginBtn) {
-        loginBtn.textContent = 'Iniciando sesión...';
-        loginBtn.disabled = true;
-    }
-    
-    try {
-        console.log('🔑 Verificando credenciales locales...');
-        
-        // Usar credenciales locales
-        const userData = usuarios[usuario.toLowerCase()];
-        console.log('🔍 Usuario encontrado:', userData ? 'SÍ' : 'NO');
-        
-        if (userData && userData.password === password) {
-            console.log('✅ Login exitoso con credenciales locales');
-            console.log('👤 Datos del usuario:', userData);
-            
-            const userSession = {
-                id: Date.now(),
-                usuario: usuario,
-                nombre: userData.nombre,
-                rol: userData.rol,
-                token: 'local-token-' + Date.now(),
-                fechaLogin: new Date().toISOString(),
-                esLocal: true
-            };
-            
-            console.log('💾 Creando sesión:', userSession);
-            
-            alert(`Bienvenido ${userData.nombre} ✅`);
-            
-            console.log('🔄 LLAMANDO A redirigirSegunRol FINAL...');
-            
-            // Llamar a la redirección
-            redirigirSegunRolFinal(userData.rol, userSession);
-            
-        } else {
-            alert('❌ Credenciales incorrectas');
-            console.error('❌ Login fallido para:', usuario);
-        }
-        
-    } catch (error) {
-        console.error('💥 Error en login:', error);
-        alert('Error: ' + error.message);
-    } finally {
-        // Restaurar botón
-        if (loginBtn) {
-            loginBtn.textContent = originalText || 'Iniciar Sesión';
-            loginBtn.disabled = false;
-        }
-    }
-}
-
+togglePassword.addEventListener('click', () => {
+    const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordField.setAttribute('type', type);
+    togglePassword.classList.toggle('bi-eye-slash');
+});
+         
 function redirigirSegunRolFinal(rol, userSession) {
     console.log('🔄 EJECUTANDO REDIRECCIÓN FINAL...');
     console.log('- Rol recibido:', rol);
@@ -183,7 +117,43 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('🆕 No hay sesión previa - login limpio');
     }
 });
+async function ejecutarLogin() {
+    const usuario = document.getElementById('usuario').value;
+    const password = document.getElementById('password').value;
+    const loginBtn = document.getElementById('loginBtn');
+    const originalText = loginBtn ? loginBtn.textContent : '';
 
+    if (loginBtn) {
+        loginBtn.textContent = 'Validando...';
+        loginBtn.disabled = true;
+    }
+
+    try {
+        const response = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ usuario, password })
+        });
+
+        if (!response.ok) {
+            throw new Error('Credenciales incorrectas');
+        }
+
+        const userData = await response.json();
+        if (userData && userData.rol) {
+            redirigirSegunRolFinal(userData.rol, userData);
+        } else {
+            alert('❌ Credenciales incorrectas');
+        }
+    } catch (error) {
+        alert('Error: ' + error.message);
+    } finally {
+        if (loginBtn) {
+            loginBtn.textContent = originalText || 'Iniciar Sesión';
+            loginBtn.disabled = false;
+        }
+    }
+}
 // Función para cerrar sesión
 function cerrarSesion() {
     console.log('👋 Cerrando sesión...');

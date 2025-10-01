@@ -18,14 +18,14 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function verificarAutenticacionMozo() {
-    console.log('🛡️ INICIANDO VERIFICACIÓN DE MOZO...');
+    console.log('INICIANDO VERIFICACIÓN DE MOZO...');
     
     let userString = localStorage.getItem('currentUser');
-    console.log('📦 localStorage principal:', userString);
+    console.log('localStorage principal:', userString);
     
     // Si no hay en localStorage, intentar recuperar de URL
     if (!userString) {
-        console.log('🔄 Intentando recuperar desde URL...');
+        console.log(' Intentando recuperar desde URL...');
         
         const urlParams = new URLSearchParams(window.location.search);
         const userFromUrl = urlParams.get('user');
@@ -33,13 +33,13 @@ function verificarAutenticacionMozo() {
         if (userFromUrl) {
             try {
                 userString = decodeURIComponent(userFromUrl);
-                console.log('✅ Datos recuperados desde URL');
+                console.log(' Datos recuperados desde URL');
                 
                 // Restaurar en localStorage para futuras visitas
                 localStorage.setItem('currentUser', userString);
                 
             } catch (error) {
-                console.error('💥 Error al decodificar datos de URL:', error);
+                console.error(' Error al decodificar datos de URL:', error);
             }
         }
     }
@@ -53,18 +53,18 @@ function verificarAutenticacionMozo() {
     
     // Si aún no hay datos, intentar otros backups
     if (!userString) {
-        console.log('🔄 Intentando otros backups...');
+        console.log(' Intentando otros backups...');
         
         userString = localStorage.getItem('userBackup') || sessionStorage.getItem('currentUser');
         
         if (userString) {
-            console.log('✅ Backup encontrado, restaurando...');
+            console.log(' Backup encontrado, restaurando...');
             localStorage.setItem('currentUser', userString);
         }
     }
     
     if (!userString) {
-        console.error('❌ No se encontró sesión en ningún lugar');
+        console.error(' No se encontró sesión en ningún lugar');
         alert('Debe iniciar sesión primero');
         window.location.href = '/login';
         return;
@@ -73,7 +73,7 @@ function verificarAutenticacionMozo() {
     let user;
     try {
         user = JSON.parse(userString);
-        console.log('✅ Usuario parseado correctamente:', user);
+        console.log(' Usuario parseado correctamente:', user);
     } catch (error) {
         console.error('💥 Error al parsear JSON:', error);
         localStorage.clear();
@@ -166,17 +166,119 @@ document.addEventListener("DOMContentLoaded", () => {
     const mesaSelect = document.getElementById("opciones");
     const cantidadInput = document.getElementById("cantidadPersonas");
     const productosLista = document.getElementById("productosSeleccionados");
-  
     const listaPorRecoger = document.getElementById("pedidosPorRecoger");
     const listaEntregados = document.getElementById("pedidosEntregados");
     const buscarInput = document.getElementById("buscarPedido");
-  
+    const totalPedido = document.getElementById("totalPedido");
+    const categorias = ["BEBIDA", "COMIDA", "POSTRE", "ENTRADA", "SNACK"];
     const ESTADOS = {
       PENDIENTE: "pendiente",
       PREPARANDO: "preparando",
       LISTO: "listo",
       ENTREGADO: "entregado"
     };
+
+    // Cargar mesas desde el backend y poblar el selector
+    async function cargarMesas() {
+      try {
+        const res = await fetch(`${API_BASE}/mesas`);
+        if (!res.ok) throw new Error("No se pudo conectar con el backend");
+        const data = await res.json();
+        mesaSelect.innerHTML = "";
+        if (data.data && data.data.length > 0) {
+          data.data.forEach(mesa => {
+            const opt = document.createElement("option");
+            opt.value = mesa.id; // Usar el id real
+            opt.textContent = `Mesa ${mesa.numero}`;
+            mesaSelect.appendChild(opt);
+          });
+        } else {
+          const opt = document.createElement("option");
+          opt.value = "";
+          opt.textContent = "No hay mesas disponibles";
+          mesaSelect.appendChild(opt);
+          mesaSelect.disabled = true;
+        }
+      } catch (err) {
+        mesaSelect.innerHTML = "";
+        const opt = document.createElement("option");
+        opt.value = "";
+        opt.textContent = "Error al cargar mesas";
+        mesaSelect.appendChild(opt);
+        mesaSelect.disabled = true;
+        alert("No se pudo cargar la lista de mesas. Verifica el backend o la conexión.");
+      }
+    }
+
+    // Cargar productos desde el backend y mostrar por categoría
+    async function cargarProductos() {
+      try {
+        const res = await fetch(`${API_BASE}/productos`);
+        const data = await res.json();
+        productos = data.data || [];
+        mostrarSelectorProductos();
+      } catch (err) {
+        productos = [];
+        mostrarSelectorProductos();
+      }
+    }
+
+    function mostrarSelectorProductos() {
+      const contenedor = document.createElement("div");
+      contenedor.className = "mb-3";
+      categorias.forEach(cat => {
+        const grupo = document.createElement("div");
+        grupo.className = "mb-2";
+        grupo.innerHTML = `<strong>${cat}</strong>`;
+        const lista = document.createElement("ul");
+        lista.className = "list-group";
+        productos.filter(p => p.categoria === cat).forEach(p => {
+          const item = document.createElement("li");
+          item.className = "list-group-item d-flex justify-content-between align-items-center";
+          item.innerHTML = `${p.nombre} <span class='badge bg-primary'>S/ ${p.precio.toFixed(2)}</span>`;
+          const btn = document.createElement("button");
+          btn.className = "btn btn-sm btn-success";
+          btn.textContent = "+";
+          btn.onclick = () => agregarProductoSeleccionado(p);
+          item.appendChild(btn);
+          lista.appendChild(item);
+        });
+        grupo.appendChild(lista);
+        contenedor.appendChild(grupo);
+      });
+      productosLista.parentElement.insertBefore(contenedor, productosLista);
+    }
+
+    cargarMesas();
+
+    let seleccionados = [];
+    function agregarProductoSeleccionado(producto) {
+      seleccionados.push(producto);
+      renderProductosSeleccionados();
+    }
+    function eliminarProductoSeleccionado(idx) {
+      seleccionados.splice(idx, 1);
+      renderProductosSeleccionados();
+    }
+    function renderProductosSeleccionados() {
+      productosLista.innerHTML = "";
+      let total = 0;
+      seleccionados.forEach((p, i) => {
+        total += p.precio;
+        const li = document.createElement("li");
+        li.className = "list-group-item d-flex justify-content-between align-items-center";
+        li.innerHTML = `${p.nombre} <span class='badge bg-primary'>S/ ${p.precio.toFixed(2)}</span>`;
+        const btn = document.createElement("button");
+        btn.className = "btn btn-sm btn-danger";
+        btn.textContent = "Eliminar";
+        btn.onclick = () => eliminarProductoSeleccionado(i);
+        li.appendChild(btn);
+        productosLista.appendChild(li);
+      });
+      totalPedido.textContent = `Total: S/ ${total.toFixed(2)}`;
+    }
+
+    cargarProductos();
   
     function getPedidos() {
       return JSON.parse(localStorage.getItem("pedidos") || "[]");
@@ -265,32 +367,81 @@ document.addEventListener("DOMContentLoaded", () => {
   
     // 👉 Enviar pedido
     enviarBtn?.addEventListener("click", () => {
-      const productos = [];
-      productosLista?.querySelectorAll("li").forEach(li => {
-        productos.push(li.textContent.replace("Eliminar", "").trim());
-      });
-  
-      if (productos.length === 0) {
-        productos.push("Producto genérico");
+      if (seleccionados.length === 0) {
+        alert("Selecciona al menos un producto");
+        return;
       }
-  
+      // Obtener usuario actual
+      let user = null;
+      try {
+        user = JSON.parse(localStorage.getItem('currentUser'));
+      } catch {}
       const pedido = {
-        id: Date.now(),
-        mesa: mesaSelect?.value || "1",
-        nombreCliente: document.getElementById("nombre")?.value || "Cliente sin nombre",
-        personas: cantidadInput?.value || 1,
-        productos,
-        estado: ESTADOS.PENDIENTE,
-        creadoEn: Date.now()
+        usuarioId: user?.id || null,
+        mesaId: mesaSelect?.value ? parseInt(mesaSelect.value) : null, // Usar el id real
+        items: seleccionados.map(p => ({
+          productoId: p.id,
+          cantidad: 1 // Si tienes campo de cantidad, cámbialo aquí
+        })),
+        notas: document.getElementById("nombre")?.value || ""
       };
-  
-      const pedidos = getPedidos();
-      pedidos.push(pedido);
-      savePedidos(pedidos);
-  
-      alert(`Pedido de ${pedido.nombreCliente} enviado ✅`);
-      if (productosLista) productosLista.innerHTML = "";
-      renderPedidos(buscarInput?.value || "");
+      fetch(`${API_BASE}/pedidos`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(pedido)
+      })
+      .then(async res => {
+        let resp;
+        let text = null;
+        try {
+          resp = await res.clone().json();
+        } catch {
+          text = await res.text();
+        }
+        // Si la respuesta es un objeto con id y mesa, es éxito
+        if (resp && resp.id) {
+          alert(`Pedido enviado correctamente `);
+          // Limpiar formulario y seleccionados
+          seleccionados = [];
+          renderProductosSeleccionados();
+          document.getElementById("nombre").value = "";
+          cantidadInput.value = 1;
+          mesaSelect.selectedIndex = 0;
+          renderPedidos(buscarInput?.value || "");
+        } else if (resp && resp.message) {
+          alert("Error al enviar pedido: " + resp.message);
+        } else if (text) {
+          // Si el backend devuelve un objeto JSON, mostrar éxito si tiene id
+          try {
+            const obj = JSON.parse(text);
+            if (obj.id) {
+              alert(`Pedido enviado correctamente`);
+              seleccionados = [];
+              renderProductosSeleccionados();
+              document.getElementById("nombre").value = "";
+              cantidadInput.value = 1;
+              mesaSelect.selectedIndex = 0;
+              renderPedidos(buscarInput?.value || "");
+              return; // No mostrar ningún error ni mensaje adicional
+            }
+            if (obj.message) {
+              alert("Error al enviar pedido: " + obj.message);
+              return;
+            }
+            // Si no hay id ni message, no mostrar nada ni modal
+            return;
+          } catch {
+            // Si el texto no es JSON válido, solo mostrar error real
+            return;
+          }
+        } else {
+          // Si no hay texto, no mostrar ningún error
+          return;
+        }
+      })
+      .catch(err => {
+        alert("Error de red: " + err);
+      });
     });
   
     // 👉 Actualizar cuando bartender cambia algo
@@ -308,4 +459,100 @@ document.addEventListener("DOMContentLoaded", () => {
   
     renderPedidos();
   });
-  
+// ===============================
+// MOSTRAR MESAS EN VISTA MOZO
+// ===============================
+async function mostrarMesasMozo() {
+  try {
+    const res = await fetch(`${API_BASE}/mesas`);
+    const data = await res.json();
+    const contenedor = document.getElementById('vistaMesasLocal');
+    if (!contenedor) return;
+    contenedor.innerHTML = '';
+    (data.data || []).forEach(mesa => {
+      const card = document.createElement('div');
+      card.className = 'col-md-3 col-sm-6 mb-3';
+      card.innerHTML = `
+        <div class="card mesa-card border-primary">
+          <div class="card-body text-center">
+            <h5 class="card-title">Mesa ${mesa.numero}</h5>
+            <p class="card-text">
+              <i class="bi bi-people"></i> ${mesa.capacidad} personas<br>
+              <span class="badge bg-info">${mesa.estado}</span>
+            </p>
+            <button class="btn btn-success btn-sm agregar-pedido-btn" data-mesa-id="${mesa.id}">
+              <i class="bi bi-plus-circle"></i> Agregar Pedido
+            </button>
+          </div>
+        </div>
+      `;
+      contenedor.appendChild(card);
+    });
+    // Eventos para los botones de agregar pedido
+    document.querySelectorAll('.agregar-pedido-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const mesaId = this.getAttribute('data-mesa-id');
+        seleccionarMesaParaPedido(mesaId);
+      });
+    });
+  } catch (err) {
+    console.error('Error mostrando mesas en mozo:', err);
+  }
+}
+
+function seleccionarMesaParaPedido(mesaId) {
+  // Selecciona la mesa en el select y muestra el formulario
+  const mesaSelect = document.getElementById('opciones');
+  if (mesaSelect) {
+    mesaSelect.value = mesaId;
+    mesaSelect.dispatchEvent(new Event('change'));
+  }
+  // Mostrar el formulario de pedido si está oculto
+  const pedidoSection = document.querySelector('.pedido-section');
+  if (pedidoSection) {
+    pedidoSection.scrollIntoView({ behavior: 'smooth' });
+    pedidoSection.classList.remove('d-none');
+  }
+}
+
+// Llamar al cargar la página
+window.addEventListener('DOMContentLoaded', mostrarMesasMozo);
+// Refresca las mesas cada 10 segundos para mostrar el estado actualizado
+setInterval(mostrarMesasMozo, 10000);
+// ===============================
+// MÉTODO DE PAGO EN FLUJO MOZO
+// ===============================
+let metodoPagoSeleccionado = null;
+
+function configurarMetodoPagoMozo() {
+  const btnEfectivo = document.getElementById('pagoEfectivo');
+  const btnTarjeta = document.getElementById('pagoTarjeta');
+  const btnYape = document.getElementById('pagoYape');
+  [btnEfectivo, btnTarjeta, btnYape].forEach(btn => {
+    if (btn) {
+      btn.addEventListener('click', function() {
+        metodoPagoSeleccionado = this.id.replace('pago', '').toLowerCase();
+        [btnEfectivo, btnTarjeta, btnYape].forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+      });
+    }
+  });
+}
+
+// Llamar al mostrar la sección de confirmación
+window.addEventListener('DOMContentLoaded', configurarMetodoPagoMozo);
+
+// Al confirmar y enviar pedido, incluir el método de pago
+const btnConfirmarEnviar = document.getElementById('btnConfirmarEnviar');
+if (btnConfirmarEnviar) {
+  btnConfirmarEnviar.addEventListener('click', function() {
+    if (!metodoPagoSeleccionado) {
+      alert('Selecciona un método de pago');
+      return;
+    }
+    // Aquí envía el pedido al backend incluyendo el método de pago
+    // ejemplo:
+    // fetch('/api/pedidos', { method: 'POST', body: JSON.stringify({ ...pedido, metodoPago: metodoPagoSeleccionado }) })
+  });
+}
+

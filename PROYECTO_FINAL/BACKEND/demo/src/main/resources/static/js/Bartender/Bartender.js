@@ -1,82 +1,81 @@
-// bartender.js - AUTENTICACIÓN CORREGIDA
+// bartender.js
+// Lógica para mostrar y gestionar pedidos desde el backend en tiempo real
 
-// Variables globales
-let pedidosBebidas = [];
-let inventarioBebidas = [];
-let recetas = [];
-let estadisticasBartender = {};
-const API_BASE = 'http://localhost:8080/api';
-
-// ===============================
-// INICIALIZACIÓN
-// ===============================
-document.addEventListener('DOMContentLoaded', function() {
-    verificarAutenticacionBartender();
-    configurarNavegacion();
-    cargarDatosBartender();
-    configurarEventos();
+document.addEventListener('DOMContentLoaded', () => {
+  cargarPedidos();
+  setInterval(cargarPedidos, 5000); // Actualización automática cada 5 segundos
 });
 
-function verificarAutenticacionBartender() {
-    console.log('🛡️ INICIANDO VERIFICACIÓN DE BARTENDER...');
-    
-    let userString = localStorage.getItem('currentUser');
-    console.log('📦 localStorage principal:', userString);
-    
-    // Si no hay en localStorage, intentar recuperar de URL
-    if (!userString) {
-        console.log('🔄 Intentando recuperar desde URL...');
-        
-        const urlParams = new URLSearchParams(window.location.search);
-        const userFromUrl = urlParams.get('user');
-        
-        if (userFromUrl) {
-            try {
-                userString = decodeURIComponent(userFromUrl);
-                console.log('✅ Datos recuperados desde URL');
-                
-                // Restaurar en localStorage para futuras visitas
-                localStorage.setItem('currentUser', userString);
-                
-            } catch (error) {
-                console.error('💥 Error al decodificar datos de URL:', error);
-            }
-        }
+async function cargarPedidos() {
+  try {
+    const response = await fetch('/api/pedidos');
+    const pedidos = await response.json();
+    renderizarPedidos(pedidos);
+  } catch (error) {
+    console.error('Error al cargar pedidos:', error);
+  }
+}
+
+function renderizarPedidos(pedidos) {
+  document.getElementById('listaPendientes').innerHTML = '';
+  document.getElementById('listaPreparacion').innerHTML = '';
+  document.getElementById('listaEntregados').innerHTML = '';
+
+  pedidos.forEach(pedido => {
+    const item = crearItemPedido(pedido);
+    if (pedido.estado === 'PENDIENTE') {
+      document.getElementById('listaPendientes').appendChild(item);
+    } else if (pedido.estado === 'PREPARACION' || pedido.estado === 'LISTO') {
+      document.getElementById('listaPreparacion').appendChild(item);
+    } else if (pedido.estado === 'ENTREGADO') {
+      document.getElementById('listaEntregados').appendChild(item);
     }
-    
-    // LIMPIAR URL inmediatamente
-    if (window.location.search) {
-        const cleanUrl = window.location.pathname;
-        window.history.replaceState({}, document.title, cleanUrl);
-        console.log('🧹 URL limpiada:', cleanUrl);
-    }
-    
-    // Si aún no hay datos, intentar otros backups
-    if (!userString) {
-        console.log('🔄 Intentando otros backups...');
-        
-        userString = localStorage.getItem('userBackup') || sessionStorage.getItem('currentUser');
-        
-        if (userString) {
-            console.log('✅ Backup encontrado, restaurando...');
-            localStorage.setItem('currentUser', userString);
-        }
-    }
-    
-    if (!userString) {
-        console.error('❌ No se encontró sesión en ningún lugar');
-        alert('Debe iniciar sesión primero');
-        window.location.href = '/login';
-        return;
-    }
-    
-    let user;
-    try {
-        user = JSON.parse(userString);
-        console.log('✅ Usuario parseado correctamente:', user);
-    } catch (error) {
-        console.error('💥 Error al parsear JSON:', error);
-        localStorage.clear();
+  });
+}
+
+function crearItemPedido(pedido) {
+  const li = document.createElement('li');
+  li.className = 'list-group-item';
+  li.innerHTML = `
+    <div>
+      <span class="fw-bold">#${pedido.id}</span> - ${pedido.productoNombre} <span class="badge bg-secondary ms-2">${pedido.cantidad}</span>
+      <span class="badge bg-info ms-2">${pedido.estado}</span>
+    </div>
+    <div>
+      ${botonesEstado(pedido)}
+    </div>
+  `;
+  return li;
+}
+
+function botonesEstado(pedido) {
+  let html = '';
+  if (pedido.estado === 'PENDIENTE') {
+    html += `<button class="btn btn-preparar" onclick="cambiarEstado(${pedido.id}, 'PREPARACION')">Preparar</button>`;
+  } else if (pedido.estado === 'PREPARACION') {
+    html += `<button class="btn btn-listo" onclick="cambiarEstado(${pedido.id}, 'LISTO')">Listo</button>`;
+  } else if (pedido.estado === 'LISTO') {
+    html += `<button class="btn btn-entregado" onclick="cambiarEstado(${pedido.id}, 'ENTREGADO')">Entregar</button>`;
+  }
+  return html;
+}
+
+async function cambiarEstado(id, nuevoEstado) {
+  try {
+    await fetch(`/api/pedidos/${id}/estado`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ estado: nuevoEstado })
+    });
+    cargarPedidos();
+  } catch (error) {
+    console.error('Error al cambiar estado:', error);
+  }
+}
+
+function cerrarSesion() {
+  window.location.href = '/login';
+}
         sessionStorage.clear();
         alert('Sesión inválida. Debe iniciar sesión nuevamente');
         window.location.href = '/login';

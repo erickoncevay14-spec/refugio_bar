@@ -16,103 +16,92 @@
 </head>
 <body class="bg-light">
 
-  <!-- Header -->
-  <header class="bg-dark text-white py-3 shadow-sm">
-    <div class="container d-flex justify-content-between align-items-center">
-      <div class="d-flex align-items-center gap-3">
-        <img src="https://static.dw.com/image/71456751_605.jpg" alt="Foto del Mozo" class="rounded-circle" width="70" height="70">
-        <div>
-          <h1 class="h4 mb-0">Refugio Bar</h1>
-          <span id="userInfo" class="small">Bienvenido, <strong>Juan Pérez</strong></span>
-        </div>
+  <!-- Header Moderno -->
+  <header class="header shadow-sm mb-4 p-3 rounded d-flex justify-content-between align-items-center" style="background: #212529; color: #fff;">
+    <div class="d-flex align-items-center gap-3">
+      <img src="https://static.dw.com/image/71456751_605.jpg" alt="Foto del Mozo" class="rounded-circle border border-3" style="width: 60px; height: 60px; object-fit: cover;">
+      <div>
+        <h1 class="h4 mb-0">Refugio Bar</h1>
+        <span id="userInfo" class="small">Bienvenido, <strong>Juan Pérez</strong></span>
       </div>
-      <button class="btn btn-danger btn-sm" onclick="cerrarSesion()">
-        <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
-      </button>
     </div>
+    <button class="btn btn-danger px-3 py-2" onclick="cerrarSesion()">
+      <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+    </button>
   </header>
 
-  <div class="mb-3">
-    <input type="text" id="buscarPedido" class="form-control" placeholder="🔎 Buscar por mesa o ID...">
+  <div class="mb-4 container">
+    <input type="text" id="buscarPedido" class="form-control shadow-sm rounded-pill" placeholder="🔎 Buscar por mesa o ID...">
   </div>
 
   <!-- Main -->
   <main class="container my-5">
     <div class="row g-4">
-
-      <!-- Realizar Pedido -->
-      <div class="col-lg-6">
-        <div class="card shadow border-0">
-          <div class="card-header bg-primary text-white fw-bold">
-            <i class="bi bi-pencil-square"></i> Realizar Pedido
-          </div>
-          <div class="card-body">
-
-            <div class="mb-3">
-              <label for="opciones" class="form-label">Número de Mesa</label>
-              <select id="opciones" name="opciones" class="form-select">
-                <option value="mesa1">Mesa 1</option>
-                <option value="mesa2">Mesa 2</option>
-                <option value="mesa3">Mesa 3</option>
-                <option value="mesa4">Mesa 4</option>
-              </select>
-            </div>
-
-            <div class="mb-3">
-              <label for="nombre" class="form-label">Nombre cliente</label>
-              <input type="text" name="nombre" id="nombre" class="form-control">
-            </div>
-
-            <div class="mb-3">
-              <label for="cantidadPersonas" class="form-label">Cantidad de Personas</label>
-              <input type="number" id="cantidadPersonas" class="form-control" min="1" max="20" value="1">
-            </div>
-
-            <h5 class="mt-4">Categorías de Producto</h5>
-            <div class="list-group mb-3">
-              <a th:href="@{/tequilas}" class="list-group-item list-group-item-action">🍸 Tequilas</a>
-              <a th:href="@{/chelas}" class="list-group-item list-group-item-action">🍺 Chelas</a>
-              <a th:href="@{/rones}" class="list-group-item list-group-item-action">🥃 Rones</a>
-              <a th:href="@{/piscos}" class="list-group-item list-group-item-action">🍶 Piscos</a>
-              <a th:href="@{/vodckas}" class="list-group-item list-group-item-action">🍸 Vodkas</a>
-              <a th:href="@{/vinos}" class="list-group-item list-group-item-action">🍷 Vinos</a>
-            </div>
-
-            <h5>Productos Seleccionados</h5>
-            <ul class="list-group mb-3" id="productosSeleccionados">
-              <!-- Se llenará dinámicamente con JS -->
-            </ul>
-
-            <div class="d-flex justify-content-between align-items-center">
-              <strong id="totalPedido">Total: S/ 0.00</strong>
-              <button class="btn btn-success" id="enviarPedido">
-                <i class="bi bi-send"></i> Enviar Pedido
-              </button>
-            </div>
-
-          </div>
-        </div>
+      <!-- Vista de todas las mesas del local -->
+      <div class="row mb-4 justify-content-center" id="vistaMesasLocal">
+        <!-- Se llenará con JS, muestra las 10 mesas -->
       </div>
-
-      <!-- Pedidos por recoger -->
-      <div class="col-lg-6">
-        <div class="card shadow border-0 mb-4">
-          <div class="card-header bg-warning fw-bold">
-            <i class="bi bi-box-seam"></i> Pedidos por Recoger
-          </div>
-          <ul class="list-group list-group-flush" id="pedidosPorRecoger">
-            <!-- Se llenará dinámicamente -->
-          </ul>
+      <div class="row g-4">
+        <div class="col-lg-7 order-lg-2 mb-4 mb-lg-0">
+          <!-- Realizar Pedido -->
+          <section class="pedido-section">
+            <div class="card shadow-lg border-0 rounded-4">
+              <div class="card-header bg-gradient bg-primary text-white fw-bold rounded-top-4">
+                <i class="bi bi-pencil-square"></i> Realizar Pedido
+              </div>
+              <div class="card-body">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label for="opciones" class="form-label">Número de Mesa</label>
+                    <select id="opciones" name="opciones" class="form-select shadow-sm rounded-pill">
+                      <!-- Opciones generadas dinámicamente -->
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="nombre" class="form-label">Nombre cliente</label>
+                    <input type="text" name="nombre" id="nombre" class="form-control shadow-sm rounded-pill">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="cantidadPersonas" class="form-label">Cantidad de Personas</label>
+                    <input type="number" id="cantidadPersonas" class="form-control shadow-sm rounded-pill" min="1" max="20" value="1">
+                  </div>
+                </div>
+                <h5 class="mt-4">Selecciona productos por categoría</h5>
+                <div id="selectorProductos"></div>
+                <h5>Productos Seleccionados</h5>
+                <ul class="list-group mb-3" id="productosSeleccionados">
+                  <!-- Se llenará dinámicamente con JS -->
+                </ul>
+                <div class="d-flex justify-content-between align-items-center">
+                  <strong id="totalPedido">Total: S/ 0.00</strong>
+                  <button class="btn btn-success px-4 py-2 rounded-pill" id="enviarPedido">
+                    <i class="bi bi-send"></i> Enviar Pedido
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
-
-        <!-- Pedidos entregados -->
-        <div class="card shadow border-0">
-          <div class="card-header bg-success text-white fw-bold">
-            <i class="bi bi-check-circle"></i> Pedidos Entregados
-          </div>
-          <ul class="list-group list-group-flush" id="pedidosEntregados">
-            <!-- Se llenará dinámicamente -->
-          </ul>
+        <!-- Pedidos por recoger y entregados -->
+        <div class="col-lg-5 order-lg-1">
+          <section class="pedidos-section">
+            <div class="card shadow-lg border-0 rounded-4 mb-4">
+              <div class="card-header bg-gradient bg-warning fw-bold rounded-top-4">
+                <i class="bi bi-box-seam"></i> Pedidos por Recoger
+              </div>
+              <ul class="list-group list-group-flush" id="pedidosPorRecoger">
+                <!-- Se llenará dinámicamente desde backend -->
+              </ul>
+            </div>
+            <div class="card shadow-lg border-0 rounded-4">
+              <div class="card-header bg-gradient bg-success text-white fw-bold rounded-top-4">
+                <i class="bi bi-check-circle"></i> Pedidos Entregados
+              </div>
+              <ul class="list-group list-group-flush" id="pedidosEntregados">
+                <!-- Se llenará dinámicamente desde backend -->
+              </ul>
+            </div>
+          </section>
         </div>
       </div>
     </div>

@@ -1,6 +1,10 @@
 package com.restaurante.dto.request;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public class ProductoRequest {
     // Para: POST /api/productos, PUT /api/productos/{id}
@@ -29,8 +33,6 @@ public class ProductoRequest {
     @NotNull(message = "El estado disponible es obligatorio")
     private Boolean disponible;
     
-    private String imagen;
-    
     // Constructores, getters y setters
     public ProductoRequest() {} 
     public Long getId() { return id; }
@@ -47,6 +49,4 @@ public class ProductoRequest {
     public void setStock(Integer stock) { this.stock = stock; }
     public Boolean getDisponible() { return disponible; }
     public void setDisponible(Boolean disponible) { this.disponible = disponible; }
-    public String getImagen() { return imagen; }
-    public void setImagen(String imagen) { this.imagen = imagen; }
 }

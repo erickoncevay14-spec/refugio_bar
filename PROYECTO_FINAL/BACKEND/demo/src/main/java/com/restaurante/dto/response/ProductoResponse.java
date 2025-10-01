@@ -13,7 +13,6 @@ public class ProductoResponse {
     private String categoria;
     private Integer stock;
     private Boolean disponible;
-    private String imagen;
     private LocalDateTime fechaCreacion;
     private LocalDateTime fechaModificacion;
     
@@ -46,8 +45,6 @@ public class ProductoResponse {
     public void setStock(Integer stock) { this.stock = stock; }
     public Boolean getDisponible() { return disponible; }
     public void setDisponible(Boolean disponible) { this.disponible = disponible; }
-    public String getImagen() { return imagen; }
-    public void setImagen(String imagen) { this.imagen = imagen; }
     public LocalDateTime getFechaCreacion() { return fechaCreacion; }
     public void setFechaCreacion(LocalDateTime fechaCreacion) { this.fechaCreacion = fechaCreacion; }
     public LocalDateTime getFechaModificacion() { return fechaModificacion; }

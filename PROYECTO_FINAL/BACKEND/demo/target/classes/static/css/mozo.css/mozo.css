@@ -54,11 +54,80 @@ body {
 }
 
 /* CONTENEDOR PRINCIPAL */
+/* Contenedor principal con dos columnas para desktop, una para móvil */
 .contenedor {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  padding: 20px;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-top: 32px;
+}
+@media (max-width: 900px) {
+  .contenedor {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+.pedido-section, .pedidos-section {
+  width: 100%;
+}
+.card {
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(44,62,80,0.08);
+}
+.card-header {
+  border-radius: 16px 16px 0 0;
+  font-size: 1.1rem;
+}
+.btn-success {
+  background: linear-gradient(90deg, #27ae60, #2ecc71);
+  border: none;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+.btn-success:hover {
+  background: linear-gradient(90deg, #219150, #27ae60);
+}
+.btn-danger {
+  background: linear-gradient(90deg, #e74c3c, #c0392b);
+  border: none;
+}
+.btn-danger:hover {
+  background: linear-gradient(90deg, #c0392b, #e74c3c);
+}
+.list-group-item {
+  font-size: 1rem;
+  border-radius: 8px;
+  margin-bottom: 4px;
+}
+.badge {
+  font-size: 0.95em;
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+.card-header.bg-warning {
+  background: linear-gradient(90deg, #f1c40f, #f39c12);
+}
+.card-header.bg-success {
+  background: linear-gradient(90deg, #27ae60, #2ecc71);
+}
+.card-header.bg-primary {
+  background: linear-gradient(90deg, #2980b9, #3498db);
+}
+.form-label {
+  font-weight: 500;
+}
+.form-control, .form-select {
+  border-radius: 8px;
+  font-size: 1rem;
+}
+.pedido-section h5, .pedidos-section h5 {
+  margin-top: 18px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.pedido-section #selectorProductos {
+  margin-bottom: 18px;
 }
 
 /* SECCIONES */
