@@ -306,41 +306,55 @@ main {
     padding: 20px 0;
 }
 
+/* Estilos mejorados para mesas */
 .mesa-card {
     background: white;
     border-radius: 10px;
     padding: 20px;
     text-align: center;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
+    transition: all 0.3s ease; /* Transición combinada */
     cursor: pointer;
+    min-height: 250px; /* Nuevo */
 }
 
 .mesa-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15); /* Sombra más pronunciada */
 }
 
-.mesa-card.ocupada {
-    background: #ffe4e1;
-    border: 2px solid var(--danger-color);
+.mesa-card .btn-group-vertical .btn {
+    font-size: 0.85rem; /* Nuevo: Botones más pequeños */
 }
 
-.mesa-card.disponible {
-    background: #e8f5e9;
-    border: 2px solid var(--success-color);
-}
-
-.mesa-numero {
-    font-size: 2rem;
+.mesa-card .card-title {
+    font-size: 1.5rem; /* Nuevo: Título más grande */
     font-weight: bold;
-    color: var(--primary-color);
-    margin-bottom: 10px;
+    color: #2c3e50;
+    margin-bottom: 1rem;
 }
 
-.mesa-capacidad {
-    color: var(--text-light);
-    margin-bottom: 15px;
+.mesa-card .badge {
+    font-size: 0.9rem; /* Nuevo: Badge más grande */
+    padding: 0.5rem 1rem; /* Nuevo: Más padding en el badge */
+    margin: 0.5rem 0;
+}
+
+/* Estados de mesa con bordes más visibles */
+.mesa-card.border-success {
+    border-width: 3px !important; /* Nuevo */
+}
+
+.mesa-card.border-danger {
+    border-width: 3px !important; /* Nuevo */
+}
+
+.mesa-card.border-warning {
+    border-width: 3px !important; /* Nuevo */
+}
+
+.mesa-card.border-info {
+    border-width: 3px !important; /* Nuevo */
 }
 
 /* Analytics Section */

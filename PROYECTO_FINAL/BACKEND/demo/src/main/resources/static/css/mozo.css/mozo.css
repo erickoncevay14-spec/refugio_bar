@@ -249,3 +249,20 @@ button:hover {
     grid-template-columns: 1fr 1fr 1fr ;
   }
 }
+
+.mesa-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.mesa-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+.btn-group-vertical .btn {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.5rem;
+}
+.mesa-card .badge {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    margin: 0.5rem 0;
+}

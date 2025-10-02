@@ -22,7 +22,7 @@ public class Mesa {
     
     private Integer capacidad;
     private String ubicacion;
-    private String estado = "DISPONIBLE";
+    private String estado = "LIBRE"; 
     private String qrCode;
     
     // Getters y Setters

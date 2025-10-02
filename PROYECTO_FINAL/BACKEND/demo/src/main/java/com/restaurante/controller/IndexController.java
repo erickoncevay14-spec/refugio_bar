@@ -90,7 +90,6 @@ public class IndexController {
     nuevo.setEmail(correo);
     nuevo.setPassword(clave);
     nuevo.setUsuario(usuario);
-    // Puedes asignar rol, activo, etc. aquí si lo deseas
 Rol rol = rolRepository.findByNombre("admin").orElse(null);
 nuevo.setRol(rol);
     usuarioRepository.save(nuevo);
