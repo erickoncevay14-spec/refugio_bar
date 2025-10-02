@@ -227,17 +227,15 @@
                 <section id="usuarios" class="content-section">
                     <h2 class="mb-4">Gestión de Usuarios</h2>
                     <!-- Filtro de usuarios -->
-                    <form id="formFiltroUsuarios" class="mb-3 d-flex gap-2">
-                        <input type="text" name="nombre" class="form-control" placeholder="Buscar por nombre">
-                        <input type="text" name="apellido" class="form-control" placeholder="Buscar por apellido">
-                        <select name="rol" class="form-select">
+                    <form id="formFiltroUsuarios" class="mb-3 d-flex gap-2" onsubmit="event.preventDefault();">
+                        <input type="text" id="filtroNombre" class="form-control" placeholder="Buscar por nombre">
+                        <select id="filtroRol" class="form-select">
                             <option value="">Todos los roles</option>
                             <option value="cliente">CLIENTE</option>
                             <option value="mozo">MOZO</option>
                             <option value="bartender">BARTENDER</option>
                             <option value="admin">ADMIN</option>
                         </select>
-                        <button type="submit" class="btn btn-primary">Filtrar</button>
                     </form>
                     <div class="table-responsive">
                         <table class="table table-hover align-middle shadow-sm">
@@ -450,6 +448,8 @@
     </div>
 
     <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/js/Admin/adminDashboard.js"></script>
     <script src="/js/Admin/adminProductos.js"></script>
@@ -457,9 +457,12 @@
     <script src="/js/Admin/adminUsuarios.js"></script>
     <script src="/js/Admin/adminMesas.js"></script>
     <script src="/js/Admin/Admin.js"></script>
-    <script>
-        // El filtrado AJAX de usuarios se movió a Admin.js para mejor organización.
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/Admin/adminDashboard.js"></script>
+    <script src="/js/Admin/adminProductos.js"></script>
+    <script src="/js/Admin/adminPedidos.js"></script>
+    <script src="/js/Admin/adminUsuarios.js"></script>
+    <script src="/js/Admin/adminMesas.js"></script>
+    <script src="/js/Admin/Admin.js"></script>
 </body>
-
 </html>

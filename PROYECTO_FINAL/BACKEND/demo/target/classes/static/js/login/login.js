@@ -13,49 +13,45 @@ togglePassword.addEventListener('click', () => {
 });
          
 function redirigirSegunRolFinal(rol, userSession) {
-    console.log('🔄 EJECUTANDO REDIRECCIÓN FINAL...');
-    console.log('- Rol recibido:', rol);
-    console.log('- UserSession:', userSession);
+    console.log('Ejecutando redirección...');
+    console.log('- Rol:', rol);
     
-    // Guardar en TODOS los lugares posibles
     const sessionString = JSON.stringify(userSession);
-    localStorage.setItem('currentUser', sessionString);
-    localStorage.setItem('userBackup', sessionString);
+    
+    // Guardar en sessionStorage (específico de cada pestaña)
     sessionStorage.setItem('currentUser', sessionString);
     
-    console.log('💾 Datos guardados en localStorage:', localStorage.getItem('currentUser'));
+    // Backup en localStorage
+    localStorage.setItem('currentUser', sessionString);
+    localStorage.setItem('userBackup', sessionString);
     
-    // Preparar datos para URL
-    const userData = encodeURIComponent(sessionString);
-    console.log('🔗 Datos preparados para URL (length):', userData.length);
+    console.log('Datos guardados correctamente');
     
-    // Determinar URL destino
+    // Determinar URL destino SIN parámetros
     let targetUrl;
-    const timestamp = Date.now();
     
     switch(rol?.toUpperCase()) {
         case 'ADMIN':
-            targetUrl = `/admin?user=${userData}&t=${timestamp}`;
-            console.log('👑 Redirigiendo a ADMIN');
+            targetUrl = '/admin';
+            console.log('Redirigiendo a ADMIN');
             break;
         case 'MOZO':
-            targetUrl = `/mozo?user=${userData}&t=${timestamp}`;
-            console.log('🍽️ Redirigiendo a MOZO');
+            targetUrl = '/mozo';
+            console.log('Redirigiendo a MOZO');
             break;
         case 'BARTENDER':
-            targetUrl = `/bartender?user=${userData}&t=${timestamp}`;
-            console.log('🍸 Redirigiendo a BARTENDER');
+            targetUrl = '/bartender';
+            console.log('Redirigiendo a BARTENDER');
             break;
         default:
             targetUrl = '/index';
-            console.log('🏠 Redirigiendo a index (rol desconocido:', rol, ')');
+            console.log('Redirigiendo a index');
     }
     
-    console.log('🚀 URL FINAL:', targetUrl.substring(0, 100) + '...');
+    console.log('URL destino:', targetUrl);
     
-    // Pequeña pausa para asegurar guardado
+    // Redirección limpia sin parámetros
     setTimeout(() => {
-        console.log('⏰ Ejecutando redirección después de pausa...');
         window.location.href = targetUrl;
     }, 100);
 }

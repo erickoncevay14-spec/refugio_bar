@@ -9,6 +9,7 @@ async function cargarUsuarios() {
         const response = await fetch(`${API_BASE}/usuarios`);
         if (response.ok) {
             usuarios = await response.json();
+            window.usuarios = usuarios; // Actualiza la variable global
             mostrarUsuarios();
         } else {
             throw new Error(`Error ${response.status}: ${response.statusText}`);
@@ -26,6 +27,7 @@ function cargarUsuariosLocal() {
         { id: 2, nombre: 'Carlos Mesero', email: 'carlos@refugiobar.com', rol: 'EMPLEADO', estado: 'ACTIVO' },
         { id: 3, nombre: 'Ana Cliente', email: 'ana@email.com', rol: 'CLIENTE', estado: 'ACTIVO' }
     ];
+    window.usuarios = usuarios; // Actualiza la variable global
     mostrarUsuarios();
 }
 
@@ -75,7 +77,11 @@ function mostrarUsuarios() {
         `;
         tbody.appendChild(row);
     });
+    window.usuarios = usuarios; // Siempre actualiza la variable global después de mostrar
 }
+
+// Asegura que la variable global usuarios esté disponible para el filtro automático
+window.usuarios = usuarios;
 
 function getRolColor(rol) {
     const colores = {
