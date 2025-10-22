@@ -1,8 +1,8 @@
 // adminDashboard.js
 // Lógica del dashboard del panel de administración
 
-async function cargarDashboard() {
-    console.log('📊 Cargando dashboard...');
+async function cargarDashboardPrincipal() { 
+    console.log('📊 Cargando dashboard principal...');
     try {
         await Promise.all([
             cargarEstadisticasProductos(),

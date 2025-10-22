@@ -1,7 +1,19 @@
 package com.restaurante.model;
 
-import jakarta.persistence.*;
 import java.util.Date;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "reservas")
@@ -26,7 +38,7 @@ public class Reserva {
     
     private String estado = "PENDIENTE"; // AGREGAMOS ESTE CAMPO
     
-    private String notas;
+    // Campo 'notas' eliminado ya que no se utiliza
     
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "fecha_creacion")
@@ -59,8 +71,7 @@ public class Reserva {
     public String getEstado() { return estado; }
     public void setEstado(String estado) { this.estado = estado; }
     
-    public String getNotas() { return notas; }
-    public void setNotas(String notas) { this.notas = notas; }
+    // Getter y Setter para 'notas' eliminados
     
     public Date getFechaCreacion() { return fechaCreacion; }
     public void setFechaCreacion(Date fechaCreacion) { this.fechaCreacion = fechaCreacion; }

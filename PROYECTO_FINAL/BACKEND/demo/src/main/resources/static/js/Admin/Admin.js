@@ -1,9 +1,12 @@
-// Admin.js
-// Inicialización y utilidades generales del panel de administración
+// admin.js
+// Archivo de control de lógica general y navegación
 
 window.API_BASE = 'http://localhost:8080/api';
 
 // ===============================
+// UTILIDADES GENERALES
+// ===============================
+
 function actualizarFechaHora() {
     const ahora = new Date();
     const opciones = { 
@@ -54,49 +57,106 @@ function cerrarSesion() {
         window.location.href = '/login';
     }
 }
-// INICIALIZACIÓN
+
+
 // ===============================
-document.addEventListener('DOMContentLoaded', function() {
-    verificarAutenticacion();
-    configurarNavegacion();
-    cargarDashboard();
-    actualizarFechaHora();
-    setInterval(actualizarFechaHora, 1000);
-    const nombreInput = document.getElementById('filtroNombre');
-    const rolInput = document.getElementById('filtroRol');
-    const formFiltro = document.getElementById('formFiltroUsuarios');
-    if (formFiltro) {
-        formFiltro.addEventListener('submit', function(e) {
-            e.preventDefault(); // Evita recarga al presionar Enter
-        });
+// LÓGICA DE ANALYTICS (Looker Studio)
+// ===============================
+
+// URLs de inserción (Embed URLs) de tus dashboards de Looker Studio.
+// ⚠️ IMPORTANTE: REEMPLAZA ESTOS VALORES POR TUS URLS REALES.
+const LOOKER_DASHBOARDS = {
+    // URL por defecto para Ventas (se puede sobrescribir con el botón 'Configurar Dashboard')
+    ventas: "https://lookerstudio.google.com/embed/reporting/d9caae57-06af-452e-9de1-780bafc69ebf/page/lvicF",
+    
+    // Otras URLs
+    clientes: "https://lookerstudio.google.com/embed/reporting/URL_CLIENTES_POR_DEFECTO/page/p_ABC",
+    inventario: "https://lookerstudio.google.com/embed/reporting/URL_INVENTARIO_POR_DEFECTO/page/p_DEF"
+};
+
+/**
+ * Función principal para la sección de Analytics.
+ * Se llama cuando se selecciona la sección 'analytics' en el menú.
+ */
+function cargarAnalytics() {
+    console.log('Cargando sección de Analytics...');
+    
+    // Por defecto, intenta cargar el dashboard de ventas al entrar a la sección.
+    setTimeout(() => {
+        cargarDashboardLooker('ventas'); // Llama a la función específica de Looker
+    }, 100); 
+}
+
+/**
+ * Función llamada al hacer click en el botón "Configurar Dashboard" de tu HTML.
+ * Este botón ahora SÍ te permite configurar la URL principal.
+ */
+function configurarLooker() {
+    const defaultKey = 'ventas';
+    const storageKey = `lookerStudioUrl_${defaultKey}`;
+    const urlGuardada = localStorage.getItem(storageKey);
+
+    const nuevaUrl = prompt(
+        `Ingresa la URL de inserción (Embed URL) de tu Dashboard de ${defaultKey.toUpperCase()}:`, 
+        urlGuardada || LOOKER_DASHBOARDS[defaultKey]
+    );
+
+    if (nuevaUrl) {
+        localStorage.setItem(storageKey, nuevaUrl);
+        mostrarMensaje(`URL de ${defaultKey.toUpperCase()} configurada correctamente.`, 'success');
+        cargarDashboardLooker(defaultKey);
+    } else {
+        mostrarMensaje("Configuración cancelada.", 'info');
     }
-    if (nombreInput && rolInput) {
-        function filtrarUsuariosAuto() {
-            const texto = (nombreInput.value || '').toLowerCase();
-            const rol = (rolInput.value || '').trim().toLowerCase();
-            let filtrados = window.usuarios.filter(u => {
-                // Buscar coincidencia en nombre o usuario, siempre en minúsculas
-                let nombre = (u.nombre || '').toLowerCase();
-                let usuario = (u.usuario || '').toLowerCase();
-                let matchNombre = !texto || nombre.includes(texto) || usuario.includes(texto);
-                // Normalizar rol del usuario, siempre en minúsculas
-                let rolUsuario = '';
-                if (u.rol) {
-                    if (typeof u.rol === 'string') {
-                        rolUsuario = u.rol.trim().toLowerCase();
-                    } else if (typeof u.rol === 'object' && u.rol.nombre) {
-                        rolUsuario = u.rol.nombre.trim().toLowerCase();
-                    }
-                }
-                let matchRol = !rol || rolUsuario === rol;
-                return matchNombre && matchRol;
-            });
-            window.mostrarUsuariosFiltrados(filtrados);
+}
+
+/**
+ * Carga el dashboard de Looker Studio en el iframe.
+ * RENOMBRADA para no chocar con la función de estadísticas de adminDashboard.js
+ * @param {string} tipo - La clave del dashboard ('ventas', 'clientes', 'inventario').
+ */
+function cargarDashboardLooker(tipo) {
+    const iframe = document.getElementById('lookerDashboard');
+    const placeholder = document.getElementById('lookerPlaceholder');
+    if (!iframe || !placeholder) {
+        console.error('Elementos de Looker Studio no encontrados en el DOM.');
+        return;
+    }
+
+    let url;
+    const storageKey = `lookerStudioUrl_${tipo}`;
+    
+    if (tipo === 'ventas') {
+        url = localStorage.getItem(storageKey) || LOOKER_DASHBOARDS[tipo];
+    } else {
+        url = LOOKER_DASHBOARDS[tipo];
+    }
+    
+    // Verifica si la URL es válida
+    const esUrlValida = url && !url.includes("URL_VENTAS_POR_DEFECTO"); 
+
+    if (esUrlValida) {
+        iframe.src = url;
+        iframe.style.display = 'block';
+        placeholder.style.display = 'none';
+        if (tipo !== 'ventas' || localStorage.getItem(storageKey)) {
+             mostrarMensaje(`Dashboard de ${tipo.toUpperCase()} cargado.`, 'info');
         }
-        nombreInput.addEventListener('input', filtrarUsuariosAuto);
-        rolInput.addEventListener('change', filtrarUsuariosAuto);
+    } else {
+        iframe.style.display = 'none';
+        placeholder.style.display = 'block';
+        if (tipo === 'ventas') {
+            mostrarError("El Dashboard de Ventas requiere configuración. Haz clic en 'Configurar Dashboard'.");
+        } else {
+            mostrarError(`La URL del dashboard de ${tipo.toUpperCase()} no está configurada.`);
+        }
     }
-});
+}
+
+
+// ===============================
+// LÓGICA DE USUARIOS Y NAVEGACIÓN
+// ===============================
 
 // Función para mostrar solo los usuarios filtrados
 window.mostrarUsuariosFiltrados = function(filtrados) {
@@ -150,13 +210,11 @@ window.mostrarUsuariosFiltrados = function(filtrados) {
 function verificarAutenticacion() {
     console.log('Verificando autenticación Admin...');
     
-    // Limpiar URL si tiene parámetros
     if (window.location.search) {
         window.history.replaceState({}, document.title, window.location.pathname);
         console.log('URL limpiada');
     }
     
-    // Priorizar sessionStorage sobre localStorage
     let userString = sessionStorage.getItem('currentUser') || localStorage.getItem('currentUser');
     
     if (!userString) {
@@ -220,7 +278,12 @@ function cambiarSeccion(section) {
     document.getElementById('pageTitle').textContent = titles[section];
     switch(section) {
         case 'dashboard':
-            cargarDashboard();
+            // Llama a la función principal renombrada en adminDashboard.js
+            if (typeof cargarDashboardPrincipal === 'function') {
+                cargarDashboardPrincipal();
+            } else {
+                console.error("Error: La función cargarDashboardPrincipal no está definida. ¿adminDashboard.js está cargado?");
+            }
             break;
         case 'productos':
             cargarProductos();
@@ -238,8 +301,49 @@ function cambiarSeccion(section) {
             cargarReservas();
             break;
         case 'analytics':
-            cargarAnalytics();
+            cargarAnalytics(); // Llama a la nueva función de Looker Studio
             break;
     }
 }
 
+
+// INICIALIZACIÓN
+// ===============================
+document.addEventListener('DOMContentLoaded', function() {
+    verificarAutenticacion();
+    configurarNavegacion();
+    actualizarFechaHora();
+    setInterval(actualizarFechaHora, 1000);
+    const nombreInput = document.getElementById('filtroNombre');
+    const rolInput = document.getElementById('filtroRol');
+    const formFiltro = document.getElementById('formFiltroUsuarios');
+    if (formFiltro) {
+        formFiltro.addEventListener('submit', function(e) {
+            e.preventDefault(); 
+        });
+    }
+    if (nombreInput && rolInput) {
+        function filtrarUsuariosAuto() {
+            const texto = (nombreInput.value || '').toLowerCase();
+            const rol = (rolInput.value || '').trim().toLowerCase();
+            let filtrados = window.usuarios.filter(u => {
+                let nombre = (u.nombre || '').toLowerCase();
+                let usuario = (u.usuario || '').toLowerCase();
+                let matchNombre = !texto || nombre.includes(texto) || usuario.includes(texto);
+                let rolUsuario = '';
+                if (u.rol) {
+                    if (typeof u.rol === 'string') {
+                        rolUsuario = u.rol.trim().toLowerCase();
+                    } else if (typeof u.rol === 'object' && u.rol.nombre) {
+                        rolUsuario = u.rol.nombre.trim().toLowerCase();
+                    }
+                }
+                let matchRol = !rol || rolUsuario === rol;
+                return matchNombre && matchRol;
+            });
+            window.mostrarUsuariosFiltrados(filtrados);
+        }
+        nombreInput.addEventListener('input', filtrarUsuariosAuto);
+        rolInput.addEventListener('change', filtrarUsuariosAuto);
+    }
+});

@@ -1,5 +1,8 @@
 package com.restaurante.dto.request;
 
+import com.restaurante.validator.NombreValido;
+import com.restaurante.validator.PasswordFuerte;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -13,10 +16,12 @@ public class RegisterRequest {
     private String email;
     
     @NotBlank(message = "Password es requerido")
-    @Size(min = 6, message = "Password debe tener al menos 6 caracteres")
+    @Size(min = 8,max=20, message = "Password debe tener entre 8 y 20 caracteres")
+    @PasswordFuerte
     private String password;
     
     @NotBlank(message = "Nombre es requerido")
+    @NombreValido
     private String nombre;
     
     private String apellido;

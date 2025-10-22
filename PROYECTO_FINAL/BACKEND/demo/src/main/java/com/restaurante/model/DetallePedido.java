@@ -30,7 +30,7 @@ public class DetallePedido {
     private Integer cantidad;
     private Double precioUnitario;
     private Double subtotal;
-    private String notas;
+    // Campo 'notas' eliminado ya que no se utiliza
     
     // Getters y Setters
     public Long getId() { return id; }
@@ -51,6 +51,5 @@ public class DetallePedido {
     public Double getSubtotal() { return subtotal; }
     public void setSubtotal(Double subtotal) { this.subtotal = subtotal; }
     
-    public String getNotas() { return notas; }
-    public void setNotas(String notas) { this.notas = notas; }
+    // Getter y Setter para 'notas' eliminados
 }

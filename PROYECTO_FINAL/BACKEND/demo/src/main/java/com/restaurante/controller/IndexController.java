@@ -88,10 +88,12 @@ public class IndexController {
     nuevo.setApellido(apellido);
     nuevo.setTelefono(telefono);
     nuevo.setEmail(correo);
-    nuevo.setPassword(clave);
+    // Encriptar la contraseña antes de guardar
+    nuevo.setPassword(passwordEncoder.encode(clave));
     nuevo.setUsuario(usuario);
-Rol rol = rolRepository.findByNombre("admin").orElse(null);
-nuevo.setRol(rol);
+    // Asignar rol 'cliente' por defecto
+    Rol rol = rolRepository.findByNombre("cliente").orElse(null);
+    nuevo.setRol(rol);
     usuarioRepository.save(nuevo);
 
     return "redirect:/login";

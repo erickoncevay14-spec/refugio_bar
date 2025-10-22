@@ -49,13 +49,13 @@ public class PedidoService {
 
         // Asignar usuario
         Usuario usuario = usuarioRepository.findById(request.getUsuarioId())
-            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         pedido.setUsuario(usuario);
 
         // Asignar mesa si existe
         if (request.getMesaId() != null) {
             Mesa mesa = mesaRepository.findById(request.getMesaId())
-                .orElseThrow(() -> new RuntimeException("Mesa no encontrada"));
+                    .orElseThrow(() -> new RuntimeException("Mesa no encontrada"));
             pedido.setMesa(mesa);
         }
 
@@ -65,7 +65,7 @@ public class PedidoService {
 
         for (CrearPedidoRequest.ItemPedido item : request.getItems()) {
             Producto producto = productoRepository.findById(item.getProductoId())
-                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+                    .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 
             DetallePedido detalle = new DetallePedido();
             detalle.setProducto(producto);
@@ -96,19 +96,19 @@ public class PedidoService {
 
     public List<Pedido> findByUsuarioId(Long usuarioId) {
         return pedidoRepository.findAll().stream()
-            .filter(p -> p.getUsuario() != null && p.getUsuario().getId().equals(usuarioId))
-            .toList();
+                .filter(p -> p.getUsuario() != null && p.getUsuario().getId().equals(usuarioId))
+                .toList();
     }
 
     public List<Pedido> findByMesaId(Long mesaId) {
         return pedidoRepository.findAll().stream()
-            .filter(p -> p.getMesa() != null && p.getMesa().getId().equals(mesaId))
-            .toList();
+                .filter(p -> p.getMesa() != null && p.getMesa().getId().equals(mesaId))
+                .toList();
     }
 
     public Pedido actualizarEstado(Long id, String estado) {
         Pedido pedido = pedidoRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Pedido no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Pedido no encontrado"));
 
         pedido.setEstado(estado);
 
@@ -121,8 +121,8 @@ public class PedidoService {
 
     public List<Pedido> findPedidosPendientes() {
         return pedidoRepository.findAll().stream()
-            .filter(p -> "PENDIENTE".equals(p.getEstado()) || "EN_PREPARACION".equals(p.getEstado()))
-            .toList();
+                .filter(p -> "PENDIENTE".equals(p.getEstado()) || "EN_PREPARACION".equals(p.getEstado()))
+                .toList();
     }
 
     public boolean eliminarPedido(Long id) {
@@ -147,7 +147,9 @@ public class PedidoService {
             }
         }
         List<Integer> resultado = new java.util.ArrayList<>();
-        for (int v : ventasPorDia) resultado.add(v);
+        for (int v : ventasPorDia) {
+            resultado.add(v);
+        }
         return resultado;
     }
 }

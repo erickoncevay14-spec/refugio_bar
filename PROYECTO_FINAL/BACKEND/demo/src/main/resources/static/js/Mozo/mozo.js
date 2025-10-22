@@ -160,11 +160,16 @@ function verificarAutenticacionMozo() {
         return;
     }
     
-    const esMozo = user.rol?.toUpperCase() === 'MOZO';
+    // Aceptamos tanto 'mozo' (minúsculas) como 'MOZO' (mayúsculas)
+    // según la información de la base de datos
+    console.log('Rol del usuario actual:', user.rol);
+    const rolUpperCase = user.rol?.toUpperCase() || '';
+    const esMozo = rolUpperCase === 'MOZO' || rolUpperCase === 'MESERO' || 
+                 user.rol === 'mozo' || user.rol === 'Mozo';
     
     if (!esMozo) {
         alert(`Acceso no autorizado. Solo mozos pueden acceder. Su rol actual: ${user.rol}`);
-        switch(user.rol?.toUpperCase()) {
+        switch(rolUpperCase) {
             case 'ADMIN':
                 window.location.href = '/admin';
                 break;

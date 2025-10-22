@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +23,8 @@ public class UsuarioApiController {
     private UsuarioRepository usuarioRepository;
     @Autowired
     private RolRepository rolRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @PutMapping("/{id}/rol")
     public ResponseEntity<Usuario> cambiarRol(@PathVariable Long id, @RequestBody Map<String, String> body) {
@@ -44,6 +47,12 @@ public class UsuarioApiController {
         usuario.setApellido((String) body.get("apellido"));
         usuario.setEmail((String) body.get("email"));
         usuario.setTelefono((String) body.get("telefono"));
+        // Si se envía password, encriptar antes de guardar
+        Object passwordObj = body.get("password");
+        if (passwordObj != null) {
+            String rawPassword = passwordObj.toString();
+            usuario.setPassword(passwordEncoder.encode(rawPassword));
+        }
         // Si se envía rol_id, actualizar el rol
         Object rolIdObj = body.get("rol_id");
         if (rolIdObj != null) {

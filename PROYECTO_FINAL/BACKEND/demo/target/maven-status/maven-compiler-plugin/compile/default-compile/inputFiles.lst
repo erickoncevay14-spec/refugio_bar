@@ -8,6 +8,7 @@ C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\jav
 C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\controller\api\ReservaController.java
 C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\controller\api\UsuarioApiController.java
 C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\controller\IndexController.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\controller\JwtAuthController.java
 C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\DemoApplication.java
 C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\dto\request\ActualizarPedidoRequest.java
 C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\dto\request\CrearPedidoRequest.java
@@ -34,6 +35,7 @@ C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\jav
 C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\dto\response\ProductoResponse.java
 C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\dto\response\RecetaResponse.java
 C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\dto\response\UsuarioResponse.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\dto\validator\ObjectValidator.java
 C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\exception\BusinessException.java
 C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\exception\GlobalExceptionHandler.java
 C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\exception\ResourceNotFoundException.java
@@ -57,6 +59,13 @@ C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\jav
 C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\repository\ReservaRepository.java
 C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\repository\RolRepository.java
 C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\repository\UsuarioRepository.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\security\config\JwtSecurityConfig.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\security\dto\AuthRequest.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\security\dto\AuthResponse.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\security\jwt\JwtAuthenticationEntryPoint.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\security\jwt\JwtAuthenticationFilter.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\security\jwt\JwtUtil.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\security\service\UserDetailsServiceImpl.java
 C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\service\AuthService.java
 C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\service\MercadoPagoService.java
 C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\service\MesaService.java
@@ -64,6 +73,10 @@ C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\jav
 C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\service\PedidoService.java
 C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\service\ProductoService.java
 C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\service\ReservaService.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\validator\NombreValidator.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\validator\NombreValido.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\validator\PasswordFuerte.java
+C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\validator\PasswordFuerteValidator.java
 C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\validator\PedidoValidator.java
 C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\validator\ProductoValidator.java
 C:\Users\WINDOWS 11\Desktop\refugio_bar\PROYECTO_FINAL\BACKEND\demo\src\main\java\com\restaurante\validator\ReservaValidator.java

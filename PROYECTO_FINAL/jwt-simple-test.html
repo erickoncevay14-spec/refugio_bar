@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Prueba JWT</title>
+    <script>
+        function testJWT() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Enviando solicitud...';
+            
+            fetch('http://localhost:8080/jwt-auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: 'admin@restaurante.com',
+                    password: 'admin123'
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                resultDiv.innerHTML = '<h3>¡Éxito!</h3><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                if (data.token) {
+                    const parts = data.token.split('.');
+                    if (parts.length === 3) {
+                        // Decodificar el payload del token (segunda parte)
+                        try {
+                            const payload = JSON.parse(atob(parts[1]));
+                            resultDiv.innerHTML += '<h3>Contenido del token:</h3><pre>' + JSON.stringify(payload, null, 2) + '</pre>';
+                        } catch (e) {
+                            resultDiv.innerHTML += '<p>Error al decodificar token: ' + e.message + '</p>';
+                        }
+                    }
+                }
+            })
+            .catch(error => {
+                resultDiv.innerHTML = '<h3>Error:</h3><p>' + error.message + '</p>';
+            });
+        }
+    </script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        button { padding: 10px; font-size: 16px; cursor: pointer; }
+        #result { margin-top: 20px; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        pre { background: #f5f5f5; padding: 10px; border-radius: 5px; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <h1>Prueba de autenticación JWT</h1>
+    <button onclick="testJWT()">Probar login JWT</button>
+    <div id="result">Los resultados aparecerán aquí...</div>
+</body>
+</html>

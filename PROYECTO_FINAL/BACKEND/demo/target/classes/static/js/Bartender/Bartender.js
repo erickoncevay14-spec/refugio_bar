@@ -26,7 +26,7 @@ function conectarWebSocket() {
         // Suscribirse a nuevos pedidos
         stompClient.subscribe('/topic/pedidos', function(message) {
             const nuevoPedido = JSON.parse(message.body);
-            console.log('🔔 Nuevo pedido recibido:', nuevoPedido);
+            // console.log('🔔 Nuevo pedido recibido:', nuevoPedido); // Eliminado para no mostrar en consola
             mostrarNotificacion(nuevoPedido);
             cargarPedidos(); // Recargar lista
         });
@@ -34,7 +34,7 @@ function conectarWebSocket() {
         // Suscribirse a actualizaciones de estado
         stompClient.subscribe('/topic/pedidos/actualizado', function(message) {
             const pedidoActualizado = JSON.parse(message.body);
-            console.log('🔄 Pedido actualizado:', pedidoActualizado);
+            // console.log('🔄 Pedido actualizado:', pedidoActualizado); // Eliminado para no mostrar en consola
             cargarPedidos(); // Recargar lista
         });
     }, function(error) {
