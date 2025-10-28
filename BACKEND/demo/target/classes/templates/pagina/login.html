@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/pagina.css/index.css}" />
+    <link rel="stylesheet" th:href="@{/css/pagina.css/menu-hamburguesa.css}" />
+    <title>login</title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="#inicio" class="logo">El Refugio</a>
+
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a th:href="@{/index}">Inicio</a></li>
+                <li><a th:href="@{/nosotros}">Nosotros</a></li>
+                <li><a th:href="@{/productos}">Productos</a></li>
+                <li><a th:href="@{/login}" class="inicio-seccion">Iniciar Sesión</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div id="result"></div>
+
+    <section id="login">
+        <div class="container">
+            <form class="login-form" autocomplete="off" onsubmit="return false;">
+                <h2>Iniciar Sesión</h2>
+                <div class="form-group">
+                    <label for="usuario">Usuario</label>
+                    <input type="text" id="usuario" name="usuario" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <!-- SOLO llamar a ejecutarLogin() - sin conflictos -->
+                    <button type="button" id="loginBtn" class="cta-button" style="width: 100%;">Iniciar Sesión</button>
+                </div>
+                <div class="form-group">
+                    <button type="button" onclick="window.location.href = '/registro'" class="cta-button"
+                        style="width: 100%;">Registrar</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script th:src="@{/js/menu-hamburguesa/menu-hamburguesa.js}"></script>
+    <script th:src="@{/js/services/apiService.js}"></script>
+    <script th:src="@{/js/services/authService.js}"></script>
+    <script th:src="@{/js/login/login.js}"></script>
+
+</body>
+</html>

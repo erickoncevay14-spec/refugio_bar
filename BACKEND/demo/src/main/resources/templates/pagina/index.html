@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index</title>
+    <link rel="stylesheet" th:href="@{/css/pagina.css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/pagina.css/menu-hamburguesa.css}">
+    <link rel="stylesheet" th:href="@{/css/pagina.css/carrito.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <header>
+        <nav>
+            <!-- Logo del sitio -->
+            <a href="#inicio" class="logo">El Refugio</a>
+
+            <!-- Botón hamburguesa -->
+            <div class="hamburger" id="hamburger">
+                <!-- Son tres líneas que simulan el ícono -->
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <!-- Enlaces del menú -->
+            <ul class="nav-links" id="nav-links">
+                <li><a th:href="@{/index}">Inicio</a></li>
+                <li><a th:href="@{/nosotros}">Nosotros</a></li>
+                <li><a th:href="@{/productos}">Productos</a></li>
+                <li><a th:href="@{/login}" class="inicio-seccion">Iniciar Sesión</a></li>
+            </ul>
+            <!-- Carrito -->
+            <div class="cart-container">
+                <div class="cart-icon" id="cartIcon">
+                    🛒 <span class="cart-count" id="cartCount">0</span>
+                </div>
+
+                <!-- Dropdown del carrito -->
+                <div class="cart-dropdown" id="cartDropdown">
+                    <div class="cart-header">
+                        <h3>Mi Carrito</h3>
+                    </div>
+                    <div class="cart-items" id="cartItems">
+                        <!-- Items dinámicos -->
+                    </div>
+                    <div class="cart-footer">
+                        <div class="cart-total" id="cartTotal">Total: $0.00</div>
+                        <button class="checkout-btn" onclick="finalizarPedido()">Finalizar Pedido</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    <main>
+        <section id="inicio">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>El Refugio Bar</h1>
+                    <p>Donde cada momento se vuelve especial. Disfruta de nuestras mejores bebidas en un ambiente único
+                        y acogedor.</p>
+                    <a href="#productos" class="cta-button">Descubre Nuestra Carta</a>
+                </div>
+            </div>
+        </section>
+        <hr class="separador">
+        <div class="hacerca-de">
+            <div class="texto-izq">
+                <h1>Acerca de</h1>
+                <h3>Local institucional</h3>
+            </div>
+            <div class="texto-der">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum ut pariatur
+                    non ad provident. Sequi reiciendis illo, aliquam quos assumenda est explicabo
+                    repellat ducimus omnis blanditiis rerum quam veniam eaque.</p>
+            </div>
+        </div>
+        <hr class="separador">
+
+
+        <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" data-bs-interval="1000">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <video class="d-block w-100" autoplay muted loop>
+                        <source
+                            src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/weekend-thirsty-night-video-ads-design-template-f1974ccb3568ffd2cf6e928955d679d5_screen.mp4?ts=1737305293"
+                            type="video/mp4">
+                        Tu navegador no soporta videos en HTML5.
+                    </video>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Video promocional</h5>
+                        <p>El Refugio Bar te da la bienvenida </p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img th:src="@{/img/noche.jpg}" class="d-block w-100" alt="Vista nocturna del bar">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Ambiente Nocturno</h5>
+                        <p>Disfruta de nuestras noches especiales con música en vivo</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img th:src="@{/img/grupobalilando.jpg}" class="d-block w-100" alt="Grupo bailando">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Fiestas y Celebraciones</h5>
+                        <p>El mejor lugar para celebrar con amigos</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <hr class="separador">
+        <section id="nosotros">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2>Nuestra Historia</h2>
+                        <p>El Refugio Bar nació hace más de 10 años con la visión de crear un espacio donde las personas
+                            pudieran escapar del bullicio diario y encontrar su momento de tranquilidad.</p>
+                        <p>Nos especializamos en cocteles artesanales, cervezas premium y una selección única de licores
+                            de todo el mundo. Nuestro equipo de bartenders profesionales está siempre listo para
+                            sorprenderte.</p>
+                        <p>Más que un bar, somos tu refugio perfecto para celebrar, relajarte o simplemente disfrutar de
+                            una buena conversación con amigos.</p>
+                    </div>
+                    <div class="about-image">
+                    <img th:src="@{/img/un-opossum-lindo-con-ropa.jpg}" alt="Nuestra Historia">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <h1 class="tomar-cerveza">Ven a tomarte unas cervezas</h1>
+        <hr class="separador-mesas">
+        <div class="imagenes-bar">
+
+            <div class="imagen-bar">
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                    alt="Imagen del bar 1">
+            </div>
+            <div class="imagen-bar">
+                <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                    alt="Imagen del bar 2">
+            </div>
+            <div class="imagen-bar">
+                <img src="https://images.unsplash.com/photo-1549924231-f129b911e442?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                    alt="Imagen del bar 3">
+            </div>
+
+            <div class="imagen-bar">
+                <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                    alt="Imagen del bar 2">
+            </div>
+            <div class="imagen-bar">
+                <img src="https://images.unsplash.com/photo-1549924231-f129b911e442?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                    alt="Imagen del bar 3">
+            </div>
+        </div>
+
+    </main>
+    <div class="container-mesas">
+        <h1 class="reservar-mesa-titulo">Reservar una mesa</h1>
+        <hr class="separador-mesas">
+
+        <div class="form-row">
+            <div class="formulario-mesas">
+                <label for="opciones">Elige una opción</label>
+                <select id="opciones" name="opciones">
+                    <option value="opcion1">2 personas</option>
+                    <option value="opcion2">3 personas</option>
+                    <option value="opcion3">4 personas</option>
+                    <option value="opcion4">6 personas</option>
+                </select>
+            </div>
+
+            <div class="fecha">
+                <label for="fecha">Selecciona una fecha</label>
+                <input type="date" id="fecha" name="fecha">
+            </div>
+
+            <div class="horario">
+                <label for="hora">Selecciona un horario</label>
+                <select id="hora" name="hora">
+                    <option value="18:00">18:00</option>
+                    <option value="19:00">19:00</option>
+                    <option value="20:00">20:00</option>
+                    <option value="21:00">21:00</option>
+                    <option value="22:00">22:00</option>
+                    <option value="23:00">23:00</option>
+                </select>
+            </div>
+            <BR>
+            <button class="btn-reservar">Buscar una mesa</button>
+        </div>
+    </div>
+
+
+    <div class="mapa">
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d76849.38488759792!2d-75.77780377420571!3d-14.036200396810997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9110e3208b90e70f%3A0x9a3dc150b1f2dd8c!2sHUACACHINA%20HOUSE!5e1!3m2!1ses-419!2spe!4v1756579922950!5m2!1ses-419!2spe"
+            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+    </div>
+
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p>📍 Av. Principal 123, Centro</p>
+                <p>📞 +51 987 654 321</p>
+                <p>✉️ info@elrefugiobar.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>Horarios</h3>
+                <p>Lunes a Jueves: 6:00 PM - 2:00 AM</p>
+                <p>Viernes y Sábado: 6:00 PM - 3:00 AM</p>
+                <p>Domingo: 6:00 PM - 1:00 AM</p>
+            </div>
+            <div class="footer-section">
+                <h3>Síguenos</h3>
+                <a href="#">Facebook</a>
+                <a href="#">Instagram</a>
+                <a href="#">Twitter</a>
+                <a href="#">TikTok</a>
+            </div>
+            <div class="footer-section">
+                <h3>Políticas</h3>
+                <a href="#">Términos y Condiciones</a>
+                <a href="#">Política de Privacidad</a>
+                <a href="#">Consumo Responsable</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 El Refugio Bar. Todos los derechos reservados. | Prohibida la venta a menores de edad.</p>
+        </div>
+    </footer>
+    <script th:src="@{/js/menu-hamburguesa/menu-hamburguesa.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
