@@ -1,4 +1,3 @@
-com\restaurante\validator\PedidoValidator.class
 com\restaurante\validator\PasswordFuerteValidator.class
 com\restaurante\repository\MesaRepository.class
 com\restaurante\controller\IndexController.class
@@ -8,7 +7,6 @@ com\restaurante\security\jwt\JwtTokenManager.class
 com\restaurante\repository\IngredienteRepository.class
 com\restaurante\repository\PagoRepository.class
 com\restaurante\service\ProductoService.class
-com\restaurante\validator\ProductoValidator.class
 com\restaurante\dto\response\ErrorResponse.class
 com\restaurante\controller\api\ReservaController.class
 com\restaurante\service\MesaService.class
@@ -32,7 +30,6 @@ com\restaurante\dto\response\DashboardResponse$ProductoPopular.class
 com\restaurante\service\implementaciones\ProductoImplements.class
 com\restaurante\service\implementaciones\UserDetailsServiceImpl.class
 com\restaurante\dto\request\EstadoMesaRequest.class
-com\restaurante\controller\JwtController.class
 com\restaurante\dto\response\UsuarioResponse.class
 com\restaurante\service\MercadoPagoService.class
 com\restaurante\dto\response\RecetaResponse.class
@@ -76,7 +73,6 @@ com\restaurante\DemoApplication.class
 com\restaurante\security\jwt\JwtAuthenticationEntryPoint.class
 com\restaurante\model\Reserva.class
 com\restaurante\model\Mesa.class
-com\restaurante\validator\ReservaValidator.class
 com\restaurante\model\Pedido.class
 com\restaurante\dto\response\IngredienteResponse.class
 com\restaurante\dto\request\CrearPedidoRequest$ItemPedido.class

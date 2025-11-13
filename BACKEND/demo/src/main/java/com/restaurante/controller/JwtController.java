@@ -1,4 +1,4 @@
-package com.restaurante.controller;
+/*package com.restaurante.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -94,4 +94,4 @@ public class JwtController {
         
         return ResponseEntity.ok(response);
     }
-}
+}*/

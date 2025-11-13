@@ -243,7 +243,7 @@ async function registrar(event) {
     };
     
     try {
-        const response = await fetch('http://localhost:8080/jwt-auth/registro', {
+        const response = await fetch('http://localhost:8080/api/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
