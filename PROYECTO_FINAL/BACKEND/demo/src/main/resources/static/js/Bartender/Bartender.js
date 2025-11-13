@@ -20,13 +20,13 @@ function conectarWebSocket() {
     const socket = new SockJS('http://localhost:8080/ws');
     stompClient = Stomp.over(socket);
     
+    // Desactivar logs de debug de STOMP
+    stompClient.debug = null;
+    
     stompClient.connect({}, function(frame) {
-        console.log('✅ WebSocket conectado:', frame);
-        
         // Suscribirse a nuevos pedidos
         stompClient.subscribe('/topic/pedidos', function(message) {
             const nuevoPedido = JSON.parse(message.body);
-            // console.log('🔔 Nuevo pedido recibido:', nuevoPedido); // Eliminado para no mostrar en consola
             mostrarNotificacion(nuevoPedido);
             cargarPedidos(); // Recargar lista
         });
@@ -38,7 +38,7 @@ function conectarWebSocket() {
             cargarPedidos(); // Recargar lista
         });
     }, function(error) {
-        console.error('❌ Error WebSocket:', error);
+        console.error(' Error WebSocket:', error);
         // Reconectar después de 5 segundos
         setTimeout(conectarWebSocket, 5000);
     });
@@ -127,6 +127,8 @@ function renderizarPedidos(pedidos) {
 function crearItemPedido(pedido) {
     const li = document.createElement('li');
     li.className = 'list-group-item';
+    li.setAttribute('data-pedido-id', pedido.id);
+    li.setAttribute('data-estado', pedido.estado);
     
     const productos = pedido.detalles?.map(d => `${d.producto?.nombre} (x${d.cantidad})`).join(', ') || 'Sin productos';
     const mesaNumero = pedido.mesa?.numero || 'N/A';
@@ -166,16 +168,81 @@ function crearBotonesEstado(pedido) {
     return html;
 }
 
-async function cambiarEstado(id, nuevoEstado) {
-    try {
-        await fetch(`${API_BASE}/pedidos/${id}/estado?estado=${nuevoEstado}`, {
-            method: 'PUT'
-        });
-        // No necesitamos recargar, el WebSocket lo hará automáticamente
-    } catch (error) {
-        console.error('Error al cambiar estado:', error);
-        alert('Error al actualizar el estado del pedido');
+// ===============================
+// ACTUALIZACIÓN OPTIMIZADA DE PEDIDOS
+// ===============================
+function agregarPedidoALista(pedido) {
+    const item = crearItemPedido(pedido);
+    const listaPendientes = document.getElementById('listaPendientes');
+    if (listaPendientes && pedido.estado === 'PENDIENTE') {
+        listaPendientes.insertBefore(item, listaPendientes.firstChild);
     }
+}
+
+function actualizarPedidoEnLista(pedido) {
+    // Buscar el pedido existente
+    const pedidoElement = document.querySelector(`[data-pedido-id="${pedido.id}"]`);
+    
+    if (!pedidoElement) {
+        // Si no existe, agregarlo
+        agregarPedidoALista(pedido);
+        return;
+    }
+    
+    const estadoAnterior = pedidoElement.getAttribute('data-estado');
+    
+    // Si el estado cambió, moverlo a la lista correcta
+    if (estadoAnterior !== pedido.estado) {
+        pedidoElement.remove();
+        
+        const nuevoItem = crearItemPedido(pedido);
+        
+        if (pedido.estado === 'PENDIENTE') {
+            const listaPendientes = document.getElementById('listaPendientes');
+            if (listaPendientes) listaPendientes.appendChild(nuevoItem);
+        } else if (pedido.estado === 'EN_PREPARACION' || pedido.estado === 'LISTO') {
+            const listaPreparacion = document.getElementById('listaPreparacion');
+            if (listaPreparacion) listaPreparacion.appendChild(nuevoItem);
+        } else if (pedido.estado === 'ENTREGADO') {
+            const listaEntregados = document.getElementById('listaEntregados');
+            if (listaEntregados) listaEntregados.appendChild(nuevoItem);
+        }
+    } else {
+        // Solo actualizar el contenido sin mover
+        const nuevoItem = crearItemPedido(pedido);
+        pedidoElement.innerHTML = nuevoItem.innerHTML;
+    }
+}
+
+async function cambiarEstado(id, nuevoEstado) {
+    // Actualizar UI inmediatamente (optimistic update)
+    const pedidoElement = document.querySelector(`[data-pedido-id="${id}"]`);
+    if (pedidoElement) {
+        const badge = pedidoElement.querySelector('.badge');
+        const btnContainer = pedidoElement.querySelector('.d-flex.gap-2');
+        
+        if (badge) {
+            badge.textContent = nuevoEstado;
+            badge.className = 'badge';
+            if (nuevoEstado === 'EN_PREPARACION') badge.classList.add('bg-primary');
+            if (nuevoEstado === 'LISTO') badge.classList.add('bg-warning');
+            if (nuevoEstado === 'ENTREGADO') badge.classList.add('bg-success');
+        }
+        
+        // Remover botón inmediatamente
+        if (btnContainer) {
+            const btn = btnContainer.querySelector('button');
+            if (btn) btn.remove();
+        }
+    }
+    
+    // Enviar al backend (sin esperar)
+    fetch(`${API_BASE}/pedidos/${id}/estado?estado=${nuevoEstado}`, {
+        method: 'PUT'
+    }).catch(error => {
+        console.error('Error al cambiar estado:', error);
+        cargarPedidos(); // Solo recargar si hay error
+    });
 }
 
 // ===============================
@@ -198,12 +265,9 @@ function configurarBusqueda() {
 // AUTENTICACIÓN
 // ===============================
 function verificarAutenticacionBartender() {
-    console.log('Verificando autenticación Bartender...');
-    
     // Limpiar URL
     if (window.location.search) {
         window.history.replaceState({}, document.title, window.location.pathname);
-        console.log('URL limpiada');
     }
     
     let userString = sessionStorage.getItem('currentUser') || localStorage.getItem('currentUser');
@@ -226,7 +290,7 @@ function verificarAutenticacionBartender() {
         return;
     }
     
-    if (!user.rol || !user.nombre) {
+    if (!user.rol || (!user.nombre && !user.usuario)) {
         alert('Datos de sesión incompletos. Debe iniciar sesión nuevamente');
         window.location.href = '/login';
         return;
@@ -235,7 +299,7 @@ function verificarAutenticacionBartender() {
     const esBartender = user.rol?.toUpperCase() === 'BARTENDER';
     
     if (!esBartender) {
-        alert(`Acceso no autorizado. Solo bartenders pueden acceder. Su rol actual: ${user.rol}`);
+        alert('Acceso no autorizado. Solo bartenders pueden acceder.');
         switch(user.rol?.toUpperCase()) {
             case 'ADMIN':
                 window.location.href = '/admin';
@@ -251,10 +315,8 @@ function verificarAutenticacionBartender() {
     
     const userInfoElement = document.getElementById('userInfo');
     if (userInfoElement) {
-        userInfoElement.textContent = `Bartender: ${user.nombre}`;
+        userInfoElement.textContent = `Bartender: ${user.nombre || user.usuario}`;
     }
-    
-    console.log('Usuario bartender verificado correctamente');
 }
 
 function cerrarSesion() {
@@ -266,4 +328,41 @@ function cerrarSesion() {
         sessionStorage.clear();
         window.location.href = '/login';
     }
+}
+
+// ===============================
+// FUNCIONES DE NAVEGACIÓN
+// ===============================
+function showSection(sectionName) {
+    // Ocultar todas las secciones
+    const sections = document.querySelectorAll('.content-section');
+    sections.forEach(section => {
+        section.style.display = 'none';
+    });
+    
+    // Mostrar la sección seleccionada
+    const targetSection = document.getElementById(`section-${sectionName}`);
+    if (targetSection) {
+        targetSection.style.display = 'block';
+    }
+    
+    // Actualizar título de la página
+    const pageTitle = document.getElementById('pageTitle');
+    if (pageTitle) {
+        const titles = {
+            'pedidos-pendientes': 'Pedidos por Preparar',
+            'pedidos-preparacion': 'En Preparación',
+            'pedidos-entregados': 'Pedidos Entregados'
+        };
+        pageTitle.textContent = titles[sectionName] || 'Bartender';
+    }
+    
+    // Actualizar nav links
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('onclick')?.includes(sectionName)) {
+            link.classList.add('active');
+        }
+    });
 }

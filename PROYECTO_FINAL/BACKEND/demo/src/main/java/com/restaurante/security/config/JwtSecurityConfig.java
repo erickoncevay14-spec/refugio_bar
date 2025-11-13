@@ -40,15 +40,30 @@ public class JwtSecurityConfig {
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(authorize -> authorize
-                // Rutas públicas
-                .requestMatchers("/auth/**", "/jwt-auth/**", "/api/public/**", "/").permitAll()
-                .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
-                // Rutas protegidas por roles
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/mozo/**").hasRole("MESERO")
-                .requestMatchers("/bartender/**").hasRole("BARTENDER")
+                // Rutas públicas - API de autenticación
+                .requestMatchers("/api/auth/**", "/jwt-auth/**", "/api/public/**").permitAll()
+                
+                // WebSocket endpoints (sin autenticación)
+                .requestMatchers("/ws/**").permitAll()
+                
+                // Rutas públicas - Páginas HTML (sin autenticación)
+                .requestMatchers("/", "/login", "/registro", "/index", "/nosotros").permitAll()
+                .requestMatchers("/productos", "/chelas", "/piscos", "/rones", "/tequilas", "/vinos", "/vodckas").permitAll()
+                .requestMatchers("/admin", "/mozo", "/bartender").permitAll() // Páginas HTML de roles
+                
+                // Recursos estáticos (CSS, JS, imágenes)
+                .requestMatchers("/css/**", "/js/**", "/img/**", "/favicon.ico").permitAll()
+                
+                // API de productos público (sin autenticación)
                 .requestMatchers("/api/productos/**").permitAll()
-                // Todas las demás rutas requieren autenticación
+                
+                // API protegidas (requieren JWT)
+                .requestMatchers("/api/pedidos/**").authenticated()
+                .requestMatchers("/api/reservas/**").authenticated()
+                .requestMatchers("/api/mesas/**").authenticated()
+                .requestMatchers("/api/usuarios/**").authenticated()
+                
+                // Todas las demás rutas requieren autenticación JWT
                 .anyRequest().authenticated()
             )
             .exceptionHandling(ex -> ex

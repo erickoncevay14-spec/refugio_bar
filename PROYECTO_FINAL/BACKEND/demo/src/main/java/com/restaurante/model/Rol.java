@@ -17,7 +17,6 @@ public class Rol {
     @Column(unique = true, nullable = false)
     private String nombre;
     
-    // Campo 'descripcion' eliminado ya que no se utiliza
     
     // Getters y Setters
     public Long getId() { return id; }

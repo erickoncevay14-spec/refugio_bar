@@ -1,10 +1,8 @@
-// adminProductos.js
-// Lógica de gestión de productos en el panel de administración
 
 let productos = [];
 
 async function cargarProductos() {
-    console.log('📦 Cargando productos...');
+
     try {
         const response = await fetch(`${API_BASE}/productos`);
         if (response.ok) {

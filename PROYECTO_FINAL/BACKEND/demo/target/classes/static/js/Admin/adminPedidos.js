@@ -1,17 +1,16 @@
-// adminPedidos.js
-// Lógica de gestión de pedidos en el panel de administración
 
 let pedidos = [];
 
 async function cargarPedidos() {
-    console.log('📝 Cargando pedidos...');
+    
     try {
-        const response = await fetch(`${API_BASE}/pedidos`);
-        if (response.ok) {
+        // Usar apiGet en lugar de fetch para incluir el token JWT automáticamente
+        const response = await apiGet(`${API_BASE}/pedidos`);
+        if (response && response.ok) {
             pedidos = await response.json();
             mostrarPedidos();
         } else {
-            throw new Error(`Error ${response.status}: ${response.statusText}`);
+            throw new Error(`Error ${response?.status}: ${response?.statusText}`);
         }
     } catch (error) {
         console.error('Error cargando pedidos:', error);

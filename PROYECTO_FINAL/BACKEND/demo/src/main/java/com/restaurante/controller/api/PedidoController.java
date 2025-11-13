@@ -7,7 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.restaurante.dto.request.CrearPedidoRequest;
 import com.restaurante.model.Pedido;
@@ -27,19 +36,16 @@ public class PedidoController {
     @Autowired
     private com.restaurante.repository.ProductoRepository productoRepository;
 
-    // ⭐ NUEVO: Inyectar SimpMessagingTemplate para WebSocket
+    //  NUEVO: Inyectar SimpMessagingTemplate para WebSocket
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
-    // ---------------------- ENDPOINTS PRINCIPALES ----------------------
-
-    // Crear pedido + broadcasting por WebSocket
     @PostMapping
     public ResponseEntity<?> crearPedido(@Valid @RequestBody CrearPedidoRequest pedidoRequest) {
         try {
             Pedido nuevoPedido = pedidoService.crearPedido(pedidoRequest);
 
-            // ⭐ Notificar a todos los clientes suscritos al topic
+            //  Notificar a todos los clientes suscritos al topic
             messagingTemplate.convertAndSend("/topic/pedidos", nuevoPedido);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(nuevoPedido);
@@ -49,7 +55,6 @@ public class PedidoController {
         }
     }
 
-    // Actualizar estado de pedido + broadcasting
     @PutMapping("/{id}/estado")
     public ResponseEntity<?> actualizarEstado(@PathVariable Long id, @RequestParam String estado) {
         try {
@@ -70,7 +75,6 @@ public class PedidoController {
         }
     }
 
-    // ---------------------- CONSULTAS ----------------------
 
     @GetMapping
     public ResponseEntity<List<Pedido>> getAllPedidos() {
@@ -102,8 +106,6 @@ public class PedidoController {
         return ResponseEntity.ok(pedidos);
     }
 
-    // ---------------------- ELIMINAR ----------------------
-
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminarPedido(@PathVariable Long id) {
         try {
@@ -119,9 +121,6 @@ public class PedidoController {
                     .body(Map.of("error", e.getMessage()));
         }
     }
-
-    // ---------------------- ESTADÍSTICAS ----------------------
-
     @GetMapping("/estadisticas/ventas-semanales")
     public ResponseEntity<List<Integer>> getVentasSemanales() {
         try {

@@ -1,11 +1,16 @@
-// admin.js
-// Archivo de control de lógica general y navegación
-
 window.API_BASE = 'http://localhost:8080/api';
 
-// ===============================
-// UTILIDADES GENERALES
-// ===============================
+// =================================================================
+// ¡¡¡IMPORTANTE!!! 
+// Pega tus 3 URLs de "Insertar" (Embed) de Looker Studio aquí
+// =================================================================
+const lookerDashboards = {
+    ventas: "https://lookerstudio.google.com/embed/reporting/d9caae57-06af-452e-9de1-780bafc69ebf/page/lvicF", // <- REEMPLAZAR
+    clientes: "URL_DE_TU_DASHBOARD_DE_CLIENTES", // <- REEMPLAZAR
+    inventario: "URL_DE_TU_DASHBOARD_DE_INVENTARIO" // <- REEMPLAZAR
+};
+// =================================================================
+
 
 function actualizarFechaHora() {
     const ahora = new Date();
@@ -57,106 +62,49 @@ function cerrarSesion() {
         window.location.href = '/login';
     }
 }
-
-
+// INICIALIZACIÓN
 // ===============================
-// LÓGICA DE ANALYTICS (Looker Studio)
-// ===============================
-
-// URLs de inserción (Embed URLs) de tus dashboards de Looker Studio.
-// ⚠️ IMPORTANTE: REEMPLAZA ESTOS VALORES POR TUS URLS REALES.
-const LOOKER_DASHBOARDS = {
-    // URL por defecto para Ventas (se puede sobrescribir con el botón 'Configurar Dashboard')
-    ventas: "https://lookerstudio.google.com/embed/reporting/d9caae57-06af-452e-9de1-780bafc69ebf/page/lvicF",
-    
-    // Otras URLs
-    clientes: "https://lookerstudio.google.com/embed/reporting/URL_CLIENTES_POR_DEFECTO/page/p_ABC",
-    inventario: "https://lookerstudio.google.com/embed/reporting/URL_INVENTARIO_POR_DEFECTO/page/p_DEF"
-};
-
-/**
- * Función principal para la sección de Analytics.
- * Se llama cuando se selecciona la sección 'analytics' en el menú.
- */
-function cargarAnalytics() {
-    console.log('Cargando sección de Analytics...');
-    
-    // Por defecto, intenta cargar el dashboard de ventas al entrar a la sección.
-    setTimeout(() => {
-        cargarDashboardLooker('ventas'); // Llama a la función específica de Looker
-    }, 100); 
-}
-
-/**
- * Función llamada al hacer click en el botón "Configurar Dashboard" de tu HTML.
- * Este botón ahora SÍ te permite configurar la URL principal.
- */
-function configurarLooker() {
-    const defaultKey = 'ventas';
-    const storageKey = `lookerStudioUrl_${defaultKey}`;
-    const urlGuardada = localStorage.getItem(storageKey);
-
-    const nuevaUrl = prompt(
-        `Ingresa la URL de inserción (Embed URL) de tu Dashboard de ${defaultKey.toUpperCase()}:`, 
-        urlGuardada || LOOKER_DASHBOARDS[defaultKey]
-    );
-
-    if (nuevaUrl) {
-        localStorage.setItem(storageKey, nuevaUrl);
-        mostrarMensaje(`URL de ${defaultKey.toUpperCase()} configurada correctamente.`, 'success');
-        cargarDashboardLooker(defaultKey);
-    } else {
-        mostrarMensaje("Configuración cancelada.", 'info');
+document.addEventListener('DOMContentLoaded', function() {
+    verificarAutenticacion();
+    configurarNavegacion();
+    cargarDashboard(); // Esto llama a la función de adminDashboard.js (gráficos Chart.js)
+    actualizarFechaHora();
+    setInterval(actualizarFechaHora, 1000);
+    const nombreInput = document.getElementById('filtroNombre');
+    const rolInput = document.getElementById('filtroRol');
+    const formFiltro = document.getElementById('formFiltroUsuarios');
+    if (formFiltro) {
+        formFiltro.addEventListener('submit', function(e) {
+            e.preventDefault(); // Evita recarga al presionar Enter
+        });
     }
-}
-
-/**
- * Carga el dashboard de Looker Studio en el iframe.
- * RENOMBRADA para no chocar con la función de estadísticas de adminDashboard.js
- * @param {string} tipo - La clave del dashboard ('ventas', 'clientes', 'inventario').
- */
-function cargarDashboardLooker(tipo) {
-    const iframe = document.getElementById('lookerDashboard');
-    const placeholder = document.getElementById('lookerPlaceholder');
-    if (!iframe || !placeholder) {
-        console.error('Elementos de Looker Studio no encontrados en el DOM.');
-        return;
-    }
-
-    let url;
-    const storageKey = `lookerStudioUrl_${tipo}`;
-    
-    if (tipo === 'ventas') {
-        url = localStorage.getItem(storageKey) || LOOKER_DASHBOARDS[tipo];
-    } else {
-        url = LOOKER_DASHBOARDS[tipo];
-    }
-    
-    // Verifica si la URL es válida
-    const esUrlValida = url && !url.includes("URL_VENTAS_POR_DEFECTO"); 
-
-    if (esUrlValida) {
-        iframe.src = url;
-        iframe.style.display = 'block';
-        placeholder.style.display = 'none';
-        if (tipo !== 'ventas' || localStorage.getItem(storageKey)) {
-             mostrarMensaje(`Dashboard de ${tipo.toUpperCase()} cargado.`, 'info');
+    if (nombreInput && rolInput) {
+        function filtrarUsuariosAuto() {
+            const texto = (nombreInput.value || '').toLowerCase();
+            const rol = (rolInput.value || '').trim().toLowerCase();
+            let filtrados = window.usuarios.filter(u => {
+                // Buscar coincidencia en nombre o usuario, siempre en minúsculas
+                let nombre = (u.nombre || '').toLowerCase();
+                let usuario = (u.usuario || '').toLowerCase();
+                let matchNombre = !texto || nombre.includes(texto) || usuario.includes(texto);
+                // Normalizar rol del usuario, siempre en minúsculas
+                let rolUsuario = '';
+                if (u.rol) {
+                    if (typeof u.rol === 'string') {
+                        rolUsuario = u.rol.trim().toLowerCase();
+                    } else if (typeof u.rol === 'object' && u.rol.nombre) {
+                        rolUsuario = u.rol.nombre.trim().toLowerCase();
+                    }
+                }
+                let matchRol = !rol || rolUsuario === rol;
+                return matchNombre && matchRol;
+            });
+            window.mostrarUsuariosFiltrados(filtrados);
         }
-    } else {
-        iframe.style.display = 'none';
-        placeholder.style.display = 'block';
-        if (tipo === 'ventas') {
-            mostrarError("El Dashboard de Ventas requiere configuración. Haz clic en 'Configurar Dashboard'.");
-        } else {
-            mostrarError(`La URL del dashboard de ${tipo.toUpperCase()} no está configurada.`);
-        }
+        nombreInput.addEventListener('input', filtrarUsuariosAuto);
+        rolInput.addEventListener('change', filtrarUsuariosAuto);
     }
-}
-
-
-// ===============================
-// LÓGICA DE USUARIOS Y NAVEGACIÓN
-// ===============================
+});
 
 // Función para mostrar solo los usuarios filtrados
 window.mostrarUsuariosFiltrados = function(filtrados) {
@@ -210,11 +158,13 @@ window.mostrarUsuariosFiltrados = function(filtrados) {
 function verificarAutenticacion() {
     console.log('Verificando autenticación Admin...');
     
+    // Limpiar URL si tiene parámetros
     if (window.location.search) {
         window.history.replaceState({}, document.title, window.location.pathname);
         console.log('URL limpiada');
     }
     
+    // Priorizar sessionStorage sobre localStorage
     let userString = sessionStorage.getItem('currentUser') || localStorage.getItem('currentUser');
     
     if (!userString) {
@@ -278,12 +228,7 @@ function cambiarSeccion(section) {
     document.getElementById('pageTitle').textContent = titles[section];
     switch(section) {
         case 'dashboard':
-            // Llama a la función principal renombrada en adminDashboard.js
-            if (typeof cargarDashboardPrincipal === 'function') {
-                cargarDashboardPrincipal();
-            } else {
-                console.error("Error: La función cargarDashboardPrincipal no está definida. ¿adminDashboard.js está cargado?");
-            }
+            cargarDashboard();
             break;
         case 'productos':
             cargarProductos();
@@ -301,49 +246,59 @@ function cambiarSeccion(section) {
             cargarReservas();
             break;
         case 'analytics':
-            cargarAnalytics(); // Llama a la nueva función de Looker Studio
+            cargarAnalytics(); // <- Esta es una de las nuevas funciones
             break;
     }
 }
 
 
-// INICIALIZACIÓN
-// ===============================
-document.addEventListener('DOMContentLoaded', function() {
-    verificarAutenticacion();
-    configurarNavegacion();
-    actualizarFechaHora();
-    setInterval(actualizarFechaHora, 1000);
-    const nombreInput = document.getElementById('filtroNombre');
-    const rolInput = document.getElementById('filtroRol');
-    const formFiltro = document.getElementById('formFiltroUsuarios');
-    if (formFiltro) {
-        formFiltro.addEventListener('submit', function(e) {
-            e.preventDefault(); 
-        });
+// =================================================================
+// NUEVAS FUNCIONES PARA LOOKER STUDIO
+// =================================================================
+
+/**
+ * Carga un dashboard de Looker Studio en el iframe.
+ * Se llama desde los botones onclick="cargarLookerDashboard('ventas')" en el HTML.
+ */
+function cargarLookerDashboard(tipo) {
+    const iframe = document.getElementById('lookerDashboard');
+    const placeholder = document.getElementById('lookerPlaceholder');
+    
+    // Busca la URL en nuestro objeto de configuración
+    const url = lookerDashboards[tipo];
+
+    if (url && !url.startsWith("URL_DE_TU_")) {
+        // ¡Tenemos una URL válida!
+        iframe.src = url;
+        iframe.style.display = 'block';    // Mostrar iframe
+        placeholder.style.display = 'none'; // Ocultar placeholder
+    } else {
+        // Si no hay URL configurada
+        console.warn(`No hay URL configurada para el dashboard: ${tipo}`);
+        iframe.style.display = 'none';      // Ocultar iframe
+        placeholder.style.display = 'block';    // Mostrar placeholder
+        
+        placeholder.querySelector('p').innerText = `URL no configurada para el dashboard '${tipo}'. Revisa el objeto 'lookerDashboards' en Admin.js`;
     }
-    if (nombreInput && rolInput) {
-        function filtrarUsuariosAuto() {
-            const texto = (nombreInput.value || '').toLowerCase();
-            const rol = (rolInput.value || '').trim().toLowerCase();
-            let filtrados = window.usuarios.filter(u => {
-                let nombre = (u.nombre || '').toLowerCase();
-                let usuario = (u.usuario || '').toLowerCase();
-                let matchNombre = !texto || nombre.includes(texto) || usuario.includes(texto);
-                let rolUsuario = '';
-                if (u.rol) {
-                    if (typeof u.rol === 'string') {
-                        rolUsuario = u.rol.trim().toLowerCase();
-                    } else if (typeof u.rol === 'object' && u.rol.nombre) {
-                        rolUsuario = u.rol.nombre.trim().toLowerCase();
-                    }
-                }
-                let matchRol = !rol || rolUsuario === rol;
-                return matchNombre && matchRol;
-            });
-            window.mostrarUsuariosFiltrados(filtrados);
-        }
-        nombreInput.addEventListener('input', filtrarUsuariosAuto);
-        rolInput.addEventListener('change', filtrarUsuariosAuto);
+}
+
+/**
+ * Prepara la sección de Analytics.
+ * Esta función es llamada por cambiarSeccion()
+ */
+function cargarAnalytics() {
+    console.log('Cargando sección Analytics...');
+    const iframe = document.getElementById('lookerDashboard');
+    const placeholder = document.getElementById('lookerPlaceholder');
+
+    // Estado inicial: Ocultar iframe y mostrar el placeholder
+    if (iframe) {
+        iframe.style.display = 'none';
+        iframe.src = ""; // Limpiamos el src para que no se quede cargado
     }
-});
+    if (placeholder) {
+        placeholder.style.display = 'block';
+        // Reseteamos el texto por si fue modificado por un error
+        placeholder.querySelector('p').innerText = "Selecciona un dashboard (Ventas, Clientes o Inventario) de las tarjetas de abajo para empezar.";
+    }
+}

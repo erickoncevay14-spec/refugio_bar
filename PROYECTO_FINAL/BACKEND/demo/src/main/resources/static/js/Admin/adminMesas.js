@@ -4,9 +4,6 @@
 let mesas = [];
 let stompClient = null;
 
-// ===============================
-// WEBSOCKET CONNECTION
-// ===============================
 function conectarWebSocketMesas() {
     const socket = new SockJS('http://localhost:8080/ws');
     stompClient = Stomp.over(socket);

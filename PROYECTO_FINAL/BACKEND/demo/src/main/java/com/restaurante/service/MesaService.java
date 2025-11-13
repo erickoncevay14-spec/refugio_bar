@@ -1,5 +1,5 @@
 package com.restaurante.service;
 
-public class MesaService {
+public interface MesaService {
     
 }

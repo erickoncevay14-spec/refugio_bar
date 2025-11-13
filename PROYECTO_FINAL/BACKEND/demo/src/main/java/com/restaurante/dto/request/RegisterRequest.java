@@ -5,7 +5,15 @@ import com.restaurante.validator.PasswordFuerte;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 
 public class RegisterRequest {
     @NotBlank(message = "Usuario es requerido")
@@ -16,28 +24,19 @@ public class RegisterRequest {
     private String email;
     
     @NotBlank(message = "Password es requerido")
-    @Size(min = 8,max=20, message = "Password debe tener entre 8 y 20 caracteres")
+    @Size(min = 8, max = 20, message = "Password debe tener entre 8 y 20 caracteres")
     @PasswordFuerte
     private String password;
     
     @NotBlank(message = "Nombre es requerido")
     @NombreValido
     private String nombre;
-    
+    @NotBlank(message = "Apellido es requerido")
+    @NombreValido
     private String apellido;
+
+    @NotBlank(message = "Teléfono es requerido")
+    @Size(min = 9, max = 9, message = "Teléfono debe tener 9 dígitos")
+    @Pattern(regexp = "^[0-9]{9}$", message = "Teléfono debe contener solo números")
     private String telefono;
-    
-    // Getters y Setters
-    public String getUsuario() { return usuario; }
-    public void setUsuario(String usuario) { this.usuario = usuario; }
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
-    public String getApellido() { return apellido; }
-    public void setApellido(String apellido) { this.apellido = apellido; }
-    public String getTelefono() { return telefono; }
-    public void setTelefono(String telefono) { this.telefono = telefono; }
 }

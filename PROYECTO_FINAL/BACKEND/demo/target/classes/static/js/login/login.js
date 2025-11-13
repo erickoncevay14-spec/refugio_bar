@@ -16,42 +16,28 @@ document.addEventListener('DOMContentLoaded', function() {
 });
          
 function redirigirSegunRolFinal(rol, userSession) {
-    console.log('Ejecutando redirección...');
-    console.log('- Rol:', rol);
     const sessionString = JSON.stringify(userSession);
     sessionStorage.setItem('currentUser', sessionString);
     localStorage.setItem('currentUser', sessionString);
     localStorage.setItem('userBackup', sessionString);
-    console.log('Datos guardados correctamente');
+    
     let targetUrl;
-    // Convertimos el rol a mayúsculas para comparación
     const rolUpperCase = rol?.toUpperCase() || '';
-    console.log('- Rol en mayúsculas:', rolUpperCase);
     
-    // Añadimos logs adicionales para depurar
-    console.log('- Tipo de rol:', typeof rol);
-    console.log('- Contenido exacto del rol:', rol);
-    
-    // Comprobación basada en el contenido real de la base de datos
     if (rolUpperCase === 'ADMIN') {
         targetUrl = '/admin';
-        console.log('Redirigiendo a ADMIN');
     } 
     else if (rolUpperCase === 'BARTENDER') {
         targetUrl = '/bartender';
-        console.log('Redirigiendo a BARTENDER');
     }
-    // Añadimos "mozo" en minúsculas y mayúsculas para asegurar la compatibilidad
     else if (rolUpperCase === 'MOZO' || rolUpperCase === 'MESERO' || 
              rol === 'mozo' || rol === 'Mozo') {
         targetUrl = '/mozo';
-        console.log('Redirigiendo a MOZO - rol detectado:', rol);
     }
     else {
         targetUrl = '/index';
-        console.log('Redirigiendo a index - Rol no reconocido:', rol);
     }
-    console.log('URL destino:', targetUrl);
+    
     setTimeout(() => {
         window.location.href = targetUrl;
     }, 100);
@@ -59,13 +45,11 @@ function redirigirSegunRolFinal(rol, userSession) {
 
 // Función wrapper para compatibilidad
 function validarLogin() {
-    console.log(' validarLogin() llamada - ejecutando versión final');
     return ejecutarLogin();
 }
 
 // Función wrapper para redirigirSegunRol (por si algo la llama)
 function redirigirSegunRol(rol, userSession) {
-    console.log(' redirigirSegunRol() llamada - ejecutando versión final');
     return redirigirSegunRolFinal(rol, userSession);
 }
 
@@ -111,15 +95,12 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 localStorage.clear();
                 sessionStorage.clear();
-                console.log('Sesión inválida, mostrando login');
             }
         } catch (error) {
             console.error(' Error al leer sesión existente:', error);
             localStorage.clear();
             sessionStorage.clear();
         }
-    } else {
-        console.log(' No hay sesión previa - login limpio');
     }
 });
 async function ejecutarLogin() {
@@ -134,10 +115,11 @@ async function ejecutarLogin() {
     }
 
     try {
+        // Usar JWT real en lugar de token temporal
         const response = await fetch('/api/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ usuario, password })
+            body: JSON.stringify({ usuario: usuario, password })
         });
 
         if (!response.ok) {
@@ -145,8 +127,21 @@ async function ejecutarLogin() {
         }
 
         const userData = await response.json();
-        if (userData && userData.rol) {
-            redirigirSegunRolFinal(userData.rol, userData);
+        
+        if (userData && userData.token && userData.rol) {
+            // Guardar el token JWT
+            const userSession = {
+                token: userData.token,
+                usuario: userData.username,
+                rol: userData.rol,
+                id: userData.id,
+                nombre: userData.nombre
+            };
+            
+            // Guardar token en localStorage para usarlo en futuras peticiones
+            localStorage.setItem('jwtToken', userData.token);
+            
+            redirigirSegunRolFinal(userData.rol, userSession);
         } else {
             alert('Credenciales incorrectas');
         }
@@ -161,7 +156,7 @@ async function ejecutarLogin() {
 }
 // Función para cerrar sesión
 function cerrarSesion() {
-    console.log(' Cerrando sesión...');
+   
     localStorage.clear();
     sessionStorage.clear();
     window.location.href = '/login';
