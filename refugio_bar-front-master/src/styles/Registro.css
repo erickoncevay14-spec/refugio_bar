@@ -1,0 +1,203 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* Fondo general con gradiente oscuro */
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #1a1a1a 0%, #3d2417 100%);
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Tarjeta de registro con efecto dorado */
+.auth-container .login-form {
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+  padding: 40px;
+  border-radius: 18px;
+  border: 1px solid rgba(245, 197, 66, 0.4);
+  box-shadow: 0 0 20px rgba(245, 197, 66, 0.3), 
+              0 8px 32px rgba(0, 0, 0, 0.5);
+  animation: slideIn 0.5s ease-out;
+  width: 100%;
+  max-width: 500px;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Título dorado */
+.auth-container .login-form h2 {
+  text-align: center;
+  color: #f5c542;
+  margin-bottom: 30px;
+  font-size: 30px;
+  font-weight: 700;
+  text-shadow: 0 2px 10px rgba(245, 197, 66, 0.3);
+}
+
+/* Grupos de input */
+.auth-container .form-group {
+  margin-bottom: 18px;
+}
+
+.auth-container .form-group label {
+  color: #f5c542;
+  font-weight: 500;
+  font-size: 15px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+/* Inputs con estilo claro */
+.auth-container .form-group input[type="text"],
+.auth-container .form-group input[type="email"],
+.auth-container .form-group input[type="tel"],
+.auth-container .form-group input[type="password"] {
+  width: 100%;
+  padding: 12px 45px 12px 16px;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  outline: none;
+  background: #f8fbff;
+  color: #1a1a1a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.auth-container .form-group input:focus {
+  background: #ffffff;
+  box-shadow: 0 0 0 2px rgba(245, 197, 66, 0.5),
+              0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.auth-container .form-group input::placeholder {
+  color: #999;
+}
+
+/* Ícono de ojo */
+.auth-container .bi-eye,
+.auth-container .bi-eye-slash {
+  font-size: 20px;
+  color: #444;
+  transition: color 0.3s ease;
+}
+
+.auth-container .bi-eye:hover,
+.auth-container .bi-eye-slash:hover {
+  color: #f5c542;
+}
+
+/* Mensaje de validación de contraseña */
+#passwordMsg {
+  font-size: 0.875em;
+  margin-top: 6px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+#passwordMsg:not(:empty) {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid;
+}
+
+/* Mensaje válido (verde) */
+div[style*="color: green"],
+div[style*="color:green"] {
+  color: #86efac !important;
+  border-color: rgba(134, 239, 172, 0.3) !important;
+}
+
+/* Mensaje inválido (rojo) */
+div[style*="color: red"],
+div[style*="color:red"] {
+  color: #fca5a5 !important;
+  border-color: rgba(252, 165, 165, 0.3) !important;
+}
+
+/* Botones con estilo dorado */
+.auth-container .cta-button {
+  width: 100%;
+  padding: 14px;
+  background: #f5c542;
+  color: #1a1a1a;
+  border: none;
+  border-radius: 20px;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(245, 197, 66, 0.4);
+}
+
+.auth-container .cta-button:hover {
+  background: #e6b635;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 197, 66, 0.6);
+}
+
+.auth-container .cta-button:active {
+  transform: translateY(0);
+}
+
+/* Espaciado entre botones */
+.auth-container .form-group:last-child {
+  margin-top: 10px;
+}
+
+/* Responsivo */
+@media (max-width: 580px) {
+  .auth-container .login-form {
+    padding: 30px 20px;
+    border-radius: 15px;
+    max-width: 100%;
+  }
+
+  .auth-container .login-form h2 {
+    font-size: 26px;
+    margin-bottom: 25px;
+  }
+
+  .auth-container .form-group {
+    margin-bottom: 15px;
+  }
+
+  .auth-container .form-group input {
+    padding: 11px 40px 11px 14px;
+    font-size: 14px;
+  }
+
+  .auth-container .cta-button {
+    padding: 12px;
+    font-size: 16px;
+  }
+
+  #passwordMsg {
+    font-size: 0.8em;
+  }
+}
+
+/* Scroll suave para formularios largos */
+@media (max-height: 700px) {
+  .auth-container {
+    align-items: flex-start;
+    padding: 30px 20px;
+  }
+}

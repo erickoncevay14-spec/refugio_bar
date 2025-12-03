@@ -1,0 +1,150 @@
+/* TOPBAR */
+.topbar {
+  background-color: var(--bg-primary);
+  padding: 1.25rem 1.5rem;
+  border-radius: 1rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.topbar-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.topbar-user {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--bg-secondary);
+  border-radius: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.topbar-user:hover {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.topbar-user i {
+  font-size: 1.125rem;
+}
+
+/* MESAS LIST */
+.mesas-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.mesa-item {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 0.875rem;
+  padding: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.mesa-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent-color);
+}
+
+.mesa-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mesa-info span:first-child {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.mesa-info span:last-child {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  padding: 0.25rem 0.75rem;
+  background-color: var(--bg-secondary);
+  border-radius: 0.5rem;
+  width: fit-content;
+}
+
+.btn-action {
+  background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+  color: white;
+  border: none;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.625rem;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.btn-action:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.btn-action:active {
+  transform: translateY(0);
+}
+
+/* Estados específicos */
+.mesa-item[data-estado="Disponible"] .mesa-info span:last-child {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+
+.mesa-item[data-estado="Ocupada"] .mesa-info span:last-child {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.mesa-item[data-estado="Reservada"] .mesa-info span:last-child {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .topbar {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  
+  .mesas-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .mesa-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .btn-action {
+    width: 100%;
+  }
+}

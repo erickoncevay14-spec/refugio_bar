@@ -1,0 +1,10 @@
+/* Estilos básicos para el formulario de usuario */
+.usuario-form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.usuario-form input {
+  width: 100%;
+  margin-bottom: 10px;
+}

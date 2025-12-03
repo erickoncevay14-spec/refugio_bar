@@ -1,0 +1,49 @@
+.bartender-topbar {
+  display: flex;
+  flex-direction: row; /* Alineación horizontal */
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-bottom: 1px solid #e6e9ee;
+}
+
+.bartender-topbar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  width: 100%;
+  gap: 0.75rem;
+}
+
+.bartender-topbar-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #053d4e;
+}
+
+.bartender-topbar-user {
+  font-size: 1rem;
+  color: #707780;
+  margin-left: 0.5rem;
+}
+
+.bartender-topbar-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.bartender-topbar-action-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.bartender-topbar-action-button:hover {
+  background-color: #0056b3;
+}

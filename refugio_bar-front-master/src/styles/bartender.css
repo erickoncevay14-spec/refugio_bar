@@ -1,0 +1,210 @@
+/* Estilos para la vista Bartender
+   Este archivo existe para resolver importaciones dinámicas como
+   import("../../styles/bartender.css") desde distintos componentes.
+   Copiado/adaptado desde los estilos del sidebar del bartender.
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+:root {
+  --background-color: white;
+  --text-color: #32363b;
+  --menu-color: #707780;
+  --border-color: #e0e0e0;
+  --text-selected-color: #355cc0;
+  --background-selected: #ebf0ff;
+  --background-hover: #ebf0ff;
+}
+
+body {
+  width: 100%;
+  height: 100vh;
+  font-family: 'Nunito Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+header {
+  z-index: 200;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.45rem 2rem 0.45rem 1.27rem;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--background-color);
+  top: 0;
+  left: 0;
+  position: fixed;
+}
+
+.sidebar {
+  margin-top: 4rem;
+  width: 4rem;
+  height: calc(100vh - 4rem);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  padding: 1.1rem 0rem;
+  border-right: 1px solid var(--border-color);
+  overflow-y: auto;
+  background-color: var(--background-color);
+  transition: width 0.5s ease;
+}
+
+.main-content {
+  margin-top: 4rem;
+  margin-left: 4rem;
+  padding: 1.5rem;
+  transition: margin-left 0.5s ease;
+  width: calc(100% - 4rem);
+}
+
+.main-content.sidebar-collapsed {
+  margin-left: 18.75rem;
+  width: calc(100% - 18.75rem);
+}
+
+.user-block {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user-name {
+  font-weight: 600;
+  color: var(--text-color);
+  font-size: 0.95rem;
+  white-space: nowrap;
+  max-width: 10rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.logout-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+@media (max-width: 500px) {
+  .sidebar { width: 0; }
+  .sidebar.menu-toggle { width: 18.75rem; }
+  .main-content { margin-left: 0; width: 100%; }
+}
+/* Estilos específicos para la vista de BARTENDER */
+body {
+  background-color: #fff0f5;
+}
+
+h1 {
+  color: #f0eeef;
+}
+
+/* Estilos para las tarjetas de pedidos */
+.pedidos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  align-items: start;
+  justify-content: center; /* centrar la cuadrícula en el contenedor */
+  padding: 1rem 0;
+}
+
+.pedido-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 6px 14px rgba(24,39,75,0.06);
+  padding: 14px;
+  border: 1px solid rgba(20,40,60,0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 140px;
+  width: 100%;
+  max-width: 320px; /* limitar ancho para consistencia */
+}
+
+.pedido-header {
+  margin-bottom: 12px;
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pedido-header p {
+  font-size: 0.9rem;
+  margin: 0;
+  color: #444;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.pedido-estado {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #2b6cb0;
+  background: #eef6ff;
+  padding: 4px 8px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+}
+
+.pedido-meta strong {
+  display: block;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+
+.pedido-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.btn {
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-action {
+  background: #2b66c6;
+  color: white;
+  padding: 10px 16px;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid #e6e9ee;
+  color: #333;
+}
+
+.btn-preparar { background: #f59e0b; color: white; }
+.btn-listo { background: #06b6d4; color: white; }
+.btn-entregado { background: #10b981; color: white; }
+
+.empty {
+  color: #6b7280;
+  padding: 1rem 0;
+}
+
+@media (max-width: 640px) {
+  .pedidos-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

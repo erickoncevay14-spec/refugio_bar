@@ -1,0 +1,122 @@
+/* src/pages/MesasDisponibles/MesasList.css (ESTILOS ACTUALIZADOS A IMAGE_ED55E4.PNG) */
+
+/* Variables de color para los estados */
+:root {
+    --color-libre: #4CAF50; /* Verde */
+    --color-ocupada: #F44336; /* Rojo */
+    --color-reservada: #FF9800; /* Naranja */
+    --color-limpieza: #4FC3F7; /* Azul Claro */
+    --color-neutral: #8D8D8D; /* Gris Neutro */
+    --card-bg-light: #F0F0F0;
+}
+
+/* ------------------------------------- */
+/* Layout y Contenedor de Mesas */
+/* ------------------------------------- */
+
+.mesas-grid {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    /* Cuadrícula flexible para 5 tarjetas por fila o más, según el tamaño */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+    gap: 25px; /* Espacio entre las tarjetas */
+    margin-top: 1rem;
+}
+
+/* ------------------------------------- */
+/* Tarjeta de Mesa (Mesa Card) */
+/* ------------------------------------- */
+
+.mesa-card {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s;
+    overflow: hidden; /* Importante para el radio */
+    text-align: center;
+}
+
+.mesa-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.mesa-header-content {
+    background-color: var(--card-bg-light); 
+    padding: 20px 15px 15px;
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.mesa-numero {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #333;
+    line-height: 1;
+}
+
+.mesa-capacidad {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 5px;
+}
+
+.mesa-capacidad::before {
+    content: "👥";
+    margin-right: 5px;
+}
+
+.mesa-label-estado {
+    display: inline-block;
+    padding: 4px 10px;
+    margin-top: 10px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: white;
+    background-color: var(--color-neutral); /* Etiqueta gris estática */
+}
+
+/* ------------------------------------- */
+/* Botones de Acción de Estado */
+/* ------------------------------------- */
+
+.mesa-actions {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Espacio entre los botones de estado */
+}
+
+.btn-status {
+    width: 100%;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s, filter 0.2s;
+}
+
+.btn-status:hover {
+    filter: brightness(1.1);
+}
+
+.btn-status.selected {
+    /* Estilo para el botón que representa el estado actual de la mesa */
+    /* Lo pondremos un poco más oscuro o con una sombra para indicarlo */
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2); 
+    filter: brightness(0.9);
+}
+
+
+/* Colores específicos de los botones */
+.btn-libre { background-color: var(--color-libre); }
+.btn-ocupada { background-color: var(--color-ocupada); }
+.btn-reservada { background-color: var(--color-reservada); }
+.btn-limpieza { background-color: var(--color-limpieza); }

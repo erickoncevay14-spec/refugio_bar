@@ -1,0 +1,274 @@
+/* src/styles/Sidebar.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Nunito Sans', sans-serif;
+}
+/* Variables de color */
+:root {
+  --background-color: white;
+  --text-color: #32363b;
+  --menu-color: #707780;
+  --border-color: #e0e0e0;
+  --text-selected-color: #355cc0;
+  --background-selected: #ebf0ff;
+  --background-hover: #ebf0ff;
+}
+
+/* Estilos globales y reseteo */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  height: 100vh;
+  font-family: 'Nunito Sans', sans-serif;
+  overflow-x: hidden;
+  /* Evita el scroll horizontal */
+}
+
+/* HEADER */
+header {
+  z-index: 200;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.45rem 2rem 0.45rem 1.27rem;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--background-color);
+  top: 0;
+  left: 0;
+  position: fixed;
+}
+
+/* Icono de menú (hamburguesa) */
+.menu {
+  width: 1.5rem;
+  height: 37%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.menu.menu-toggle div:first-child {
+  width: 40%;
+  transform: rotate(-35deg) translate(-30%, 175%);
+}
+
+.menu.menu-toggle div:last-child {
+  width: 40%;
+  transform: rotate(35deg) translate(-30%, -160%);
+}
+
+.menu {
+  width: 1.9rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-icon { width: 1.6rem; height: auto; display:block }
+
+.menu.menu-toggle .menu-icon { opacity: 0.95 }
+.left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.4rem;
+}
+
+.right {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+.right a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.right a:hover {
+  background-color: var(--background-hover);
+}
+
+.right img {
+  width: 1.5rem;
+  margin: 0.5rem;
+}
+
+.right .user {
+  width: 2.1rem;
+  border-radius: 50%;
+}
+
+/* Bloque del usuario: avatar + nombre */
+.right .user-block {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.right .user-name {
+  font-weight: 600;
+  color: var(--text-color);
+  font-size: 0.95rem;
+  white-space: nowrap;
+  max-width: 10rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Botón de logout estilado para integrarse con header */
+.logout-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background: var(--background-hover);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.brand .logo {
+  width: 1.7rem;
+}
+
+/* SIDEBAR */
+.sidebar {
+  margin-top: 4rem;
+  width: 4rem;
+  height: calc(100vh - 4rem);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000; /* aumentar para que el sidebar pueda quedar encima del header cuando sea necesario */
+  padding: 1.1rem 0rem;
+  border-right: 1px solid var(--border-color);
+  overflow-y: auto;
+  background-color: var(--background-color);
+  transition: width 0.5s ease;
+
+}
+
+.sidebar.menu-toggle {
+  width: 18.75rem;
+  z-index: 10000; /* asegurar que la versión expandida se muestre por encima del header/topbar */
+}
+
+.sidebar a {
+  display: flex;
+  align-items: center;
+  gap: 1.3rem;
+  padding: 0.9rem 0.7rem;
+  text-decoration: none;
+  margin: 0 0.5rem;
+  border-radius: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  color: var(--text-color);
+}
+
+.sidebar a:hover {
+  background-color: var(--background-hover);
+}
+
+.sidebar a.selected {
+  background-color: var(--background-selected);
+  color: var(--text-selected-color);
+}
+
+.sidebar a.search {
+  padding: 1rem 0.7rem;
+  margin-bottom: 0.2rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar img {
+  width: 1.6rem;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+/* MAIN CONTENT */
+.main-content {
+  margin-top: 4rem;
+  margin-left: 4rem;
+  /* Margen inicial para sidebar colapsado */
+  padding: 1.5rem;
+  transition: margin-left 0.5s ease;
+  width: calc(100% - 4rem);
+}
+
+.main-content.sidebar-collapsed {
+  margin-left: 18.75rem;
+  /* Margen para sidebar expandido */
+  width: calc(100% - 18.75rem);
+}
+
+.content-area {
+  padding: 1rem;
+}
+
+/* Responsividad para pantallas pequeñas */
+@media (max-width: 500px) {
+  .right .icons-header {
+    display: none;
+  }
+
+  .sidebar {
+    width: 0;
+  }
+
+  .sidebar.menu-toggle {
+    width: 18.75rem;
+  }
+
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .main-content.sidebar-collapsed {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  /* Estilos del icono de menú a "X" en móvil */
+  .menu.menu-toggle div:first-child {
+    width: 100%;
+    transform: rotate(-45deg) translate(-0.2rem, 0.3rem);
+  }
+
+  .menu.menu-toggle div:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer
+  }
+}

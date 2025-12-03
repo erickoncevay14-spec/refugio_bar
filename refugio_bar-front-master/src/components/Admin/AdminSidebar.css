@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --background-color: white;
+    --text-color: #32363b;
+    --menu-color: #707780;
+    --border-color: #e0e0e0;
+    --text-selected-color: #355cc0;
+    --background-selected: #ebf0ff;
+    --background-hover: #ebf0ff;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+.admin-header {
+    z-index: 200;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.45rem 2rem 0.45rem 1.27rem;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--background-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.admin-header .menu {
+    width: 1.5rem;
+    height: 37%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.admin-header .menu div {
+    width: 100%;
+    height: 0.15rem;
+    background: var(--menu-color);
+    transition: all 0.2s;
+}
+
+.admin-header .menu.menu-toggle div:first-child {
+    width: 40%;
+    transform: rotate(-35deg) translate(-30%, 175%);
+}
+
+.admin-header .menu.menu-toggle div:last-child {
+    width: 40%;
+    transform: rotate(35deg) translate(-30%, -160%);
+}
+
+.admin-header .menu-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.admin-header .left {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+}
+
+.admin-header .brand .logo {
+    width: 1.7rem;
+}
+
+.admin-header .right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.admin-header .right .user {
+    width: 2.1rem;
+    border-radius: 50%;
+}
+
+.admin-header .user-block {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.admin-header .logout-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+}
+
+.admin-header + .sidebar {
+    margin-top: 4rem;
+    width: 4rem;
+    height: calc(100vh - 4rem);
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 1.1rem 0;
+    border-right: 1px solid var(--border-color);
+    overflow-y: auto;
+    background: var(--background-color);
+    transition: width 0.5s;
+}
+
+.admin-header + .sidebar.menu-toggle {
+    width: 18.75rem;
+}
+
+.admin-header + .sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 1.3rem;
+    padding: 0.9rem 0.7rem;
+    text-decoration: none;
+    margin: 0 0.5rem;
+    border-radius: 0.5rem;
+    color: var(--text-color);
+}
+
+.admin-header + .sidebar a:hover {
+    background: var(--background-hover);
+}
+
+.admin-header + .sidebar a.selected {
+    background: var(--background-selected);
+    color: var(--text-selected-color);
+}
+
+.admin-header + .sidebar img {
+    width: 1.6rem;
+}
+
+.admin-header + .sidebar ul {
+    list-style: none;
+}
+
+.admin-header + .admin-topbar + .main-content {
+    margin-top: 4rem;
+    margin-left: 4rem;
+    padding: 1.5rem;
+    transition: margin-left 0.5s;
+}
+
+.admin-header + .admin-topbar + .main-content.sidebar-collapsed {
+    margin-left: 18.75rem;
+}
+
+/* pequeño ajuste responsive */
+@media (max-width:500px) {
+    .sidebar {
+        width: 0
+    }
+
+    .sidebar.menu-toggle {
+        width: 18.75rem
+    }
+
+    .main-content {
+        margin-left: 0
+    }
+}

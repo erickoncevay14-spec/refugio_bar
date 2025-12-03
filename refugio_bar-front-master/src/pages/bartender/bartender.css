@@ -1,0 +1,291 @@
+/* Estilos específicos para las páginas de bartender */
+
+.content-area {
+	padding: 1rem;
+}
+
+.pedidos-list ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+}
+
+.pedido-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0.9rem 1rem;
+	border-radius: 8px;
+	background: #fff;
+	border: 1px solid #e6e9ee;
+	box-shadow: 0 1px 2px rgba(50,54,59,0.03);
+}
+
+.pedido-meta {
+	display: flex;
+	flex-direction: column;
+}
+
+.pedido-estado {
+	font-size: 0.85rem;
+	color: #707780;
+}
+
+.pedido-actions button {
+	background: #355cc0;
+	color: white;
+	border: none;
+	padding: 0.45rem 0.7rem;
+	border-radius: 6px;
+	cursor: pointer;
+}
+
+.empty {
+	color: #707780;
+	padding: 1rem;
+}
+
+/* Estilos para las tarjetas de pedido (bartender) */
+.pedido-card {
+	background: #fff;
+	border: 1px solid #e6e9ee;
+	border-radius: 8px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	padding: 1rem;
+	transition:
+	transform 0.2s,
+	box-shadow 0.2s;
+}
+
+.pedido-card:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.pedido-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 0.75rem;
+}
+
+.pedido-num {
+	font-weight: 700;
+	color: #21314a;
+}
+
+.pedido-meta-small {
+	font-size: 0.85rem;
+	color: #707780;
+}
+
+.pedido-estado-badge {
+	background: #fff1f4;
+	color: #c13b4b;
+	padding: 0.3rem 0.6rem;
+	border-radius: 6px;
+	font-size: 0.75rem;
+	font-weight: 700;
+}
+
+.badge-pendiente { background: #fff7eb; color: #b86b00; }
+.badge-preparacion { background: #fff3f6; color: #c13b4b; }
+.badge-listo { background: #e6ffef; color: #137a3c; }
+.badge-entregado { background: #eef6ff; color: #234a80; }
+
+.productos-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+}
+
+.producto-item {
+	display: flex;
+	gap: 0.75rem;
+	align-items: center;
+	color: #2b2f33;
+}
+
+.producto-cantidad {
+	font-weight: 700;
+	color: #355cc0;
+	width: 3rem;
+}
+
+.producto-nombre {
+	flex: 1;
+}
+
+.producto-precio {
+	color: #707780;
+	margin-left: auto;
+}
+
+.producto-subtotal {
+	color: #707780;
+	margin-left: 0.75rem;
+}
+
+.pedido-footer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 0.6rem;
+}
+
+.btn-accion {
+	background: #355cc0;
+	border: none;
+	color: white;
+	padding: 0.45rem 0.8rem;
+	border-radius: 6px;
+	cursor: pointer;
+}
+
+/* Diseño de cuadrícula para las tarjetas de pedidos */
+.pedidos-grid {
+	display: grid !important;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important;
+	gap: 1rem !important;
+	padding: 1rem !important;
+	justify-content: center !important; /* centrar la cuadrícula */
+}
+
+/* Ajustes para las tarjetas */
+.pedido-card {
+	background: #fff !important;
+	border: 1px solid #e6e9ee !important;
+	border-radius: 8px !important;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+	padding: 1rem !important;
+	transition: transform 0.2s, box-shadow 0.2s !important;
+	width: 100% !important;
+	max-width: 320px !important;
+}
+
+.pedido-card:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Encabezado de la tarjeta */
+.pedido-header {
+	display: flex !important;
+	flex-direction: column !important; /* mostrar en columna para evitar solapamientos */
+	justify-content: flex-start !important;
+	align-items: flex-start !important;
+	margin-bottom: 0.75rem !important;
+}
+
+.pedido-estado {
+  font-weight: bold !important;
+  color: #355cc0 !important;
+}
+
+/* Botones de acción */
+.pedido-actions {
+	display: flex !important;
+	justify-content: center !important; /* centrar el/los botones */
+	gap: 0.5rem !important;
+	margin-top: 1rem !important;
+}
+
+.pedido-actions .btn {
+	flex: none !important;
+	padding: 0.5rem 1rem !important;
+	border: none !important;
+	border-radius: 6px !important;
+	font-size: 0.95rem !important;
+	cursor: pointer !important;
+	transition: background-color 0.2s !important;
+	width: 100% !important;
+	max-width: 260px !important;
+}
+
+.btn-preparar {
+  background-color: #ffcc00 !important;
+  color: #fff !important;
+}
+
+.btn-preparar:hover {
+  background-color: #e6b800 !important;
+}
+
+.btn-listo {
+  background-color: #28a745 !important;
+  color: #fff !important;
+}
+
+.btn-listo:hover {
+  background-color: #218838 !important;
+}
+
+.btn-entregado {
+  background-color: #007bff !important;
+  color: #fff !important;
+}
+
+.btn-entregado:hover {
+  background-color: #0056b3 !important;
+}
+
+/* Estilos para la tabla de Pedidos Entregados */
+.pedidos-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 1rem;
+}
+.pedidos-table thead th {
+	text-align: left;
+	padding: 12px 10px;
+	background: rgba(0,0,0,0.03);
+	font-weight: 700;
+	color: #21314a;
+	border-bottom: 1px solid #e6e9ee;
+}
+.pedidos-table tbody td {
+	padding: 10px;
+	border-bottom: 1px solid #f0f4f8;
+	vertical-align: middle;
+	color: #2b2f33;
+}
+.pedidos-table tbody tr:last-child td { border-bottom: none; }
+
+.badge-estado {
+	display: inline-block;
+	padding: 6px 12px;
+	border-radius: 20px;
+	background: #0831d4;
+	color: #fff;
+	font-weight: 700;
+	font-size: 12px;
+}
+
+.muted { color: #707780; }
+
+.pagination {
+	display: flex;
+	gap: 6px;
+	align-items: center;
+}
+.pagination button {
+	background: transparent;
+	border: 1px solid #dfe6ee;
+	padding: 6px 10px;
+	border-radius: 6px;
+	cursor: pointer;
+}
+.pagination button.active {
+	background: #0831d4;
+	color: white;
+	border-color: #0831d4;
+}
+.pagination button:disabled { opacity: 0.5; cursor: default; }
+
+.pedidos-table-wrapper { padding: 0.5rem 0; }

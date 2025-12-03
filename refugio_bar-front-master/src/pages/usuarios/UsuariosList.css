@@ -1,0 +1,14 @@
+/* Estilos básicos para la lista de usuarios */
+.usuarios-list {
+  padding: 20px;
+}
+
+.usuarios-list table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.usuarios-list th, .usuarios-list td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}

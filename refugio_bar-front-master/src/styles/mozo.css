@@ -1,0 +1,58 @@
+/* Estilos específicos para la vista de MOZO */
+/* Estilos específicos para la vista de MOZO */
+body {
+  background-color: #f8fafc;
+}
+
+h1 {
+  color: #007bff;
+}
+
+/* Forzar fondo claro en zonas principales cuando se muestra la vista mozo */
+.mozo-page {
+  background: transparent;
+}
+
+.mozo-page .main-content,
+.mozo-page .content-area {
+  background: transparent;
+  color: #222;
+}
+
+.mozo-page .topbar,
+.mozo-page .App-header,
+.mozo-page header {
+  background-color: #ffffff !important;
+  color: #222 !important;
+  box-shadow: none !important;
+  border-bottom: 1px solid #e6e6e6 !important;
+}
+
+.mozo-page .total-section {
+  background-color: #f5f5f5 !important;
+  color: #222 !important;
+}
+
+/* Overrides más específicos para evitar cualquier fondo oscuro heredado */
+.mozo-page header,
+.mozo-page .topbar,
+.mozo-page .main-content,
+.mozo-page .content-area,
+.mozo-page .mesas-grid-container,
+.mozo-page .mesas-grid,
+.mozo-page .mesa-card {
+  background-color: transparent !important;
+  color: #222 !important;
+}
+
+.mozo-page .main-content::before,
+.mozo-page .content-area::before {
+  display: none !important;
+}
+
+/* Forzar fondo claro en la franja superior si existe un elemento oscuro */
+.mozo-page > .main-content > .topbar,
+.mozo-page > .main-content > .content-area > .topbar {
+  background: #fff !important;
+  color: #222 !important;
+}

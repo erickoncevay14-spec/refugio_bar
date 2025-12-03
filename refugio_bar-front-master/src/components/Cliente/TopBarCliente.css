@@ -1,0 +1,143 @@
+.admin-topbar {
+    padding: 1rem 0.75rem;
+    background: #fbfeff;
+    /* subtle tint to separate from content */
+    border-bottom: 1px solid rgba(8, 49, 212, 0.06);
+}
+
+.admin-topbar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin-topbar-title {
+    font-size: 1.5rem;
+    color: #053d4e;
+    margin: 0
+}
+
+.admin-topbar-user {
+    color: #707780
+}
+
+.admin-topbar-actions {
+    margin-top: 0.75rem;
+    display: flex;
+    gap: 0.5rem
+}
+
+.admin-topbar-action {
+    background: #0831d4;
+    color: white;
+    border: none;
+    padding: 0.5rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer
+}
+
+/* Header (moved from sidebar style) */
+.admin-header {
+    z-index: 999;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.65rem 1.25rem;
+    border-bottom: 1px solid #e6eef3;
+    background-color: #f8fbfd;
+    /* subtle blue-ish tint to stand out */
+    box-shadow: 0 2px 8px rgba(3, 37, 65, 0.03);
+    top: 0;
+    left: 0;
+    position: fixed;
+}
+
+.admin-header .menu {
+    width: 1.9rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.admin-header .menu div {
+    width: 100%;
+    height: 0.15rem;
+    background-color: #707780
+}
+
+.admin-header .menu-icon {
+    width: 1.6rem;
+    height: auto;
+    display: block
+}
+
+.admin-header .menu-container {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    cursor: pointer
+}
+
+.admin-header .left {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem
+}
+
+.admin-header .right {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    gap: 1.6rem
+}
+
+.admin-header .brand .logo {
+    width: 1.7rem
+}
+
+.admin-header .icons-header img {
+    width: 1.5rem
+}
+
+.admin-header .user {
+    width: 2.1rem;
+    border-radius: 50%
+}
+
+.admin-header .logout-btn {
+    background: transparent;
+    border: 1px solid #e0e0e0;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px
+}
+
+.admin-header .user-block {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center
+}
+
+/* push main content down to not hide under fixed header (only for admin pages) */
+.admin-topbar+.main-content {
+    margin-top: 5.2rem;
+}
+
+/* Make the small header area (title row under main header) stand out */
+.admin-topbar {
+    box-shadow: 0 1px 0 rgba(3, 37, 65, 0.03) inset;
+}
+
+.admin-topbar-title {
+    font-weight: 600;
+}
+
+.admin-header .menu div {
+    background-color: #053d4e;
+}
+
+.user-name {
+    font-weight: 600;
+    color: #274b57
+}

@@ -1,0 +1,47 @@
+# ----------------------------------------
+#  ARCHIVOS DE MAVEN
+# ----------------------------------------
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# ----------------------------------------
+#  LOGS
+# ----------------------------------------
+*.log
+
+# ----------------------------------------
+#  CONFIGURACIONES DE IDE
+# ----------------------------------------
+
+# IntelliJ
+.idea/
+*.iml
+out/
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# VS Code
+.vscode/
+
+# ----------------------------------------
+#  SISTEMA OPERATIVO
+# ----------------------------------------
+.DS_Store
+Thumbs.db
+
+# ----------------------------------------
+#  ARCHIVOS TEMPORALES
+# ----------------------------------------
+*.tmp
+*.bak
+*.swp
+
+# ----------------------------------------
+#  VARIABLES / SECRETOS
+# ----------------------------------------
+application-dev.properties
+application-prod.properties
+.env
